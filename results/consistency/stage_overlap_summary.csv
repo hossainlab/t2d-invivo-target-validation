@@ -1,0 +1,50 @@
+set_a,set_b,n_a,n_b,overlap,genes
+Fig1 candidate 19,Fig1 candidate 19,19,19,19,VSNL1;LZTFL1;GAS6;SREBF2;SERPINE1;PPARGC1A;HMOX1;CCND1;ENPP1;PNPLA3;GPX1;IGFBP1;FBP1;IRS2;PLIN1;CTSD;KHK;IGF1;IGFBP2
+Fig1 candidate 19,"Fig2 axis (unanchored, superseded)",19,5,0,""
+Fig1 candidate 19,Fig2 selected map (hsa04152),19,39,5,PPARGC1A;CCND1;FBP1;IRS2;IGF1
+Fig1 candidate 19,"Fig2 axis (anchored, reported)",19,7,3,PPARGC1A;CCND1;IRS2
+Fig1 candidate 19,Fig3 confirmed axis,19,5,1,CCND1
+Fig1 candidate 19,Fig4 ML top 7,19,7,7,VSNL1;LZTFL1;GAS6;SREBF2;SERPINE1;PPARGC1A;HMOX1
+Fig1 candidate 19,Fig5 MR FDR<0.05,19,2,0,""
+"Fig2 axis (unanchored, superseded)",Fig1 candidate 19,5,19,0,""
+"Fig2 axis (unanchored, superseded)","Fig2 axis (unanchored, superseded)",5,5,5,CAMKK2;GYS2;MLYCD;PFKFB4;PRKAA2
+"Fig2 axis (unanchored, superseded)",Fig2 selected map (hsa04152),5,39,5,CAMKK2;GYS2;MLYCD;PFKFB4;PRKAA2
+"Fig2 axis (unanchored, superseded)","Fig2 axis (anchored, reported)",5,7,1,PRKAA2
+"Fig2 axis (unanchored, superseded)",Fig3 confirmed axis,5,5,0,""
+"Fig2 axis (unanchored, superseded)",Fig4 ML top 7,5,7,0,""
+"Fig2 axis (unanchored, superseded)",Fig5 MR FDR<0.05,5,2,0,""
+Fig2 selected map (hsa04152),Fig1 candidate 19,39,19,5,PPARGC1A;CCND1;FBP1;IRS2;IGF1
+Fig2 selected map (hsa04152),"Fig2 axis (unanchored, superseded)",39,5,5,PFKFB4;CAMKK2;GYS2;PRKAA2;MLYCD
+Fig2 selected map (hsa04152),Fig2 selected map (hsa04152),39,39,39,ULK1;PFKFB3;PPARGC1A;PPP2R3B;CCND1;PFKFB1;EEF2;PPP2R1A;CREB3;IRS1;FBP1;IRS2;AKT1;PFKL;SIRT1;PFKFB4;PIK3R2;PFKP;CAMKK2;CFTR;HNF4A;PPP2R5A;FASN;GYS2;STK11;IGF1;PRKAA2;PDPK1;RPS6KB2;FOXO3;PIK3CA;SREBF1;TSC2;MLYCD;PPP2R5B;AKT2;TSC1;PFKM;PIK3CD
+Fig2 selected map (hsa04152),"Fig2 axis (anchored, reported)",39,7,7,PPARGC1A;CCND1;IRS2;PIK3R2;PRKAA2;PIK3CA;PIK3CD
+Fig2 selected map (hsa04152),Fig3 confirmed axis,39,5,1,CCND1
+Fig2 selected map (hsa04152),Fig4 ML top 7,39,7,1,PPARGC1A
+Fig2 selected map (hsa04152),Fig5 MR FDR<0.05,39,2,2,SIRT1;SREBF1
+"Fig2 axis (anchored, reported)",Fig1 candidate 19,7,19,3,IRS2;PPARGC1A;CCND1
+"Fig2 axis (anchored, reported)","Fig2 axis (unanchored, superseded)",7,5,1,PRKAA2
+"Fig2 axis (anchored, reported)",Fig2 selected map (hsa04152),7,39,7,IRS2;PRKAA2;PIK3R2;PPARGC1A;PIK3CA;PIK3CD;CCND1
+"Fig2 axis (anchored, reported)","Fig2 axis (anchored, reported)",7,7,7,IRS2;PRKAA2;PIK3R2;PPARGC1A;PIK3CA;PIK3CD;CCND1
+"Fig2 axis (anchored, reported)",Fig3 confirmed axis,7,5,1,CCND1
+"Fig2 axis (anchored, reported)",Fig4 ML top 7,7,7,1,PPARGC1A
+"Fig2 axis (anchored, reported)",Fig5 MR FDR<0.05,7,2,0,""
+Fig3 confirmed axis,Fig1 candidate 19,5,19,1,CCND1
+Fig3 confirmed axis,"Fig2 axis (unanchored, superseded)",5,5,0,""
+Fig3 confirmed axis,Fig2 selected map (hsa04152),5,39,1,CCND1
+Fig3 confirmed axis,"Fig2 axis (anchored, reported)",5,7,1,CCND1
+Fig3 confirmed axis,Fig3 confirmed axis,5,5,5,CDKN1A;CCND1;PHLDA3;ZMAT3;BAX
+Fig3 confirmed axis,Fig4 ML top 7,5,7,0,""
+Fig3 confirmed axis,Fig5 MR FDR<0.05,5,2,0,""
+Fig4 ML top 7,Fig1 candidate 19,7,19,7,VSNL1;LZTFL1;PPARGC1A;SREBF2;GAS6;HMOX1;SERPINE1
+Fig4 ML top 7,"Fig2 axis (unanchored, superseded)",7,5,0,""
+Fig4 ML top 7,Fig2 selected map (hsa04152),7,39,1,PPARGC1A
+Fig4 ML top 7,"Fig2 axis (anchored, reported)",7,7,1,PPARGC1A
+Fig4 ML top 7,Fig3 confirmed axis,7,5,0,""
+Fig4 ML top 7,Fig4 ML top 7,7,7,7,VSNL1;LZTFL1;PPARGC1A;SREBF2;GAS6;HMOX1;SERPINE1
+Fig4 ML top 7,Fig5 MR FDR<0.05,7,2,0,""
+Fig5 MR FDR<0.05,Fig1 candidate 19,2,19,0,""
+Fig5 MR FDR<0.05,"Fig2 axis (unanchored, superseded)",2,5,0,""
+Fig5 MR FDR<0.05,Fig2 selected map (hsa04152),2,39,2,SREBF1;SIRT1
+Fig5 MR FDR<0.05,"Fig2 axis (anchored, reported)",2,7,0,""
+Fig5 MR FDR<0.05,Fig3 confirmed axis,2,5,0,""
+Fig5 MR FDR<0.05,Fig4 ML top 7,2,7,0,""
+Fig5 MR FDR<0.05,Fig5 MR FDR<0.05,2,2,2,SREBF1;SIRT1

@@ -1,0 +1,9 @@
+tissue,condition,HTO,RNA_override,kNN_rescue
+Heart,Control,1452,0,546
+Heart,STZ,2101,0,237
+Kidney,Control,719,573,637
+Kidney,STZ,2936,2505,590
+Liver,Control,7719,193,99
+Liver,STZ,10831,1112,759
+Spleen,Control,10616,0,1830
+Spleen,STZ,12571,0,258

@@ -1,0 +1,19 @@
+item,value
+expression_source,"raw CEL, oligo RMA, hgu133plus2.db, MaxMean"
+samples_NGT,7
+samples_T2D,10
+genes,20823
+intersect_present,19
+intersect_concordant,11
+intersect_sign_test_p,0.324
+intersect_replicated_P05,2
+DEGs_present,178
+DEGs_concordant,76
+DEGs_sign_test_p,0.979
+signature_intersect_AUC,0.614
+signature_intersect_AUC_CI,0.31-0.92
+signature_intersect_wilcox_p,0.475
+signature_DEGs_AUC,0.429
+signature_DEGs_AUC_CI,0.11-0.75
+signature_DEGs_wilcox_p,0.669
+genomewide_logFC_spearman_vs_discovery,-0.292

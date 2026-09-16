@@ -1,0 +1,12 @@
+item,value
+DEG_T2D_vs_Control,178
+hub_genes,1770
+key_modules,red;yellow;tan;greenyellow;blue;green;turquoise
+module_genes,4022
+geneset_total,772
+geneset_in_universe,618
+triple_intersection,19
+DEG_module_intersection,175
+main_set_type,DEG ∩ key-module genes ∩ hyperglycemia gene set (paper 3-way); hub status as annotation
+main_set_n,19
+main_set_in_geneset,19

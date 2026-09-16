@@ -1,0 +1,8 @@
+analysis,up,down
+primary ~condition+dataset,0,0
+paper-style ComBat->limma,0,0
+sensitivity +sex,0,0
+GSE15653 only,0,0
+GSE64998 only,0,0
+supplementary ObeseT2D vs Lean,31,31
+DEG definition used downstream: P<0.05 & |log2FC|>0.5,15,12

@@ -1,0 +1,7 @@
+analysis,up,down
+primary ~condition+dataset,12,19
+paper-style ComBat->limma,34,25
+sensitivity +sex,0,0
+GSE15653 only,0,0
+GSE64998 only,4,4
+DEG definition used downstream: P<0.05 & |log2FC|>0.5,96,82

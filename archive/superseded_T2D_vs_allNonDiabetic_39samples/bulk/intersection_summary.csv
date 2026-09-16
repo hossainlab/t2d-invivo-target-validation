@@ -1,0 +1,12 @@
+item,value
+DEG_T2D_vs_Control,27
+hub_genes,912
+key_modules,green;blue;turquoise;grey60;brown;yellow
+module_genes,6878
+geneset_total,772
+geneset_in_universe,618
+triple_intersection,2
+DEG_module_intersection,23
+main_set_type,DEG ∩ WGCNA hub genes (key modules); hyperglycemia gene set as annotation
+main_set_n,4
+main_set_in_geneset,1

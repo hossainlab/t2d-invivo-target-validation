@@ -1,0 +1,6 @@
+cluster,cell_type,reason
+11,LoH,Cryab Epcam Atp1b1 Apela Spint2 (loop of Henle epithelium); automatic Plasma_cell label was a low-confidence misassignment
+17,Exclude,cardiomyocyte transcripts Tnnt2 Tnni3 Myl3 Pln Csrp3: heart cells mis-assigned to kidney
+8,Distal_tubule,Atp1b1 Atp1a1 Wfdc2 (distal tubule/connecting segment); low-confidence CD_PC label
+13,Urothelium,Krt7 Wfdc2 Sprr1a Foxq1 Gsta4 (pelvic urothelium); not fibroblast
+15,Tubular_epithelium_other,Cdh16 Pkhd1 Bicc1 Spp1 Col18a1; low-confidence PT label

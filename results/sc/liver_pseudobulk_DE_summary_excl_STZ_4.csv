@@ -1,0 +1,11 @@
+cell_type,genes_tested,up,down,sig_deseq2_concordant,n_cells,mice_ctrl,mice_stz
+NK_cell,3514,17,38,38,528,3,3
+Cholangiocyte,5601,7,21,23,421,3,3
+B_cell,8709,4,1,2,6890,3,3
+T_cell,7322,3,2,4,1797,3,3
+Neutrophil,1376,1,0,1,499,3,3
+HSC_Fibroblast,6562,0,0,0,670,3,3
+LSEC,3552,0,0,0,693,3,3
+Monocyte,5920,0,0,0,838,3,3
+cDC,7243,0,0,0,701,3,3
+pDC,6204,0,0,0,689,3,3

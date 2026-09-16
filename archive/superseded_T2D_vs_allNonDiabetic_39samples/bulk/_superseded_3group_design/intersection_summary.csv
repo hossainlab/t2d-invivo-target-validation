@@ -1,0 +1,12 @@
+item,value
+DEG_C1,130
+fallback_used,TRUE
+key_modules,green;magenta
+module_genes,541
+geneset_total,772
+geneset_in_universe,491
+triple_intersection,5
+DEG_module_intersection,48
+main_set_type,DEG∩module (geneset as annotation)
+main_set_n,48
+main_set_hyperglycemia_tagged,3

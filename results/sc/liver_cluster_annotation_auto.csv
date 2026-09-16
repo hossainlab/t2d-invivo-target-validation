@@ -1,0 +1,21 @@
+cluster,n_cells,auto_label,score1,second,score2,gap,mixed_lineage,high_sets,low_confidence,SingleR_ImmGen_major,SingleR_ImmGen_frac,SingleR_MouseRNAseq_major,SingleR_MouseRNAseq_frac,top_markers,cell_type,cell_class
+0,4429,B_cell,2.74,Plasma_cell,1.57,1.18,FALSE,B_cell;Plasma_cell,FALSE,B cells,1,B cells,1,"Cd79a,Igkc,Cd74,Ebf1,Ighm,H2-Aa,H2-Eb1,H2-Ab1,Mef2c,Ccr7,Rps27,H3f3a",B_cell,Lymphoid
+1,2957,B_cell,3.07,Plasma_cell,1.43,1.64,FALSE,B_cell;Plasma_cell,FALSE,B cells,1,B cells,1,"Hspa1a,Hspa1b,Iglc2,Hsp90aa1,Cd79b,Ighm,Cd79a,Igkc,Ebf1,Dnajb1,Hsp90ab1,Hspa8",B_cell,Lymphoid
+7,636,Cholangiocyte,4.2,Hepatocyte,0.84,3.36,FALSE,Cholangiocyte,FALSE,Epithelial cells,0.58,Hepatocytes,0.64,"Clu,Spp1,Anxa5,Apoe,Alb,Dbi,Ttr,Krt18,Krt8,Tm4sf4,Gas6,Ambp",Cholangiocyte,Epithelial
+17,130,LSEC,-0.14,Kupffer_cell,-0.2,0.06,FALSE,"",TRUE,Monocytes,0.24,Macrophages,0.23,"Gm42418,Malat1,mt-Co3,mt-Co1,mt-Atp6,mt-Co2,AY036118,mt-Nd4,Lars2,mt-Cytb,Srrm2,mt-Nd1",Exclude,Exclude
+2,2024,HSC_Fibroblast,2.08,Endothelial_vasc,0.38,1.7,FALSE,HSC_Fibroblast,FALSE,Fibroblasts,0.78,Fibroblasts,0.9,"Gsn,Dcn,Mgp,Mt1,S100a6,Igfbp7,Cebpd,Sparc,Serping1,Bgn,Vim,Cst3",HSC_Fibroblast,Stromal
+18,69,Hepatocyte,3.85,Plasma_cell,0.28,3.57,FALSE,Hepatocyte,FALSE,Fibroblasts,0.7,Hepatocytes,0.97,"Apoc1,Aldob,Scp2,Gpx1,Fabp1,Ttc36,Apoa2,Dbi,Ftl1,Chchd10,Ddt,Serpina1b",Hepatocyte,Epithelial
+15,202,Kupffer_cell,4.23,Macrophage_other,2.03,2.2,FALSE,Kupffer_cell;Macrophage_other,FALSE,Macrophages,0.99,Macrophages,0.98,"C1qa,Clec4f,C1qc,Ctsb,C1qb,Wfdc17,Apoe,Cd5l,Vsig4,Apoc1,Fcna,Lyz2",Kupffer_cell,Myeloid
+6,745,LSEC,4.16,Endothelial_vasc,2.87,1.29,FALSE,LSEC;Endothelial_vasc,FALSE,Endothelial cells,0.99,Endothelial cells,0.99,"Ptprb,Selenop,Ehd3,Egfl7,Aqp1,Kdr,Adgrf5,Gm42418,Eng,Dnase1l3,F8,Maf",LSEC,Endothelial
+16,150,Macrophage_other,2.57,Endothelial_vasc,0.16,2.4,FALSE,Macrophage_other,FALSE,Macrophages,0.99,Macrophages,0.9,"Apoe,C1qb,C1qa,C1qc,Ctss,Aif1,Lyz2,H2-Eb1,Ctsc,Csf1r,H2-Ab1,Fcer1g",Macrophage_other,Myeloid
+19,64,Macrophage_other,1.09,Endothelial_vasc,0.74,0.36,FALSE,Macrophage_other,FALSE,Macrophages,0.88,Macrophages,0.66,"Lyz2,Apoe,C1qb,Ifitm3,Cst3,C1qa,Ftl1,Crip1,Mt1,Cxcl2,Cebpb,C1qc",Macrophage_other,Myeloid
+12,360,Macrophage_other,0.62,Neutrophil,-0.15,0.78,FALSE,"",FALSE,Monocytes,0.84,Monocytes,0.89,"Fcer1g,Gngt2,Cst3,Lst1,Gpx1,Clec4a3,Ctsb,Fcgr4,Tyrobp,Tln1,Grk3,Calm1",Monocyte,Myeloid
+9,560,Monocyte,2.83,Macrophage_other,0.29,2.54,FALSE,Monocyte,FALSE,Monocytes,0.98,Monocytes,0.99,"Lyz2,Lgals3,S100a4,Ms4a6c,Ifitm3,Prdx5,Fcer1g,Psap,Ctss,Cebpb,Plac8,Gpx1",Monocyte,Myeloid
+13,360,NK_cell,2.12,Monocyte,-0.2,2.32,FALSE,NK_cell,FALSE,ILC,0.96,NK cells,1,"Ccl5,Xcl1,AW112010,Nkg7,Il2rb,Cd7,Klrk1,Ctsw,H2-Q7,H2-K1,Ncr1,Klre1",NK_cell,Lymphoid
+14,236,NK_cell,3.18,Monocyte,0.15,3.03,FALSE,NK_cell,FALSE,ILC,0.5,NK cells,1,"Ccl5,Nkg7,Gzma,AW112010,Klre1,Prf1,Klrk1,Ptprc,Il2rb,Fcer1g,Ms4a4b,H2afz",NK_cell,Lymphoid
+8,572,Neutrophil,4.23,Plasma_cell,0.02,4.21,FALSE,Neutrophil,FALSE,Neutrophils,0.99,Granulocytes,1,"S100a9,S100a8,S100a11,Msrb1,Tyrobp,Cebpb,Srgn,Fxyd5,Hdc,Mxd1,Ifitm2,Csf3r",Neutrophil,Myeloid
+3,1231,T_cell,2.58,NK_cell,0.35,2.22,FALSE,T_cell,FALSE,NKT,0.61,T cells,0.86,"Cd3g,Cd3d,Trbc2,Tmsb10,Nkg7,Cd3e,AW112010,Hcst,Ms4a4b,Ccl5,Trac,H2-Q7",T_cell,Lymphoid
+4,787,T_cell,2.57,Proliferating,-0.21,2.78,FALSE,T_cell,FALSE,T cells,0.95,T cells,0.99,"Rplp1,Tpt1,Rpl12,Rps16,Rplp0,Rpl5,Rps23,Rps14,Cd3d,Rps24,Rps15a,Trbc2",T_cell,Lymphoid
+10,369,Proliferating,4.07,cDC,2.57,1.49,TRUE,Proliferating;cDC,FALSE,DC,0.76,Monocytes,0.78,"H2afz,Tmsb4x,Actb,Cst3,Crip1,Psmb9,Tmsb10,Ckb,Psmb8,Actg1,Plbd1,Lgals3",cDC,Myeloid
+11,362,cDC,1.57,Monocyte,0.39,1.18,FALSE,cDC,FALSE,DC,0.67,Monocytes,0.99,"Ifi30,S100a4,H2-Ab1,H2-Eb1,Gm2a,H2-Aa,Tmsb4x,Cd74,Plbd1,H2-DMb1,Lsp1,Atox1",cDC,Myeloid
+5,748,pDC,4.05,Monocyte,1.36,2.69,TRUE,pDC;Monocyte;Plasma_cell;cDC,FALSE,DC,0.98,B cells,0.85,"Bst2,Siglech,Irf8,Rpl31,Ccr9,Cox6a2,Plac8,Rnase6,Mpeg1,Tcf4,Tyrobp,Ctsl",pDC,Myeloid

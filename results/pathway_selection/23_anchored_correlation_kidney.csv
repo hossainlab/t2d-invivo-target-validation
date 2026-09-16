@@ -1,0 +1,2 @@
+tissue,cell_type,pair,n_cells,pct_coexpr,cell_R,cell_p,coexpr_rho,coexpr_p,pb_r,pb_p,n_mice,bg_mean_R,bg_q95,empirical_p
+kidney,Endothelial,Ppargc1a-Ccnd1,2875,0.173913043478261,-0.0125427354939436,0.501416123578623,,,0.120995735182768,0.79609154132291,7,0.00508349966664828,0.0384671804349872,0.81

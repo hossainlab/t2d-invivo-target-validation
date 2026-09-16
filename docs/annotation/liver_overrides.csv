@@ -1,0 +1,4 @@
+cluster,cell_type,reason
+17,Exclude,low quality: mitochondrial and Malat1-dominated markers; low-confidence automatic label
+12,Monocyte,non-classical (patrolling) monocytes: Fcgr4 Clec4a3 Gngt2 Lst1; SingleR ImmGen Monocytes 0.84
+10,cDC,Cst3 Psmb8 Psmb9 H2 genes without Mki67/Top2a; SingleR ImmGen DC 0.76

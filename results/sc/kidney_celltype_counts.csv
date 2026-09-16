@@ -1,0 +1,15 @@
+cell_type,Control_1,Control_2,Control_3,STZ_1,STZ_2,STZ_3,STZ_4
+B_cell,28,5,3,11,15,4,123
+CD_IC,10,6,2,36,16,17,209
+Distal_tubule,28,11,2,38,30,14,111
+Endothelial,682,342,88,845,497,145,276
+Fibroblast_Pericyte,10,3,2,26,20,7,523
+LoH,20,12,0,35,41,20,35
+Macrophage,42,29,19,388,71,69,289
+Neutrophil,1,0,0,1,0,1,31
+PT,100,37,13,38,51,14,71
+Proliferating,1,0,1,13,2,1,19
+T_cell,17,13,11,185,44,8,67
+Tubular_epithelium_other,8,4,0,10,7,3,2
+Urothelium,1,4,0,8,3,3,24
+cDC,13,7,3,83,17,8,21

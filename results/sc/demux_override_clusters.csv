@@ -1,0 +1,8 @@
+cluster,n,override_tissue,score_Kidney,score_Liver,pct_negative,singlet_Heart,singlet_Kidney,singlet_Liver,singlet_Spleen,top_markers
+32,503,Kidney,1.79900351903532,0.0651430292728275,79.1,25,23,18,24,"Aldob,Fxyd2,Gpx3,Fth1,Dbi,Akr1c21,Gpx1,Prdx5,Ass1,Miox,Spink1,Chchd10"
+25,1100,Kidney,1.48015775484674,0.0207758002763554,64.5,22,31,84,175,"mt-Nd4,mt-Cytb,mt-Co3,mt-Co1,Atp1b1,mt-Co2,mt-Nd1,Fxyd2,mt-Nd4l,mt-Nd2,mt-Atp6,mt-Nd5"
+26,942,Kidney,1.44141285702666,0.0348996862481641,73.8,17,39,91,40,"Atp6v1g3,Tmem213,mt-Cytb,Car2,mt-Nd4,mt-Co1,Atp1b1,Ldhb,mt-Co3,mt-Nd1,mt-Nd5,Cox8a"
+30,533,Kidney,1.28938944767739,0.0140967127619914,65.9,12,80,28,33,"Atp1b1,Epcam,Cdh16,Pdzk1ip1,Mal,Cryab,Spint2,Sdc4,Cystm1,Cldn7,Apela,Malat1"
+34,400,Liver,0.205513302944611,0.859314227950472,47,8,20,99,11,"Fabp1,Apoc1,Ftl1,Aldob,Dbi,Apoa2,Ttc36,Gnmt,Fth1,Ass1,Phyh,Arg1"
+27,874,Liver,0.166539280539036,0.759985550390714,32.8,4,32,440,17,"Clu,Spp1,Alb,Apoe,Ttr,Tm4sf4,Dbi,Krt8,Tstd1,Anxa5,Krt18,Ambp"
+40,31,Liver,0.090949454898079,0.963197519384786,16.1,0,0,18,0,"Tstd1,Dsg2,Clu,Tm4sf4,Ambp,Ttr,Krt8,Krt18,Sorbs2,Spp1,Epcam,Cldn3"

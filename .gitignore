@@ -216,3 +216,89 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ---------------------------------------------------------------------------
+# R / RStudio
+# ---------------------------------------------------------------------------
+.Rhistory
+.Rapp.history
+.RData
+.Rdata
+.Ruserdata
+.Rproj.user/
+*_cache/
+*.Rcheck/
+
+# R serialized objects (regenerate from scripts/)
+*.rds
+*.RDS
+*.RData
+*.rda
+
+# ---------------------------------------------------------------------------
+# Tabix / index sidecars (regenerate with tabix -p)
+# ---------------------------------------------------------------------------
+*.tbi
+*.csi
+*.bai
+*.crai
+*.fai
+*.idx
+
+# ---------------------------------------------------------------------------
+# Raw / large omics data — re-downloadable from GEO, GTEx, eQTL Catalogue
+# ---------------------------------------------------------------------------
+data/*
+# ...except small hand-curated metadata needed to reproduce the pipeline
+!data/meta/
+!data/mr/
+data/mr/*
+!data/mr/genes.txt
+!data/genesets/
+data/genesets/*
+!data/genesets/kegg_diabetes_pathways.csv
+
+# Archives and raw platform files anywhere in the tree
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.CEL
+*.cel
+*.CEL.gz
+*.cel.gz
+*.soft
+*.soft.gz
+*.annot.gz
+
+# Alignment / variant / coverage
+*.bam
+*.sam
+*.cram
+*.bcf
+*.vcf
+*.vcf.gz
+*.bw
+*.bigWig
+*.bedGraph
+
+# Single-cell matrices and containers
+*.mtx
+*.mtx.gz
+*.h5
+*.h5ad
+*.hdf5
+*.loom
+barcodes.tsv.gz
+features.tsv.gz
+genes.tsv.gz
+
+# ---------------------------------------------------------------------------
+# Heavy intermediates under results/ (tables and figures stay tracked)
+# ---------------------------------------------------------------------------
+results/**/*.rds
+results/sc/demux_stage1_meta.csv.gz
+
+# OS cruft
+.DS_Store
+Thumbs.db

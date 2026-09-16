@@ -1,0 +1,11 @@
+cell_type,n_concordant,genes,n_cells
+LSEC,2,Ccnd1;Cdkn1a,745
+Cholangiocyte,2,Ccnd1;Cdkn1a,636
+B_cell,1,Retreg1,7386
+HSC_Fibroblast,0,"",2024
+T_cell,0,"",2018
+Monocyte,0,"",920
+pDC,0,"",748
+cDC,0,"",731
+NK_cell,0,"",596
+Neutrophil,0,"",572

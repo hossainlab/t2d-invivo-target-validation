@@ -1,0 +1,4 @@
+contrast,definition,up_primary,down_primary,up_paper,down_paper,up_sex,down_sex,nominal_p01_lfc
+C1,ObeseT2D - Lean,46,46,37,27,7,9,130
+C2,ObeseT2D - ObeseND,0,0,0,0,0,0,2
+C3,ObeseND - Lean,0,0,0,0,0,0,45

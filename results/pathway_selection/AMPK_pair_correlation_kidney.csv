@@ -1,0 +1,2 @@
+tissue,cell_type,gene1,gene2,n_cells,cell_pearson_r,cell_pearson_p,cells_coexpressing,pct_coexpressing,coexpr_spearman_rho,coexpr_spearman_p,n_mice,pseudobulk_r,pseudobulk_p
+kidney,CD_IC,Sirt1,Ppargc1a,296,0.106915597519657,0.0662200837264275,21,7.09,0.501298701298701,0.0206078519184424,2,,

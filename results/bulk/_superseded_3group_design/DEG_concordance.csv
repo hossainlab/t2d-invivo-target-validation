@@ -1,0 +1,4 @@
+contrast,n_primary,jaccard_primary_vs_paper,frac_primary_in_sex_model,sign_agree_GSE15653,sign_agree_GSE64998,cor_logFC_between_datasets.V1
+C1,92,0.642105263157895,0.173913043478261,1,0.989130434782609,0.27357243642067
+C2,0,,,,,-0.0598516647127208
+C3,0,,,,,0.0957693729268652

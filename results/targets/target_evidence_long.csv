@@ -1,0 +1,514 @@
+gene,tier,evidence,supported
+VSNL1,Not a target,candidate19,TRUE
+LZTFL1,Not a target,candidate19,TRUE
+GAS6,Not a target,candidate19,TRUE
+SREBF2,Not a target,candidate19,TRUE
+SERPINE1,Not a target,candidate19,TRUE
+HMOX1,Not a target,candidate19,TRUE
+ENPP1,Not a target,candidate19,TRUE
+PNPLA3,Not a target,candidate19,TRUE
+GPX1,Not a target,candidate19,TRUE
+IGFBP1,Not a target,candidate19,TRUE
+PLIN1,Not a target,candidate19,TRUE
+CTSD,Not a target,candidate19,TRUE
+KHK,Not a target,candidate19,TRUE
+IGFBP2,Not a target,candidate19,TRUE
+ULK1,Not a target,candidate19,FALSE
+PPP2R3B,Not a target,candidate19,FALSE
+PFKFB1,Not a target,candidate19,FALSE
+EEF2,Not a target,candidate19,FALSE
+PPP2R1A,Not a target,candidate19,FALSE
+CREB3,Not a target,candidate19,FALSE
+IRS1,Not a target,candidate19,FALSE
+AKT1,Not a target,candidate19,FALSE
+PFKL,Not a target,candidate19,FALSE
+PFKFB4,Not a target,candidate19,FALSE
+PIK3R2,Not a target,candidate19,FALSE
+PFKP,Not a target,candidate19,FALSE
+CFTR,Not a target,candidate19,FALSE
+HNF4A,Not a target,candidate19,FALSE
+FASN,Not a target,candidate19,FALSE
+GYS2,Not a target,candidate19,FALSE
+PDPK1,Not a target,candidate19,FALSE
+RPS6KB2,Not a target,candidate19,FALSE
+FOXO3,Not a target,candidate19,FALSE
+PIK3CA,Not a target,candidate19,FALSE
+SREBF1,Not a target,candidate19,FALSE
+TSC2,Not a target,candidate19,FALSE
+MLYCD,Not a target,candidate19,FALSE
+PPP2R5B,Not a target,candidate19,FALSE
+AKT2,Not a target,candidate19,FALSE
+TSC1,Not a target,candidate19,FALSE
+PFKM,Not a target,candidate19,FALSE
+PIK3CD,Not a target,candidate19,FALSE
+PPARGC1A,Tier 1,candidate19,TRUE
+CCND1,Tier 1,candidate19,TRUE
+IRS2,Tier 2,candidate19,TRUE
+CDKN1A,Tier 2,candidate19,FALSE
+PFKFB3,Tier 2,candidate19,FALSE
+ZMAT3,Tier 2,candidate19,FALSE
+PPP2R5A,Tier 2,candidate19,FALSE
+BAX,Tier 2,candidate19,FALSE
+PHLDA3,Tier 2,candidate19,FALSE
+FBP1,Tier 2b (not testable in this atlas),candidate19,TRUE
+IGF1,Tier 2b (not testable in this atlas),candidate19,TRUE
+SIRT1,Tier 3 (protein-level),candidate19,FALSE
+CAMKK2,Tier 3 (protein-level),candidate19,FALSE
+STK11,Tier 3 (protein-level),candidate19,FALSE
+PRKAA2,Tier 3 (protein-level),candidate19,FALSE
+VSNL1,Not a target,module,TRUE
+LZTFL1,Not a target,module,TRUE
+GAS6,Not a target,module,TRUE
+SREBF2,Not a target,module,TRUE
+SERPINE1,Not a target,module,TRUE
+HMOX1,Not a target,module,TRUE
+ENPP1,Not a target,module,TRUE
+PNPLA3,Not a target,module,TRUE
+GPX1,Not a target,module,TRUE
+IGFBP1,Not a target,module,TRUE
+PLIN1,Not a target,module,TRUE
+CTSD,Not a target,module,TRUE
+KHK,Not a target,module,TRUE
+IGFBP2,Not a target,module,TRUE
+ULK1,Not a target,module,TRUE
+PPP2R3B,Not a target,module,TRUE
+PFKFB1,Not a target,module,TRUE
+EEF2,Not a target,module,FALSE
+PPP2R1A,Not a target,module,TRUE
+CREB3,Not a target,module,FALSE
+IRS1,Not a target,module,TRUE
+AKT1,Not a target,module,TRUE
+PFKL,Not a target,module,TRUE
+PFKFB4,Not a target,module,FALSE
+PIK3R2,Not a target,module,TRUE
+PFKP,Not a target,module,FALSE
+CFTR,Not a target,module,TRUE
+HNF4A,Not a target,module,TRUE
+FASN,Not a target,module,TRUE
+GYS2,Not a target,module,TRUE
+PDPK1,Not a target,module,FALSE
+RPS6KB2,Not a target,module,TRUE
+FOXO3,Not a target,module,TRUE
+PIK3CA,Not a target,module,TRUE
+SREBF1,Not a target,module,TRUE
+TSC2,Not a target,module,TRUE
+MLYCD,Not a target,module,TRUE
+PPP2R5B,Not a target,module,FALSE
+AKT2,Not a target,module,FALSE
+TSC1,Not a target,module,FALSE
+PFKM,Not a target,module,FALSE
+PIK3CD,Not a target,module,FALSE
+PPARGC1A,Tier 1,module,TRUE
+CCND1,Tier 1,module,TRUE
+IRS2,Tier 2,module,TRUE
+CDKN1A,Tier 2,module,TRUE
+PFKFB3,Tier 2,module,TRUE
+ZMAT3,Tier 2,module,TRUE
+PPP2R5A,Tier 2,module,TRUE
+BAX,Tier 2,module,TRUE
+PHLDA3,Tier 2,module,FALSE
+FBP1,Tier 2b (not testable in this atlas),module,TRUE
+IGF1,Tier 2b (not testable in this atlas),module,TRUE
+SIRT1,Tier 3 (protein-level),module,TRUE
+CAMKK2,Tier 3 (protein-level),module,TRUE
+STK11,Tier 3 (protein-level),module,TRUE
+PRKAA2,Tier 3 (protein-level),module,FALSE
+VSNL1,Not a target,phenotype_set,TRUE
+LZTFL1,Not a target,phenotype_set,TRUE
+GAS6,Not a target,phenotype_set,TRUE
+SREBF2,Not a target,phenotype_set,TRUE
+SERPINE1,Not a target,phenotype_set,TRUE
+HMOX1,Not a target,phenotype_set,TRUE
+ENPP1,Not a target,phenotype_set,TRUE
+PNPLA3,Not a target,phenotype_set,TRUE
+GPX1,Not a target,phenotype_set,TRUE
+IGFBP1,Not a target,phenotype_set,TRUE
+PLIN1,Not a target,phenotype_set,TRUE
+CTSD,Not a target,phenotype_set,TRUE
+KHK,Not a target,phenotype_set,TRUE
+IGFBP2,Not a target,phenotype_set,TRUE
+ULK1,Not a target,phenotype_set,FALSE
+PPP2R3B,Not a target,phenotype_set,FALSE
+PFKFB1,Not a target,phenotype_set,FALSE
+EEF2,Not a target,phenotype_set,FALSE
+PPP2R1A,Not a target,phenotype_set,FALSE
+CREB3,Not a target,phenotype_set,TRUE
+IRS1,Not a target,phenotype_set,TRUE
+AKT1,Not a target,phenotype_set,TRUE
+PFKL,Not a target,phenotype_set,TRUE
+PFKFB4,Not a target,phenotype_set,FALSE
+PIK3R2,Not a target,phenotype_set,TRUE
+PFKP,Not a target,phenotype_set,FALSE
+CFTR,Not a target,phenotype_set,FALSE
+HNF4A,Not a target,phenotype_set,TRUE
+FASN,Not a target,phenotype_set,FALSE
+GYS2,Not a target,phenotype_set,TRUE
+PDPK1,Not a target,phenotype_set,TRUE
+RPS6KB2,Not a target,phenotype_set,TRUE
+FOXO3,Not a target,phenotype_set,TRUE
+PIK3CA,Not a target,phenotype_set,TRUE
+SREBF1,Not a target,phenotype_set,TRUE
+TSC2,Not a target,phenotype_set,TRUE
+MLYCD,Not a target,phenotype_set,FALSE
+PPP2R5B,Not a target,phenotype_set,FALSE
+AKT2,Not a target,phenotype_set,TRUE
+TSC1,Not a target,phenotype_set,TRUE
+PFKM,Not a target,phenotype_set,FALSE
+PIK3CD,Not a target,phenotype_set,TRUE
+PPARGC1A,Tier 1,phenotype_set,TRUE
+CCND1,Tier 1,phenotype_set,TRUE
+IRS2,Tier 2,phenotype_set,TRUE
+CDKN1A,Tier 2,phenotype_set,FALSE
+PFKFB3,Tier 2,phenotype_set,FALSE
+ZMAT3,Tier 2,phenotype_set,FALSE
+PPP2R5A,Tier 2,phenotype_set,FALSE
+BAX,Tier 2,phenotype_set,TRUE
+PHLDA3,Tier 2,phenotype_set,FALSE
+FBP1,Tier 2b (not testable in this atlas),phenotype_set,TRUE
+IGF1,Tier 2b (not testable in this atlas),phenotype_set,TRUE
+SIRT1,Tier 3 (protein-level),phenotype_set,TRUE
+CAMKK2,Tier 3 (protein-level),phenotype_set,FALSE
+STK11,Tier 3 (protein-level),phenotype_set,FALSE
+PRKAA2,Tier 3 (protein-level),phenotype_set,TRUE
+VSNL1,Not a target,on_map,FALSE
+LZTFL1,Not a target,on_map,FALSE
+GAS6,Not a target,on_map,FALSE
+SREBF2,Not a target,on_map,FALSE
+SERPINE1,Not a target,on_map,FALSE
+HMOX1,Not a target,on_map,FALSE
+ENPP1,Not a target,on_map,FALSE
+PNPLA3,Not a target,on_map,FALSE
+GPX1,Not a target,on_map,FALSE
+IGFBP1,Not a target,on_map,FALSE
+PLIN1,Not a target,on_map,FALSE
+CTSD,Not a target,on_map,FALSE
+KHK,Not a target,on_map,FALSE
+IGFBP2,Not a target,on_map,FALSE
+ULK1,Not a target,on_map,TRUE
+PPP2R3B,Not a target,on_map,TRUE
+PFKFB1,Not a target,on_map,TRUE
+EEF2,Not a target,on_map,TRUE
+PPP2R1A,Not a target,on_map,TRUE
+CREB3,Not a target,on_map,TRUE
+IRS1,Not a target,on_map,TRUE
+AKT1,Not a target,on_map,TRUE
+PFKL,Not a target,on_map,TRUE
+PFKFB4,Not a target,on_map,TRUE
+PIK3R2,Not a target,on_map,TRUE
+PFKP,Not a target,on_map,TRUE
+CFTR,Not a target,on_map,TRUE
+HNF4A,Not a target,on_map,TRUE
+FASN,Not a target,on_map,TRUE
+GYS2,Not a target,on_map,TRUE
+PDPK1,Not a target,on_map,TRUE
+RPS6KB2,Not a target,on_map,TRUE
+FOXO3,Not a target,on_map,TRUE
+PIK3CA,Not a target,on_map,TRUE
+SREBF1,Not a target,on_map,TRUE
+TSC2,Not a target,on_map,TRUE
+MLYCD,Not a target,on_map,TRUE
+PPP2R5B,Not a target,on_map,TRUE
+AKT2,Not a target,on_map,TRUE
+TSC1,Not a target,on_map,TRUE
+PFKM,Not a target,on_map,TRUE
+PIK3CD,Not a target,on_map,TRUE
+PPARGC1A,Tier 1,on_map,TRUE
+CCND1,Tier 1,on_map,TRUE
+IRS2,Tier 2,on_map,TRUE
+CDKN1A,Tier 2,on_map,FALSE
+PFKFB3,Tier 2,on_map,TRUE
+ZMAT3,Tier 2,on_map,FALSE
+PPP2R5A,Tier 2,on_map,TRUE
+BAX,Tier 2,on_map,FALSE
+PHLDA3,Tier 2,on_map,FALSE
+FBP1,Tier 2b (not testable in this atlas),on_map,TRUE
+IGF1,Tier 2b (not testable in this atlas),on_map,TRUE
+SIRT1,Tier 3 (protein-level),on_map,TRUE
+CAMKK2,Tier 3 (protein-level),on_map,TRUE
+STK11,Tier 3 (protein-level),on_map,TRUE
+PRKAA2,Tier 3 (protein-level),on_map,TRUE
+VSNL1,Not a target,axis_anchor,FALSE
+LZTFL1,Not a target,axis_anchor,FALSE
+GAS6,Not a target,axis_anchor,FALSE
+SREBF2,Not a target,axis_anchor,FALSE
+SERPINE1,Not a target,axis_anchor,FALSE
+HMOX1,Not a target,axis_anchor,FALSE
+ENPP1,Not a target,axis_anchor,FALSE
+PNPLA3,Not a target,axis_anchor,FALSE
+GPX1,Not a target,axis_anchor,FALSE
+IGFBP1,Not a target,axis_anchor,FALSE
+PLIN1,Not a target,axis_anchor,FALSE
+CTSD,Not a target,axis_anchor,FALSE
+KHK,Not a target,axis_anchor,FALSE
+IGFBP2,Not a target,axis_anchor,FALSE
+ULK1,Not a target,axis_anchor,FALSE
+PPP2R3B,Not a target,axis_anchor,FALSE
+PFKFB1,Not a target,axis_anchor,FALSE
+EEF2,Not a target,axis_anchor,FALSE
+PPP2R1A,Not a target,axis_anchor,FALSE
+CREB3,Not a target,axis_anchor,FALSE
+IRS1,Not a target,axis_anchor,FALSE
+AKT1,Not a target,axis_anchor,FALSE
+PFKL,Not a target,axis_anchor,FALSE
+PFKFB4,Not a target,axis_anchor,FALSE
+PIK3R2,Not a target,axis_anchor,TRUE
+PFKP,Not a target,axis_anchor,FALSE
+CFTR,Not a target,axis_anchor,FALSE
+HNF4A,Not a target,axis_anchor,FALSE
+FASN,Not a target,axis_anchor,FALSE
+GYS2,Not a target,axis_anchor,FALSE
+PDPK1,Not a target,axis_anchor,FALSE
+RPS6KB2,Not a target,axis_anchor,FALSE
+FOXO3,Not a target,axis_anchor,FALSE
+PIK3CA,Not a target,axis_anchor,TRUE
+SREBF1,Not a target,axis_anchor,FALSE
+TSC2,Not a target,axis_anchor,FALSE
+MLYCD,Not a target,axis_anchor,FALSE
+PPP2R5B,Not a target,axis_anchor,FALSE
+AKT2,Not a target,axis_anchor,FALSE
+TSC1,Not a target,axis_anchor,FALSE
+PFKM,Not a target,axis_anchor,FALSE
+PIK3CD,Not a target,axis_anchor,TRUE
+PPARGC1A,Tier 1,axis_anchor,TRUE
+CCND1,Tier 1,axis_anchor,TRUE
+IRS2,Tier 2,axis_anchor,TRUE
+CDKN1A,Tier 2,axis_anchor,FALSE
+PFKFB3,Tier 2,axis_anchor,FALSE
+ZMAT3,Tier 2,axis_anchor,FALSE
+PPP2R5A,Tier 2,axis_anchor,FALSE
+BAX,Tier 2,axis_anchor,FALSE
+PHLDA3,Tier 2,axis_anchor,FALSE
+FBP1,Tier 2b (not testable in this atlas),axis_anchor,FALSE
+IGF1,Tier 2b (not testable in this atlas),axis_anchor,FALSE
+SIRT1,Tier 3 (protein-level),axis_anchor,FALSE
+CAMKK2,Tier 3 (protein-level),axis_anchor,FALSE
+STK11,Tier 3 (protein-level),axis_anchor,FALSE
+PRKAA2,Tier 3 (protein-level),axis_anchor,TRUE
+VSNL1,Not a target,sc_confirmed,FALSE
+LZTFL1,Not a target,sc_confirmed,FALSE
+GAS6,Not a target,sc_confirmed,FALSE
+SREBF2,Not a target,sc_confirmed,FALSE
+SERPINE1,Not a target,sc_confirmed,FALSE
+HMOX1,Not a target,sc_confirmed,FALSE
+ENPP1,Not a target,sc_confirmed,FALSE
+PNPLA3,Not a target,sc_confirmed,FALSE
+GPX1,Not a target,sc_confirmed,FALSE
+IGFBP1,Not a target,sc_confirmed,FALSE
+PLIN1,Not a target,sc_confirmed,FALSE
+CTSD,Not a target,sc_confirmed,FALSE
+KHK,Not a target,sc_confirmed,FALSE
+IGFBP2,Not a target,sc_confirmed,FALSE
+ULK1,Not a target,sc_confirmed,FALSE
+PPP2R3B,Not a target,sc_confirmed,FALSE
+PFKFB1,Not a target,sc_confirmed,FALSE
+EEF2,Not a target,sc_confirmed,FALSE
+PPP2R1A,Not a target,sc_confirmed,FALSE
+CREB3,Not a target,sc_confirmed,FALSE
+IRS1,Not a target,sc_confirmed,FALSE
+AKT1,Not a target,sc_confirmed,FALSE
+PFKL,Not a target,sc_confirmed,FALSE
+PFKFB4,Not a target,sc_confirmed,FALSE
+PIK3R2,Not a target,sc_confirmed,FALSE
+PFKP,Not a target,sc_confirmed,FALSE
+CFTR,Not a target,sc_confirmed,FALSE
+HNF4A,Not a target,sc_confirmed,FALSE
+FASN,Not a target,sc_confirmed,FALSE
+GYS2,Not a target,sc_confirmed,FALSE
+PDPK1,Not a target,sc_confirmed,FALSE
+RPS6KB2,Not a target,sc_confirmed,FALSE
+FOXO3,Not a target,sc_confirmed,FALSE
+PIK3CA,Not a target,sc_confirmed,FALSE
+SREBF1,Not a target,sc_confirmed,FALSE
+TSC2,Not a target,sc_confirmed,FALSE
+MLYCD,Not a target,sc_confirmed,FALSE
+PPP2R5B,Not a target,sc_confirmed,FALSE
+AKT2,Not a target,sc_confirmed,FALSE
+TSC1,Not a target,sc_confirmed,FALSE
+PFKM,Not a target,sc_confirmed,FALSE
+PIK3CD,Not a target,sc_confirmed,FALSE
+PPARGC1A,Tier 1,sc_confirmed,TRUE
+CCND1,Tier 1,sc_confirmed,TRUE
+IRS2,Tier 2,sc_confirmed,TRUE
+CDKN1A,Tier 2,sc_confirmed,TRUE
+PFKFB3,Tier 2,sc_confirmed,TRUE
+ZMAT3,Tier 2,sc_confirmed,TRUE
+PPP2R5A,Tier 2,sc_confirmed,TRUE
+BAX,Tier 2,sc_confirmed,TRUE
+PHLDA3,Tier 2,sc_confirmed,TRUE
+FBP1,Tier 2b (not testable in this atlas),sc_confirmed,FALSE
+IGF1,Tier 2b (not testable in this atlas),sc_confirmed,FALSE
+SIRT1,Tier 3 (protein-level),sc_confirmed,FALSE
+CAMKK2,Tier 3 (protein-level),sc_confirmed,FALSE
+STK11,Tier 3 (protein-level),sc_confirmed,FALSE
+PRKAA2,Tier 3 (protein-level),sc_confirmed,FALSE
+VSNL1,Not a target,replicated,FALSE
+LZTFL1,Not a target,replicated,FALSE
+GAS6,Not a target,replicated,FALSE
+SREBF2,Not a target,replicated,FALSE
+SERPINE1,Not a target,replicated,FALSE
+HMOX1,Not a target,replicated,FALSE
+ENPP1,Not a target,replicated,FALSE
+PNPLA3,Not a target,replicated,TRUE
+GPX1,Not a target,replicated,FALSE
+IGFBP1,Not a target,replicated,FALSE
+PLIN1,Not a target,replicated,FALSE
+CTSD,Not a target,replicated,FALSE
+KHK,Not a target,replicated,FALSE
+IGFBP2,Not a target,replicated,FALSE
+ULK1,Not a target,replicated,FALSE
+PPP2R3B,Not a target,replicated,FALSE
+PFKFB1,Not a target,replicated,FALSE
+EEF2,Not a target,replicated,FALSE
+PPP2R1A,Not a target,replicated,FALSE
+CREB3,Not a target,replicated,FALSE
+IRS1,Not a target,replicated,FALSE
+AKT1,Not a target,replicated,FALSE
+PFKL,Not a target,replicated,FALSE
+PFKFB4,Not a target,replicated,FALSE
+PIK3R2,Not a target,replicated,FALSE
+PFKP,Not a target,replicated,FALSE
+CFTR,Not a target,replicated,FALSE
+HNF4A,Not a target,replicated,FALSE
+FASN,Not a target,replicated,FALSE
+GYS2,Not a target,replicated,FALSE
+PDPK1,Not a target,replicated,FALSE
+RPS6KB2,Not a target,replicated,FALSE
+FOXO3,Not a target,replicated,FALSE
+PIK3CA,Not a target,replicated,FALSE
+SREBF1,Not a target,replicated,FALSE
+TSC2,Not a target,replicated,FALSE
+MLYCD,Not a target,replicated,FALSE
+PPP2R5B,Not a target,replicated,FALSE
+AKT2,Not a target,replicated,FALSE
+TSC1,Not a target,replicated,FALSE
+PFKM,Not a target,replicated,FALSE
+PIK3CD,Not a target,replicated,FALSE
+PPARGC1A,Tier 1,replicated,FALSE
+CCND1,Tier 1,replicated,TRUE
+IRS2,Tier 2,replicated,FALSE
+CDKN1A,Tier 2,replicated,FALSE
+PFKFB3,Tier 2,replicated,FALSE
+ZMAT3,Tier 2,replicated,FALSE
+PPP2R5A,Tier 2,replicated,FALSE
+BAX,Tier 2,replicated,FALSE
+PHLDA3,Tier 2,replicated,FALSE
+FBP1,Tier 2b (not testable in this atlas),replicated,FALSE
+IGF1,Tier 2b (not testable in this atlas),replicated,FALSE
+SIRT1,Tier 3 (protein-level),replicated,FALSE
+CAMKK2,Tier 3 (protein-level),replicated,FALSE
+STK11,Tier 3 (protein-level),replicated,FALSE
+PRKAA2,Tier 3 (protein-level),replicated,FALSE
+VSNL1,Not a target,ml_top5,TRUE
+LZTFL1,Not a target,ml_top5,TRUE
+GAS6,Not a target,ml_top5,FALSE
+SREBF2,Not a target,ml_top5,TRUE
+SERPINE1,Not a target,ml_top5,FALSE
+HMOX1,Not a target,ml_top5,FALSE
+ENPP1,Not a target,ml_top5,FALSE
+PNPLA3,Not a target,ml_top5,FALSE
+GPX1,Not a target,ml_top5,FALSE
+IGFBP1,Not a target,ml_top5,FALSE
+PLIN1,Not a target,ml_top5,FALSE
+CTSD,Not a target,ml_top5,FALSE
+KHK,Not a target,ml_top5,FALSE
+IGFBP2,Not a target,ml_top5,FALSE
+ULK1,Not a target,ml_top5,FALSE
+PPP2R3B,Not a target,ml_top5,FALSE
+PFKFB1,Not a target,ml_top5,FALSE
+EEF2,Not a target,ml_top5,FALSE
+PPP2R1A,Not a target,ml_top5,FALSE
+CREB3,Not a target,ml_top5,FALSE
+IRS1,Not a target,ml_top5,FALSE
+AKT1,Not a target,ml_top5,FALSE
+PFKL,Not a target,ml_top5,FALSE
+PFKFB4,Not a target,ml_top5,FALSE
+PIK3R2,Not a target,ml_top5,FALSE
+PFKP,Not a target,ml_top5,FALSE
+CFTR,Not a target,ml_top5,FALSE
+HNF4A,Not a target,ml_top5,FALSE
+FASN,Not a target,ml_top5,FALSE
+GYS2,Not a target,ml_top5,FALSE
+PDPK1,Not a target,ml_top5,FALSE
+RPS6KB2,Not a target,ml_top5,FALSE
+FOXO3,Not a target,ml_top5,FALSE
+PIK3CA,Not a target,ml_top5,FALSE
+SREBF1,Not a target,ml_top5,FALSE
+TSC2,Not a target,ml_top5,FALSE
+MLYCD,Not a target,ml_top5,FALSE
+PPP2R5B,Not a target,ml_top5,FALSE
+AKT2,Not a target,ml_top5,FALSE
+TSC1,Not a target,ml_top5,FALSE
+PFKM,Not a target,ml_top5,FALSE
+PIK3CD,Not a target,ml_top5,FALSE
+PPARGC1A,Tier 1,ml_top5,TRUE
+CCND1,Tier 1,ml_top5,FALSE
+IRS2,Tier 2,ml_top5,FALSE
+CDKN1A,Tier 2,ml_top5,FALSE
+PFKFB3,Tier 2,ml_top5,FALSE
+ZMAT3,Tier 2,ml_top5,FALSE
+PPP2R5A,Tier 2,ml_top5,FALSE
+BAX,Tier 2,ml_top5,FALSE
+PHLDA3,Tier 2,ml_top5,FALSE
+FBP1,Tier 2b (not testable in this atlas),ml_top5,FALSE
+IGF1,Tier 2b (not testable in this atlas),ml_top5,FALSE
+SIRT1,Tier 3 (protein-level),ml_top5,FALSE
+CAMKK2,Tier 3 (protein-level),ml_top5,FALSE
+STK11,Tier 3 (protein-level),ml_top5,FALSE
+PRKAA2,Tier 3 (protein-level),ml_top5,FALSE
+VSNL1,Not a target,mr_sig,FALSE
+LZTFL1,Not a target,mr_sig,FALSE
+GAS6,Not a target,mr_sig,FALSE
+SREBF2,Not a target,mr_sig,FALSE
+SERPINE1,Not a target,mr_sig,FALSE
+HMOX1,Not a target,mr_sig,FALSE
+ENPP1,Not a target,mr_sig,FALSE
+PNPLA3,Not a target,mr_sig,FALSE
+GPX1,Not a target,mr_sig,FALSE
+IGFBP1,Not a target,mr_sig,FALSE
+PLIN1,Not a target,mr_sig,FALSE
+CTSD,Not a target,mr_sig,FALSE
+KHK,Not a target,mr_sig,FALSE
+IGFBP2,Not a target,mr_sig,FALSE
+ULK1,Not a target,mr_sig,FALSE
+PPP2R3B,Not a target,mr_sig,FALSE
+PFKFB1,Not a target,mr_sig,FALSE
+EEF2,Not a target,mr_sig,FALSE
+PPP2R1A,Not a target,mr_sig,FALSE
+CREB3,Not a target,mr_sig,FALSE
+IRS1,Not a target,mr_sig,FALSE
+AKT1,Not a target,mr_sig,FALSE
+PFKL,Not a target,mr_sig,FALSE
+PFKFB4,Not a target,mr_sig,FALSE
+PIK3R2,Not a target,mr_sig,FALSE
+PFKP,Not a target,mr_sig,FALSE
+CFTR,Not a target,mr_sig,FALSE
+HNF4A,Not a target,mr_sig,FALSE
+FASN,Not a target,mr_sig,FALSE
+GYS2,Not a target,mr_sig,FALSE
+PDPK1,Not a target,mr_sig,FALSE
+RPS6KB2,Not a target,mr_sig,FALSE
+FOXO3,Not a target,mr_sig,FALSE
+PIK3CA,Not a target,mr_sig,FALSE
+SREBF1,Not a target,mr_sig,TRUE
+TSC2,Not a target,mr_sig,FALSE
+MLYCD,Not a target,mr_sig,FALSE
+PPP2R5B,Not a target,mr_sig,FALSE
+AKT2,Not a target,mr_sig,FALSE
+TSC1,Not a target,mr_sig,FALSE
+PFKM,Not a target,mr_sig,FALSE
+PIK3CD,Not a target,mr_sig,FALSE
+PPARGC1A,Tier 1,mr_sig,FALSE
+CCND1,Tier 1,mr_sig,FALSE
+IRS2,Tier 2,mr_sig,FALSE
+CDKN1A,Tier 2,mr_sig,FALSE
+PFKFB3,Tier 2,mr_sig,FALSE
+ZMAT3,Tier 2,mr_sig,FALSE
+PPP2R5A,Tier 2,mr_sig,FALSE
+BAX,Tier 2,mr_sig,FALSE
+PHLDA3,Tier 2,mr_sig,FALSE
+FBP1,Tier 2b (not testable in this atlas),mr_sig,FALSE
+IGF1,Tier 2b (not testable in this atlas),mr_sig,FALSE
+SIRT1,Tier 3 (protein-level),mr_sig,TRUE
+CAMKK2,Tier 3 (protein-level),mr_sig,FALSE
+STK11,Tier 3 (protein-level),mr_sig,FALSE
+PRKAA2,Tier 3 (protein-level),mr_sig,FALSE

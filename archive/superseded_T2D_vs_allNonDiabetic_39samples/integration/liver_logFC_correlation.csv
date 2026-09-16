@@ -1,0 +1,11 @@
+cell_type,n_DEG_tested,spearman_DEGs,sign_agree_DEGs,sign_test_p
+HSC_Fibroblast,10,,0.8,0.109375
+pDC,6,,0.833333333333333,0.21875
+NK_cell,3,,0,0.25
+Cholangiocyte,10,,0.7,0.34375
+cDC,10,,0.3,0.34375
+B_cell,7,,0.571428571428571,1
+LSEC,6,,0.5,1
+Monocyte,7,,0.571428571428571,1
+Neutrophil,5,,0.6,1
+T_cell,7,,0.571428571428571,1

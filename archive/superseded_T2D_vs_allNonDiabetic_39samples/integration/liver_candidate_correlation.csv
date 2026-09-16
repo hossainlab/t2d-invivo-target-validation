@@ -1,0 +1,4 @@
+tissue,cell_type,gene1,gene2,pseudobulk_pearson_r,pseudobulk_p,n_mice,cells_coexpressing,pct_coexpressing,cell_spearman_rho,cell_spearman_p
+liver,LSEC,Ccnd1,Cdkn1a,0.661383601748823,0.105688641086038,7,49,6.58,0.179285714285714,0.217718163247056
+liver,LSEC,Ccnd1,Retreg1,-0.085326609321542,0.85567179034669,7,0,0,,
+liver,LSEC,Cdkn1a,Retreg1,-0.188609595989024,0.685471101404153,7,1,0.13,,

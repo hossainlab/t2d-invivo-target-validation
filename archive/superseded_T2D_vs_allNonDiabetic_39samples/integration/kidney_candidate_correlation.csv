@@ -1,0 +1,4 @@
+tissue,cell_type,gene1,gene2,pseudobulk_pearson_r,pseudobulk_p,n_mice,cells_coexpressing,pct_coexpressing,cell_spearman_rho,cell_spearman_p
+kidney,Endothelial,Ccnd1,Cdkn1a,0.821400978164478,0.023457498620383,7,318,11.06,0.208179362565218,0.00018490488265299
+kidney,Endothelial,Ccnd1,Retreg1,0.470005543300808,0.287222092895335,7,6,0.21,,
+kidney,Endothelial,Cdkn1a,Retreg1,0.577351956580528,0.17468625497475,7,4,0.14,,

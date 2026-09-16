@@ -1,0 +1,2 @@
+tissue,cell_type,gene1,gene2,n_cells,cell_pearson_r,cell_pearson_p,cells_coexpressing,pct_coexpressing,coexpr_spearman_rho,coexpr_spearman_p,n_mice,pseudobulk_r,pseudobulk_p
+liver,Cholangiocyte,Sirt1,Ppargc1a,636,0.0290831884073218,0.464069603739361,21,3.3,0.425974025974026,0.0541785423399237,7,0.280227207924355,0.542728225051449

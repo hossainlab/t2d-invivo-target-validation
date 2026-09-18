@@ -2,8 +2,8 @@
 
 **Fig. 5 | Cis-eQTL Mendelian randomisation does not support a causal role for most candidates.**
 **a**, Inverse-variance-weighted causal estimates for the 21 genes with usable instruments, as odds ratio for T2D per standard deviation of genetically predicted whole-blood expression (eQTLGen exposures, GCST006867 outcome). The instrumented set is the Fig. 1g candidate genes together with the p53 and AMPK axis genes of Fig. 3, not the candidate set alone. Bars, 95% confidence interval; the number at the right of each row is the instrument count. Coloured, FDR < 0.05.
-**b**, SNP-level effect on expression against effect on T2D for the four best-instrumented genes; line, the IVW slope. Error bars, standard errors.
-**c**, Leave-one-out IVW estimates; the vertical line is the estimate using all SNPs.
+**b**, SNP-level effect on expression against effect on T2D for the four best-instrumented genes, using the same LD-clumped instruments as **a**; line, the IVW slope. Error bars, standard errors.
+**c**, Leave-one-out IVW estimates on the LD-clumped instruments; the vertical line is the estimate using all SNPs.
 **d**, Estimates from LD-clumped instruments against the superseded distance-pruned pass, per gene; point size, instrument count after clumping.
 **c**, The 3 genes with usable GTEx liver instruments (Wald ratio, single SNP each); kidney cortex yielded none.
 **d**, Steiger directionality test: variance in expression explained by the instruments (exposure) against variance explained in T2D (outcome), per gene. Exposure exceeds outcome for 25 of 25 genes, i.e. the instruments act on expression first.

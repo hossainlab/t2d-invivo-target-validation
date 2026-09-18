@@ -32,16 +32,16 @@ dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
 keep <- function(p, n, w, h) save_fig(p, n, w, h, dir = fig_dir, keep_dir = panel_dir)
 
 PRIMARY <- "IVW"
-# IMPORTANT: mr_instruments.csv is the only table carrying the outcome side, and it belongs to the
-# SUPERSEDED distance-pruned pass. instruments_blood_ldclumped.csv lists the SNPs that survived
-# clumping but holds exposure columns only, and the two barely overlap (SIRT1: 10 vs 5 SNPs, 0 shared).
-# The harmonised per-SNP data for the primary LD-clumped analysis was never written to disk, so the
-# per-SNP diagnostics below CANNOT be drawn for the primary pass without re-running script 20b. They
-# are therefore written to results/supplementary_figures/mr/ with distance-pruned in the file name,
-# and are deliberately kept out of Fig. 5, whose panels are all the LD-clumped analysis.
+# Script 20b now writes the harmonised per-SNP table for the PRIMARY (LD-clumped) analysis to
+# results/mr/instruments_blood_ldclumped_harmonised.csv, together with a clumped leave-one-out. The
+# SNP-level panels below are therefore drawn from the same analysis as the forest in panel a. The
+# superseded distance-pruned per-SNP data (mr_instruments.csv, mr_leaveoneout.csv) is no longer used
+# here; it shares almost no instruments with the clumped set (SIRT1: 10 vs 5 SNPs, 0 overlapping).
 supp_dir <- "results/supplementary_figures/mr"
 read_instruments <- function() {
-  d <- fread(file.path(mrd, "mr_instruments.csv"))
+  f <- file.path(mrd, "instruments_blood_ldclumped_harmonised.csv")
+  if (!file.exists(f)) stop("missing ", f, "; re-run scripts/20b_tissue_MR.R")
+  d <- fread(f)
   need <- c("gene", "rsid", "exp_beta", "exp_se", "out_beta", "out_se")
   if (!all(need %in% names(d))) stop("harmonised instrument table lacks: ",
                                      paste(setdiff(need, names(d)), collapse = ", "))
@@ -78,8 +78,8 @@ if (stage %in% c("A", "panels", "all")) {
 # ===================================================================================================
 if (stage %in% c("B", "panels", "all")) {
   ins <- read_instruments()
-  m   <- fread(file.path(mrd, "mr_results.csv"))[method == PRIMARY]   # distance-pruned, matches ins
-  sel <- intersect(m[order(p)][n_snp >= 3, gene], ins[, .N, by = gene][N >= 3, gene])[1:4]
+  m   <- fread(file.path(mrd, "mr_results_blood_ldclumped.csv"))[method == PRIMARY]
+  sel <- intersect(m[order(FDR, p)][n_snp >= 3, gene], ins[, .N, by = gene][N >= 3, gene])[1:4]
   sel <- sel[!is.na(sel)]
   d   <- ins[gene %in% sel]
   d[, gene := factor(gene, levels = sel)]
@@ -102,16 +102,17 @@ if (stage %in% c("B", "panels", "all")) {
     theme_pub() +
     theme(strip.text = element_text(face = "italic", size = BASE - 1),
           panel.spacing.x = unit(3.2, "mm"), panel.spacing.y = unit(2.2, "mm"))
-  save_fig(pB, "MR_snp_effects_distance_pruned_SUPERSEDED", 120, 60, dir = supp_dir)
+  keep(pB, "Fig5b_snp_effects", 89, 60)
 }
 
 # ===================================================================================================
 # c - leave-one-out
 # ===================================================================================================
 if (stage %in% c("C", "panels", "all")) {
-  lo <- fread(file.path(mrd, "mr_leaveoneout.csv"))
-  m  <- fread(file.path(mrd, "mr_results.csv"))[method == PRIMARY]   # distance-pruned, matches lo
-  sel <- lo[, .N, by = gene][order(-N)][1:3, gene]
+  lo <- fread(file.path(mrd, "mr_leaveoneout_blood_ldclumped.csv"))
+  m  <- fread(file.path(mrd, "mr_results_blood_ldclumped.csv"))[method == PRIMARY]
+  sel <- intersect(m[order(FDR, p), gene], lo[, .N, by = gene][N >= 4, gene])[1:3]
+  sel <- sel[!is.na(sel)]
   d  <- lo[gene %in% sel]
   d[, gene := factor(gene, levels = sel)]
   d[, lo := b - 1.96 * se][, hi := b + 1.96 * se]
@@ -124,13 +125,13 @@ if (stage %in% c("C", "panels", "all")) {
     geom_errorbarh(aes(xmin = lo, xmax = hi), height = 0, linewidth = 0.3, colour = "grey45") +
     geom_point(size = 0.7) +
     facet_wrap(~ gene, scales = "free", nrow = 1) +
-    scale_x_continuous(breaks = scales::breaks_pretty(3)) +
+    scale_x_continuous(breaks = scales::breaks_pretty(2), expand = expansion(mult = 0.12)) +
     labs(x = "IVW estimate with the SNP removed", y = NULL) +
     theme_pub() +
     theme(strip.text = element_text(face = "italic", size = BASE - 1),
           axis.text.y = element_text(size = BASE - 3),
           panel.spacing.x = unit(3.2, "mm"))
-  save_fig(pC, "MR_leave_one_out_distance_pruned_SUPERSEDED", 120, 54, dir = supp_dir)
+  keep(pC, "Fig5c_leave_one_out", 120, 54)
 }
 
 # ===================================================================================================
@@ -159,7 +160,7 @@ if (stage %in% c("D", "panels", "all")) {
     theme_pub() +
     theme(legend.position = "right", legend.box = "vertical",
           legend.key.size = unit(2.2, "mm"))
-  keep(pD, "Fig5b_clumping_comparison", 90, 62)
+  keep(pD, "Fig5d_clumping_comparison", 90, 62)
 }
 
 # ===================================================================================================
@@ -180,7 +181,7 @@ if (stage %in% c("E", "panels", "all")) {
     labs(x = "OR for T2D (GTEx liver instruments)", y = NULL) +
     theme_pub() +
     theme(axis.text.y = element_text(face = "italic"))
-  keep(pE, "Fig5c_tissue_forest", 90, 40)
+  keep(pE, "Fig5e_tissue_forest", 90, 40)
 }
 
 
@@ -203,7 +204,7 @@ if (stage %in% c("F", "panels", "all")) {
     theme_pub() +
     theme(axis.text.y = element_text(face = "italic", size = BASE - 2.5),
           legend.position = "top", legend.justification = "left")
-  keep(pF, "Fig5d_steiger", 89, 96)
+  keep(pF, "Fig5f_steiger", 89, 96)
   if (length(wrong)) message("Steiger flags wrong direction for: ", paste(wrong, collapse = ", "))
 }
 
@@ -211,24 +212,26 @@ if (stage %in% c("F", "panels", "all")) {
 # assemble
 # ===================================================================================================
 if (stage %in% c("assemble", "all")) {
-  need <- c("Fig5a_forest", "Fig5b_clumping_comparison", "Fig5c_tissue_forest", "Fig5d_steiger")
+  need <- c("Fig5a_forest", "Fig5b_snp_effects", "Fig5c_leave_one_out",
+            "Fig5d_clumping_comparison", "Fig5e_tissue_forest", "Fig5f_steiger")
   ps <- lapply(need, function(n) {
     f <- file.path(panel_dir, paste0(n, ".rds"))
     if (!file.exists(f)) stop("missing panel ", n, "; run stage panels first")
     readRDS(f)$plot
   })
   design <- "
-AAAAAADDDDDD
-AAAAAADDDDDD
-AAAAAADDDDDD
+AAAAAAFFFFFF
+AAAAAAFFFFFF
+AAAAAAFFFFFF
 BBBBBBDDDDDD
-BBBBBBCCCCCC
+BBBBBBDDDDDD
+CCCCCCEEEEEE
 "
-  comp <- ps[[1]] + ps[[2]] + ps[[3]] + ps[[4]] +
+  comp <- ps[[1]] + ps[[2]] + ps[[3]] + ps[[4]] + ps[[5]] + ps[[6]] +
     plot_layout(design = design) +
-    plot_annotation(tag_levels = list(tag_letters(4)[c(1, 2, 3, 4)])) &
+    plot_annotation(tag_levels = list(tag_letters(6))) &
     theme(plot.tag = element_text(size = BASE + 1, face = "bold", family = FONT))
-  save_fig(comp, "Fig5_composite", W_2COL, 165, dir = fig_dir, tiff = TRUE)
+  save_fig(comp, "Fig5_composite", W_2COL, 200, dir = fig_dir, tiff = TRUE)
 }
 
 # ===================================================================================================
@@ -247,8 +250,8 @@ if (stage %in% c("legend", "panels", "all")) {
     "**Fig. 5 | Cis-eQTL Mendelian randomisation does not support a causal role for most candidates.**",
     sprintf("**a**, Inverse-variance-weighted causal estimates for the %d genes with usable instruments, as odds ratio for T2D per standard deviation of genetically predicted whole-blood expression (eQTLGen exposures, GCST006867 outcome). The instrumented set is the Fig. 1g candidate genes together with the p53 and AMPK axis genes of Fig. 3, not the candidate set alone. Bars, 95%% confidence interval; the number at the right of each row is the instrument count. Coloured, FDR < 0.05.",
             nrow(m)),
-    "**b**, SNP-level effect on expression against effect on T2D for the four best-instrumented genes; line, the IVW slope. Error bars, standard errors.",
-    "**c**, Leave-one-out IVW estimates; the vertical line is the estimate using all SNPs.",
+    "**b**, SNP-level effect on expression against effect on T2D for the four best-instrumented genes, using the same LD-clumped instruments as **a**; line, the IVW slope. Error bars, standard errors.",
+    "**c**, Leave-one-out IVW estimates on the LD-clumped instruments; the vertical line is the estimate using all SNPs.",
     "**d**, Estimates from LD-clumped instruments against the superseded distance-pruned pass, per gene; point size, instrument count after clumping.",
     sprintf("**c**, The %d genes with usable GTEx liver instruments (Wald ratio, single SNP each); kidney cortex yielded none.",
             nrow(ti)),

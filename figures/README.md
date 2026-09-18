@@ -5,8 +5,45 @@ This folder holds only the panels that mirror the analytical framework of the re
 | Location | Contents |
 |---|---|
 | `results/supplementary_figures/` | QC, diagnostic and sensitivity plots (bulk QC, scRNA demultiplexing/QC, pseudobulk DE counts, validation, prioritization) |
-| `results/figure_exports/` | TIFF exports of main panels |
+| `results/figure_exports/` | TIFF submission rasters, serialized panel intermediates (`fig*_panels/`), figure caches |
 | `archive/superseded_figures/` | Outputs from superseded designs (3-group bulk contrast, 12-gene DEG run) |
+
+## Publication contract
+
+Everything in `figures/` obeys one contract, defined in `scripts/figure_style.R` and applied by the
+figure scripts 27–31:
+
+- **PDF only.** No PNG. TIFF submission rasters and any serialized intermediates go to
+  `results/figure_exports/`, never here.
+- **Drawn at final print size** in millimetres (single column 89 mm, 1.5 column 120 mm, double
+  180 mm). Panels are never drawn large and scaled down — that is what lands text at 3 pt in a proof.
+- **Arial 5–7 pt**, fonts embedded, text left live and selectable in the PDF; only dense point clouds
+  are rasterised (600 dpi).
+- **No titles, subtitles or explanatory prose inside the axes.** Every statistic that would sit in a
+  panel title lives in that figure's `Fig<n>_legend.md`, which also carries the caveats.
+- **Perceptually uniform, colour-vision-safe colour maps** (viridis for continuous, a blue–white–red
+  divergent for correlations). No rainbow/jet.
+- Panel tags are Nature-style bold lowercase; set `TAG_CASE <- "upper"` in `figure_style.R` for Cell.
+
+Rebuild any figure with `Rscript scripts/<script> <stage>`, where `stage` is a single panel letter,
+`panels`, `assemble`, `legend` or `all`. The scripts **re-draw only** — they read the result tables the
+analysis scripts already wrote, so no number changes.
+
+| Figure | Script | Legend |
+|---|---|---|
+| Fig 1 | `scripts/28_pub_fig1.R` | `Fig1_bulk_DEG_WGCNA/Fig1_legend.md` |
+| Fig 2 | `scripts/29_pub_fig2.R` | `Fig2_enrichment/Fig2_legend.md` |
+| Fig 3 (single-cell composite) | `scripts/27_fig3_composite.R` | `Fig3_composite_liver/Fig3_legend.md` |
+| Fig 4 | `scripts/30_pub_fig4.R` | `Fig4_ML/Fig4_legend.md` |
+| Fig 5 | `scripts/31_pub_fig5.R` | `Fig5_MR/Fig5_legend.md` |
+
+**Not yet converted:** `Fig3_scRNA/` (20 panels from scripts 18 and 23) still carries the old
+draft-quality styling — in-panel titles, default ggplot theme, oversized canvases. The composite in
+`Fig3_composite_liver/` supersedes its A–C panels; D–J have no publication-contract equivalent yet.
+
+**Note on filenames:** panel files are lowercase (`Fig1a_…`). Windows is case-insensitive, so a new
+lowercase name silently overwrites an old uppercase one when the rest of the name matches — check
+before deleting anything that differs only in case.
 
 ## Fig 1: Bulk DEG + WGCNA (`Fig1_bulk_DEG_WGCNA/`)
 
@@ -46,6 +83,41 @@ Selected map: **AMPK signalling** (stage 1, script 16). Reported axis is **candi
 | Fig3H | — (downstream readout) | `Fig3H_p53_partner_expression_<tissue>`: Cdkn1a, Ccnd1, Phlda3, Zmat3, Bax, Serpine1, Mdm2, Trp53 in the key cell type | 18 |
 | Fig3I | — | `Fig3I_p53_partner_colocalization_<tissue>`: Cdkn1a+Ccnd1 joint density and % co-expressing cells | 18 |
 | Fig3J | — | `Fig3J_p53_partner_correlation_<tissue>`: the pair that does satisfy all three criteria in kidney endothelium, with its background null | 18 |
+
+## Fig 3 composite: single-cell overview (`Fig3_composite_liver/`)
+
+One assembled, submission-ready figure for the single-cell analysis (script 27,
+`Rscript scripts/27_fig3_composite.R liver <stage>`). Tissue: **liver** (16,861 cells, 13 cell types); pair:
+**Cdkn1a–Ccnd1**, the p53 arrest readout (decision R23). Each panel is also written as its own `.pdf`/`.png`
+in the same folder, so panels can be rebuilt one at a time (`stage` = `cache`, `A`…`G`, `panels`,
+`assemble`, `legend`, `all`). Only `cache` loads the Seurat object; it writes
+`results/figure_exports/fig3_composite_liver_cache.rds`, which every panel stage reads.
+
+**Figure conventions.** Drawn at final print size (180 mm double-column, 186 mm tall), Arial 5–7 pt, text
+live and fonts embedded in the PDF, only the point clouds rasterised (600 dpi). No panel titles, subtitles
+or explanatory prose inside the axes; perceptually uniform colour maps only (viridis — the reference
+composite's rainbow/jet map is not used). Panel tags are Nature-style bold lowercase; set
+`TAG_CASE <- "upper"` at the top of the script for Cell style.
+
+Everything that would otherwise sit in a panel title is written to **`Fig3_legend.md`** by the `legend`
+stage — draft legend prose, a table of every statistic to quote, and the caveats that belong in the text.
+
+| Panel | File | Contents |
+|---|---|---|
+| a | `Fig3A_umap_celltype` | UMAP by cell type; legend gives per-type proportion; corner arrows in place of axes |
+| b | `Fig3B_marker_dotplot` | Canonical markers (the script-08 sets, 3 per present cell type); size = % expressed, colour = mean log-normalized expression |
+| c | `Fig3C_composition` | Control/STZ fraction per cell type + cells per cell type (log10) |
+| d | `Fig3D_violin_pair1` | *Cdkn1a*, Control vs STZ; white points are per-mouse means, the % under each violin is the detection rate |
+| e | `Fig3E_violin_pair2` | *Ccnd1*, same construction |
+| f | `Fig3F_coexpression_density` | Nebulosa joint density for *Cdkn1a*+*Ccnd1*; hottest in cholangiocytes and HSC/fibroblasts |
+| g | `Fig3G_pair_correlation` | Cell-level Pearson in the key cell type (cholangiocytes): R = −0.10, P = 0.010, and against the detection-matched background null from script 18 the empirical P = 0.992, i.e. no positive co-expression |
+
+Brackets in **d**,**e** report the **per-mouse t-test** (n = 3 vs 4 mice), not the cell-level Wilcoxon:
+cells within a mouse are not independent replicates, so the cell-level p is anticonservative (*Cdkn1a*
+P = 2.5 × 10⁻⁹ per cell but P = 0.16 per mouse; *Ccnd1* P = 2.7 × 10⁻¹³ vs P = 0.081). Both are recorded in
+`Fig3_legend.md`; `SIG_UNIT <- "cell"` switches the panels back to cell-level stars.
+
+Composite: `Fig3_composite_liver.{pdf,png,tiff}` (180 × 186 mm; PNG/TIFF at 600 dpi).
 
 ## Fig 4: Machine learning (`Fig4_ML/`)
 

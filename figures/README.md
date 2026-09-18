@@ -33,13 +33,21 @@ analysis scripts already wrote, so no number changes.
 |---|---|---|
 | Fig 1 | `scripts/28_pub_fig1.R` | `Fig1_bulk_DEG_WGCNA/Fig1_legend.md` |
 | Fig 2 | `scripts/29_pub_fig2.R` | `Fig2_enrichment/Fig2_legend.md` |
-| Fig 3 (single-cell composite) | `scripts/27_fig3_composite.R` | `Fig3_composite_liver/Fig3_legend.md` |
+| Fig 3 atlas, per tissue | `scripts/27_fig3_composite.R <tissue>` | `Fig3_composite_<tissue>/Fig3_legend.md` |
+| Fig 3 axis, per tissue | `scripts/32_pub_fig3_axis.R <tissue>` | `Fig3_axis_<tissue>/Fig3_axis_legend.md` |
 | Fig 4 | `scripts/30_pub_fig4.R` | `Fig4_ML/Fig4_legend.md` |
 | Fig 5 | `scripts/31_pub_fig5.R` | `Fig5_MR/Fig5_legend.md` |
 
-**Not yet converted:** `Fig3_scRNA/` (20 panels from scripts 18 and 23) still carries the old
-draft-quality styling — in-panel titles, default ggplot theme, oversized canvases. The composite in
-`Fig3_composite_liver/` supersedes its A–C panels; D–J have no publication-contract equivalent yet.
+Analysis scripts never write into `figures/`. Scripts 01-05, 08, 15b, 18, 19, 20b, 21 and 23 send their
+draft panels to `results/supplementary_figures/`, because Windows filenames are case-insensitive and a
+draft `Fig1C_soft_threshold.pdf` silently overwrites the publication `Fig1c_soft_threshold.pdf`. The one
+exception is the KEGG pathview diagram, which no figure script redraws.
+
+**Fig 3 is now four figures**, two per tissue. `Fig3_composite_<tissue>/` is the atlas (UMAP, markers,
+composition, the pair, co-expression density, correlation) and `Fig3_axis_<tissue>/` is the pathway-axis
+evidence (AMPK-PGC-1a and p53 arrest: gene-level effects, per-cell-type scores, and each pair against a
+detection-matched null). The old `Fig3_scRNA/` set is superseded and moved to
+`archive/superseded_figures/Fig3_scRNA/`.
 
 **Note on filenames:** panel files are lowercase (`Fig1a_…`). Windows is case-insensitive, so a new
 lowercase name silently overwrites an old uppercase one when the rest of the name matches — check

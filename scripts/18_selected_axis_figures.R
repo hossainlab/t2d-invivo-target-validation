@@ -25,7 +25,11 @@ suppressPackageStartupMessages({
   library(ggplot2); library(patchwork); library(Matrix)
 })
 set.seed(20260916)
-fig_main <- "figures/Fig3_scRNA"; out_dir <- "results/pathway_selection"
+fig_main <- "results/supplementary_figures/pathway_selection"; out_dir <- "results/pathway_selection"
+  # draft panels; figures/ is owned by the 27-32 publication figure scripts (Fig 3 is now
+  # Fig3_composite_<tissue> from 27 and Fig3_axis_<tissue> from 32). Writing here from an analysis
+  # script silently overwrites them, because Windows filenames are case-insensitive.
+
 dir.create(fig_main, recursive = TRUE, showWarnings = FALSE)
 cols <- c(Control = "#3B7DD8", STZ = "#C8322F")
 

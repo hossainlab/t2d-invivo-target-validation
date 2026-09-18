@@ -29,7 +29,11 @@ set.seed(20260914)
 args <- commandArgs(trailingOnly = TRUE)
 tissue <- tolower(args[1]); stopifnot(tissue %in% c("liver", "kidney"))
 res <- if (length(args) >= 2) args[2] else "0.6"
-out_dir <- "results/sc"; fig_dir <- "figures/Fig3_scRNA"; ann_dir <- "docs/annotation"  # Fig 3A-C analogue
+out_dir <- "results/sc"; fig_dir <- "results/supplementary_figures/sc_annotation"; ann_dir <- "docs/annotation"
+  # draft panels; figures/ is owned by the 27-32 publication figure scripts (Fig 3 is now
+  # Fig3_composite_<tissue> from 27 and Fig3_axis_<tissue> from 32). Writing here from an analysis
+  # script silently overwrites them, because Windows filenames are case-insensitive.
+
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(ann_dir, recursive = TRUE, showWarnings = FALSE)
 

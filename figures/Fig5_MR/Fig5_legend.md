@@ -1,7 +1,7 @@
 # Figure 5 legend - Mendelian randomisation of candidate gene expression on T2D
 
 **Fig. 5 | Cis-eQTL Mendelian randomisation does not support a causal role for most candidates.**
-**a**, Inverse-variance-weighted causal estimates for the 21 instrumentable candidate genes, as odds ratio for T2D per standard deviation of genetically predicted whole-blood expression (eQTLGen exposures, GCST006867 outcome). Bars, 95% confidence interval; the number at the right of each row is the instrument count. Coloured, FDR < 0.05.
+**a**, Inverse-variance-weighted causal estimates for the 21 genes with usable instruments, as odds ratio for T2D per standard deviation of genetically predicted whole-blood expression (eQTLGen exposures, GCST006867 outcome). The instrumented set is the Fig. 1g candidate genes together with the p53 and AMPK axis genes of Fig. 3, not the candidate set alone. Bars, 95% confidence interval; the number at the right of each row is the instrument count. Coloured, FDR < 0.05.
 **b**, SNP-level effect on expression against effect on T2D for the four best-instrumented genes; line, the IVW slope. Error bars, standard errors.
 **c**, Leave-one-out IVW estimates; the vertical line is the estimate using all SNPs.
 **d**, Estimates from LD-clumped instruments against the superseded distance-pruned pass, per gene; point size, instrument count after clumping.
@@ -19,7 +19,8 @@
 
 | Quantity | Value |
 |---|---|
-| Genes with instruments | 21 |
+| Genes with instruments | 21 (candidates + axis genes) |
+| Of which are Fig. 1g candidates | PPARGC1A, CCND1, IRS2, IGFBP2 |
 | Genes at FDR < 0.05 (LD-clumped) | 2 |
 | Strongest estimate | SREBF1, OR 0.90 (95% CI 0.87-0.94), P = 9.0 × 10⁻⁹, FDR 0.000 |
 | Lost after LD clumping | SERPINE1, PPARGC1A, PRKAA1 |

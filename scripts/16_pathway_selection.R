@@ -22,6 +22,13 @@ suppressPackageStartupMessages({
   library(data.table); library(limma); library(fgsea); library(clusterProfiler)
   library(org.Hs.eg.db); library(xml2); library(ggplot2); library(pathview)
 })
+# clusterProfiler reaches KEGG through yulab.utils::yread, which calls readLines() on the URL as a
+# bare string. That goes through file() -> url() with R's default URL method, which on this
+# Windows box hangs on https and surfaces as "cannot read from connection" after the timeout.
+# curl and readLines(url(...)) both fetch the same table in ~3 s, so this is the method, not the
+# network. Forcing libcurl makes the bare-string form work.
+options(url.method = "libcurl", timeout = max(300, getOption("timeout")))
+
 set.seed(20260916)
 out_dir  <- "results/pathway_selection"
 fig_dir  <- "results/supplementary_figures/pathway_selection"

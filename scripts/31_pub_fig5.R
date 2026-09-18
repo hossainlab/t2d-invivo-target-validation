@@ -3,7 +3,10 @@
 # Usage: Rscript scripts/31_pub_fig5.R <stage>
 #   stage : A | B | C | D | E | panels | assemble | legend | all
 #
-# Re-draws only; every estimate comes from what scripts 19/20 wrote. The primary analysis is the
+# Re-draws only; every estimate comes from what scripts 19/20 wrote. MR estimates are per-gene and do
+# not depend on the WGCNA module selection, so the M11b fix did not change them; it changed only which
+# of these genes are Fig. 1g candidates (now VSNL1, SREBF2, PPARGC1A, CCND1, IGFBP1, IRS2, IGF1, IGFBP2,
+# of which 4 have instruments). The primary analysis is the
 # LD-clumped one (decision R21), so that is what panel a shows - the superseded distance-pruned pass is
 # shown only in panel d, as the comparison that justifies the switch.
 #   a  forest of IVW causal estimates, LD-clumped   <- mr_results_blood_ldclumped.csv
@@ -242,7 +245,7 @@ if (stage %in% c("legend", "panels", "all")) {
     "# Figure 5 legend - Mendelian randomisation of candidate gene expression on T2D",
     "",
     "**Fig. 5 | Cis-eQTL Mendelian randomisation does not support a causal role for most candidates.**",
-    sprintf("**a**, Inverse-variance-weighted causal estimates for the %d instrumentable candidate genes, as odds ratio for T2D per standard deviation of genetically predicted whole-blood expression (eQTLGen exposures, GCST006867 outcome). Bars, 95%% confidence interval; the number at the right of each row is the instrument count. Coloured, FDR < 0.05.",
+    sprintf("**a**, Inverse-variance-weighted causal estimates for the %d genes with usable instruments, as odds ratio for T2D per standard deviation of genetically predicted whole-blood expression (eQTLGen exposures, GCST006867 outcome). The instrumented set is the Fig. 1g candidate genes together with the p53 and AMPK axis genes of Fig. 3, not the candidate set alone. Bars, 95%% confidence interval; the number at the right of each row is the instrument count. Coloured, FDR < 0.05.",
             nrow(m)),
     "**b**, SNP-level effect on expression against effect on T2D for the four best-instrumented genes; line, the IVW slope. Error bars, standard errors.",
     "**c**, Leave-one-out IVW estimates; the vertical line is the estimate using all SNPs.",
@@ -269,7 +272,9 @@ if (stage %in% c("legend", "panels", "all")) {
     "",
     "| Quantity | Value |",
     "|---|---|",
-    sprintf("| Genes with instruments | %d |", nrow(m)),
+    sprintf("| Genes with instruments | %d (candidates + axis genes) |", nrow(m)),
+    sprintf("| Of which are Fig. 1g candidates | %s |",
+            paste(intersect(fread("results/bulk/intersect_genes.csv")$gene, m$gene), collapse = ", ")),
     sprintf("| Genes at FDR < 0.05 (LD-clumped) | %d |", nrow(hit)),
     if (nrow(hit)) sprintf("| Strongest estimate | %s, OR %s (95%% CI %s-%s), %s, FDR %s |",
                            hit[1, gene], mfmt(hit[1, OR]), mfmt(hit[1, OR_lo]), mfmt(hit[1, OR_hi]),

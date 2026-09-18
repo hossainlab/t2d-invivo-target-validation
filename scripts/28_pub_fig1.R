@@ -242,7 +242,7 @@ if (stage %in% c("G", "panels", "all")) {
                     bold = c(rep(FALSE, 6), TRUE))
   nm <- data.table(x = c(-1.5, 1.5, 0), y = c(1.62, 1.62, -1.95), set = c("A", "B", "C"),
                    lab = c(sprintf("DEGs\n(%s)", nfmt(length(A))),
-                           sprintf("Key-module genes\n(%s)", nfmt(length(B))),
+                           sprintf("WGCNA key-module\ngenes (%s)", nfmt(length(B))),
                            sprintf("Hyperglycaemia set\n(%s)", nfmt(length(C)))))
 
   pG <- ggplot() +
@@ -315,7 +315,7 @@ if (stage %in% c("legend", "panels", "all")) {
     sprintf("**e**, Pearson correlation between each module eigengene and T2D status (all 27 samples and within each cohort separately), HbA1c (GSE15653 only, n = 14) and dataset of origin. Each cell gives r above P. Key modules, in bold, are those with P < 0.1 for T2D pooled AND the same direction at P < 0.1 in both cohorts (decision M11b): %s.",
             paste(km, collapse = ", ")),
     "**f**, Gene significance for T2D against module membership within each key module; line, linear fit.",
-    sprintf("**g**, Overlap of the %d DEGs, the %s genes in the key modules and the %s hyperglycaemia-associated genes present in the expression universe; the %s genes shared by all three (bold) are the candidate set carried into Fig. 2.",
+    sprintf("**g**, Overlap of the %d DEGs, the %s genes in the WGCNA key modules and the %s hyperglycaemia-associated genes present in the expression universe; the %s genes shared by all three (bold) are the candidate set carried into Fig. 2.",
             nup + ndn, nfmt(isum[item == "module_genes", as.integer(value)]),
             nfmt(isum[item == "geneset_in_universe", as.integer(value)]),
             isum[item == "triple_intersection", value]),

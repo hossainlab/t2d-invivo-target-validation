@@ -1,11 +1,10 @@
 cell_type,n_concordant,genes,n_cells
-Cholangiocyte,3,Ccnd1;Gpx1;Ppargc1a,636
+Cholangiocyte,2,Ccnd1;Ppargc1a,636
 pDC,1,Irs2,748
 LSEC,1,Ccnd1,745
-cDC,1,Ctsd,731
 B_cell,0,"",7386
 HSC_Fibroblast,0,"",2024
 T_cell,0,"",2018
 Monocyte,0,"",920
+cDC,0,"",731
 NK_cell,0,"",596
-Neutrophil,0,"",572

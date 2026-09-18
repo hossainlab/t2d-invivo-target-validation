@@ -9,8 +9,8 @@
 
 ## Caveats that belong in the text, not the figure
 
-- The gap between panel-fixed and nested CV in **a** is the selection bias: panel-fixed median AUC 0.93 vs nested 0.88 (LASSO). Only the nested estimate is honest, and it is close to the permutation null.
-- No model separates groups in the independent cohort at conventional confidence: best AUC 0.67 (RF), 95% CI 0.37-0.97, and every CI includes 0.5.
+- The gap between panel-fixed and nested CV in **a** is the selection bias: panel-fixed median AUC 0.91 vs nested 0.88 (LASSO). Only the nested estimate is honest, and it is close to the permutation null.
+- No model separates groups in the independent cohort at conventional confidence: best AUC 0.64 (Score), 95% CI 0.33-0.96, and every CI includes 0.5.
 - With 16 vs 11 samples in discovery and 10 vs 7 in validation, all of these intervals are wide; the figure should be read as a negative result, not a ranking of models.
 - **e** is z-scored within cohort, so it shows relative pattern, not comparable absolute expression.
 
@@ -19,8 +19,8 @@
 | Quantity | Value |
 |---|---|
 | Permutation null AUC (median) | 0.49 |
-| Panel-fixed CV AUC, median | LASSO 0.93; RF 0.91; SVM 0.91 |
+| Panel-fixed CV AUC, median | LASSO 0.91; RF 0.95; SVM 0.90 |
 | Nested CV AUC, median | LASSO 0.88; RF 0.88; SVM 0.86 |
-| External AUC (95% CI) | LASSO 0.41 (0.06-0.77); RF 0.67 (0.37-0.97); SVM 0.63 (0.32-0.93); Score 0.61 (0.31-0.92) |
-| Most stable LASSO feature | VSNL1 (selected in 96% of folds) |
+| External AUC (95% CI) | LASSO 0.43 (0.09-0.77); RF 0.61 (0.30-0.93); SVM 0.61 (0.29-0.94); Score 0.64 (0.33-0.96) |
+| Most stable LASSO feature | VSNL1 (selected in 100% of folds) |
 | Top RF feature | VSNL1 |

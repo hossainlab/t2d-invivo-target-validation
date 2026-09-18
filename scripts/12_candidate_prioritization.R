@@ -44,7 +44,16 @@ man_file <- "docs/annotation/candidate_manual_scores.csv"
 man <- if (file.exists(man_file)) fread(man_file) else NULL
 # Key modules: same rule as 03/04 (user decision M11), not only modules of the few intersect genes
 mt_key <- fread(file.path(bulk_dir, "WGCNA_module_trait.csv"))
-key_modules <- mt_key[module != "grey" & p_T2D < 0.1 & abs(r_T2D) > abs(r_Dataset), module]
+# Key modules are decided once, by script 03 (decision M11b: T2D p < 0.1 AND replicated in both
+# cohorts). Reading that decision here instead of re-deriving it keeps every downstream step on the
+# same module set; the rule used to be copied into four scripts, which is how the vacuous
+# abs(r_T2D) > abs(r_Dataset) clause survived unnoticed.
+read_key_modules <- function(dir = "results/bulk") {
+  f <- file.path(dir, "WGCNA_key_module_selection.csv")
+  if (!file.exists(f)) stop("missing ", f, "; run scripts/03_bulk_WGCNA.R first")
+  fread(f)[key == TRUE][order(p_T2D), module]
+}
+key_modules <- read_key_modules()
 
 score_tissue <- function(tissue) {
   conc_file <- file.path(int_dir, paste0(tissue, "_candidate_concordance.csv"))

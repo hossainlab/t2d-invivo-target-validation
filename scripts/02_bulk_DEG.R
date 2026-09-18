@@ -24,7 +24,8 @@ suppressPackageStartupMessages({
 
 set.seed(20260914)
 out_dir <- "results/bulk"; fig_dir <- "results/supplementary_figures/bulk"
-fig_main <- "figures/Fig1_bulk_DEG_WGCNA"; exp_dir <- "results/figure_exports"  # framework panels / TIFF exports
+fig_main <- "results/supplementary_figures/bulk"; exp_dir <- "results/figure_exports"  # draft panels;
+# figures/Fig1 is owned by scripts/28_pub_fig1.R
 for (d in c(fig_dir, fig_main, exp_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 LFC <- 0.5; FDR <- 0.05
 

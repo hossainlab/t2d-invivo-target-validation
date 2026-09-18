@@ -147,17 +147,23 @@ if (stage %in% c("D", "panels", "all")) {
 # ===================================================================================================
 if (stage %in% c("E", "panels", "all")) {
   mt <- fread(file.path(bulk, "WGCNA_module_trait.csv"))
+  km <- key_modules()
   ds <- "Dataset†"   # dagger: bounded near zero by ComBat, not an independent batch test
-  rr <- melt(setnames(mt[, .(module, r_T2D, r_HbA1c_GSE15653, r_Dataset)],
-                      c("module", "T2D", "HbA1c", ds)),
+  # the per-cohort columns are the ones the key-module rule actually uses (decision M11b), so they
+  # belong in the panel; without them a reader cannot see why blue is excluded and greenyellow is not
+  cols <- c("T2D (all)", "T2D\nGSE15653", "T2D\nGSE64998", "HbA1c", ds)
+  rr <- melt(setnames(mt[, .(module, r_T2D, r_T2D_GSE15653, r_T2D_GSE64998,
+                             r_HbA1c_GSE15653, r_Dataset)], c("module", cols)),
              id.vars = "module", variable.name = "trait", value.name = "r")
-  pp <- melt(setnames(mt[, .(module, p_T2D, p_HbA1c_GSE15653, p_Dataset)],
-                      c("module", "T2D", "HbA1c", ds)),
+  pp <- melt(setnames(mt[, .(module, p_T2D, p_T2D_GSE15653, p_T2D_GSE64998,
+                             p_HbA1c_GSE15653, p_Dataset)], c("module", cols)),
              id.vars = "module", variable.name = "trait", value.name = "p")
   d <- merge(rr, pp, by = c("module", "trait"))
+  d[, trait := factor(trait, levels = cols)]
   d[, module := factor(module, levels = mt[order(r_T2D), module])]
   d[, lab := sprintf("%s\n%s", mfmt(r), formatC(p, format = "g", digits = 1))]
   d[, dark := abs(r) > 0.6]
+  d[, key := module %in% km]
 
   pE <- ggplot(d, aes(trait, module, fill = r)) +
     geom_tile(colour = "white", linewidth = 0.4) +
@@ -172,8 +178,10 @@ if (stage %in% c("E", "panels", "all")) {
     scale_y_discrete(expand = c(0, 0)) +
     labs(x = NULL, y = NULL) +
     theme_pub_grid() +
-    theme(axis.ticks = element_blank())
-  keep(pE, "Fig1e_module_trait", 89, 92)
+    theme(axis.ticks = element_blank(),
+          axis.text.x = element_text(size = BASE - 2, lineheight = 0.9),
+          axis.text.y = element_text(face = ifelse(levels(d$module) %in% km, "bold", "plain")))
+  keep(pE, "Fig1e_module_trait", 92, 150)
 }
 
 # ===================================================================================================
@@ -199,7 +207,8 @@ if (stage %in% c("F", "panels", "all")) {
     geom_text(data = ann, aes(x = -Inf, y = Inf, label = lab), parse = TRUE, hjust = -0.12,
               vjust = 1.5, size = (BASE - 2) * ppt, family = FONT, inherit.aes = FALSE) +
     facet_wrap(~ module, ncol = 4) +
-    scale_x_continuous(breaks = c(0, 0.5, 1), expand = expansion(mult = 0.08)) +
+    scale_x_continuous(breaks = c(0, 0.5, 1), labels = c("0", "0.5", "1"),
+                       expand = expansion(mult = 0.12)) +
     labs(x = "Module membership |MM|", y = "Gene significance |GS| for T2D") +
     theme_pub() +
     theme(panel.spacing.x = unit(2.6, "mm"), panel.spacing.y = unit(1.8, "mm"))
@@ -264,20 +273,23 @@ if (stage %in% c("assemble", "all")) {
   })
   names(ps) <- c("a", "b", "c", "e", "f", "g")
   L <- tag_letters(7)
+  # patchwork maps design letters to the ORDER plots are added, not to panel names: A is the first
+  # plot in the expression below, B the second, and so on. The visible tags are set separately.
   design <- "
-AAAAAABBBBBB
-AAAAAABBBBBB
-CCCCCCEEEEEE
-CCCCCCEEEEEE
-FFFFFFEEEEEE
-FFFFFFGGGGGG
-FFFFFFGGGGGG
+AAAAAAADDDDDDD
+AAAAAAADDDDDDD
+BBBBBBBDDDDDDD
+BBBBBBBDDDDDDD
+CCCCCCCDDDDDDD
+CCCCCCCDDDDDDD
+EEEEEEEFFFFFFF
+EEEEEEEFFFFFFF
 "
   comp <- ps$a + ps$b + ps$c + ps$e + ps$f + ps$g +
     plot_layout(design = design) +
     plot_annotation(tag_levels = list(c(L[1], L[2], L[3], L[5], L[6], L[7]))) &
     theme(plot.tag = element_text(size = BASE + 1, face = "bold", family = FONT))
-  save_fig(comp, "Fig1_composite", W_2COL, 210, dir = fig_dir, tiff = TRUE)
+  save_fig(comp, "Fig1_composite", W_2COL, 205, dir = fig_dir, tiff = TRUE)
 }
 
 # ===================================================================================================
@@ -300,8 +312,8 @@ if (stage %in% c("legend", "panels", "all")) {
             LFC, PCUT, nup, ndn),
     sprintf("**c**, Scale-free topology fit and mean connectivity against soft-thresholding power; power %d (red) was the lowest reaching a fit of 0.8 (dashed).", pwr),
     "**d**, Gene dendrogram from the signed-hybrid network with the assigned module colours beneath.",
-    sprintf("**e**, Pearson correlation between each module eigengene and T2D status, HbA1c (GSE15653 only, n = 14) and dataset of origin. Each cell gives r above P. The %d key modules taken forward are those with P < 0.1 for T2D: %s.",
-            length(km), paste(km, collapse = ", ")),
+    sprintf("**e**, Pearson correlation between each module eigengene and T2D status (all 27 samples and within each cohort separately), HbA1c (GSE15653 only, n = 14) and dataset of origin. Each cell gives r above P. Key modules, in bold, are those with P < 0.1 for T2D pooled AND the same direction at P < 0.1 in both cohorts (decision M11b): %s.",
+            paste(km, collapse = ", ")),
     "**f**, Gene significance for T2D against module membership within each key module; line, linear fit.",
     sprintf("**g**, Overlap of the %d DEGs, the %s genes in the key modules and the %s hyperglycaemia-associated genes present in the expression universe; the %s genes shared by all three (bold) are the candidate set carried into Fig. 2.",
             nup + ndn, nfmt(isum[item == "module_genes", as.integer(value)]),
@@ -310,7 +322,8 @@ if (stage %in% c("legend", "panels", "all")) {
     "",
     "## Caveats that belong in the text, not the figure",
     "",
-    "- † **e**, the Dataset column is computed on ComBat-corrected expression. ComBat removes the batch mean by construction, so this column is bounded near zero (max |r| = 0.08) and is *not* an independent test for residual batch effect. The honest batch check is **a**.",
+    "- † **e**, the Dataset column is computed on ComBat-corrected expression. ComBat removes the batch mean by construction, so this column is bounded near zero (max |r| = 0.08) and is *not* an independent test for residual batch effect. It is reported, not used as a filter; the per-cohort columns are what the key-module rule tests, and the honest batch check is **a**.",
+    "- Three modules with a strong pooled T2D correlation are excluded because they do not replicate: blue (r = −0.72 in GSE15653 vs +0.11 in GSE64998, i.e. the sign flips), green (0.69 vs 0.23) and turquoise (0.63 vs 0.16). blue and turquoise are also the two largest modules, so this is what cuts the key-module gene pool from 4,022 to 418.",
     sprintf("- No gene reaches FDR < 0.05 for T2D vs control; **b** therefore uses nominal P < %.2f and the DEG set is exploratory (decision M9).", PCUT),
     "- **e**, module-trait P values are uncorrected across 14 modules x 3 traits.",
     "- **f**, MM and GS are both computed from the same 27 samples, so the correlation is not independent evidence of module relevance.",

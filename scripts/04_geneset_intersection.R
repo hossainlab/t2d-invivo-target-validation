@@ -22,7 +22,8 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 out_dir <- "results/bulk"; fig_dir <- "results/supplementary_figures/bulk"; gs_dir <- "data/genesets"
-fig_main <- "figures/Fig1_bulk_DEG_WGCNA"; exp_dir <- "results/figure_exports"  # framework panels / TIFF exports
+fig_main <- "results/supplementary_figures/bulk"; exp_dir <- "results/figure_exports"  # draft panels;
+# figures/Fig1 is owned by scripts/28_pub_fig1.R
 for (d in c(fig_dir, fig_main, exp_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 dir.create(gs_dir, showWarnings = FALSE, recursive = TRUE)
 
@@ -109,8 +110,16 @@ deg[, sig_use := deg_call]
 deg_genes <- deg[sig_use != "NS", gene]
 
 mt <- fread(file.path(out_dir, "WGCNA_module_trait.csv"))
-cand <- mt[module != "grey" & p_T2D < 0.1 & abs(r_T2D) > abs(r_Dataset)]  # user decision M11 (same rule as 03)
-key_modules <- cand[order(p_T2D), module]
+# Key modules are decided once, by script 03 (decision M11b: T2D p < 0.1 AND replicated in both
+# cohorts). Reading that decision here instead of re-deriving it keeps every downstream step on the
+# same module set; the rule used to be copied into four scripts, which is how the vacuous
+# abs(r_T2D) > abs(r_Dataset) clause survived unnoticed.
+read_key_modules <- function(dir = "results/bulk") {
+  f <- file.path(dir, "WGCNA_key_module_selection.csv")
+  if (!file.exists(f)) stop("missing ", f, "; run scripts/03_bulk_WGCNA.R first")
+  fread(f)[key == TRUE][order(p_T2D), module]
+}
+key_modules <- read_key_modules(out_dir)
 wg <- fread(file.path(out_dir, "WGCNA_gene_module_GS_MM.csv"))
 module_genes <- wg[module %in% key_modules, gene]
 

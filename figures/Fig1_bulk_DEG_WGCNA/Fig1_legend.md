@@ -5,7 +5,7 @@
 **b**, Volcano plot of T2D vs control (limma, ~condition + dataset). Dashed lines, |log2 fold change| > 0.5 and nominal P < 0.05; 96 genes up and 82 down. The 10 most significant genes in each direction are labelled.
 **c**, Scale-free topology fit and mean connectivity against soft-thresholding power; power 7 (red) was the lowest reaching a fit of 0.8 (dashed).
 **d**, Gene dendrogram from the signed-hybrid network with the assigned module colours beneath.
-**e**, Pearson correlation between each module eigengene and T2D status (all 27 samples and within each cohort separately), HbA1c (GSE15653 only, n = 14) and dataset of origin. Each cell gives r above P. Key modules, in bold, are those with P < 0.1 for T2D pooled AND the same direction at P < 0.1 in both cohorts (decision M11b): red, yellow, tan, greenyellow.
+**e**, Pearson correlation between each module eigengene and group (control and T2D, all 27 samples), T2D within each cohort separately, HbA1c (GSE15653 only, n = 14) and dataset of origin. Each cell gives r above P. Control is the complement of T2D, so its correlation is the exact negative and its P value identical. Key modules, in bold, are those with P < 0.1 for T2D pooled AND the same direction at P < 0.1 in both cohorts (decision M11b): red, yellow, tan, greenyellow.
 **f**, Gene significance for T2D against module membership within each key module; line, linear fit.
 **g**, Overlap of the 178 DEGs, the 418 genes in the WGCNA key modules and the 618 hyperglycaemia-associated genes present in the expression universe; the 8 genes shared by all three (bold) are the candidate set carried into Fig. 2.
 

@@ -151,11 +151,14 @@ if (stage %in% c("E", "panels", "all")) {
   ds <- "Dataset†"   # dagger: bounded near zero by ComBat, not an independent batch test
   # the per-cohort columns are the ones the key-module rule actually uses (decision M11b), so they
   # belong in the panel; without them a reader cannot see why blue is excluded and greenyellow is not
-  cols <- c("T2D (all)", "T2D\nGSE15653", "T2D\nGSE64998", "HbA1c", ds)
-  rr <- melt(setnames(mt[, .(module, r_T2D, r_T2D_GSE15653, r_T2D_GSE64998,
+  # The reference framework (Xu et al. Fig. 1E) shows the module eigengenes against the case AND the
+  # control group. Control is the complement indicator of T2D, so cor(ME, 1 - T2D) = -cor(ME, T2D)
+  # exactly and the P value is identical; the Control column is derived here, not recomputed.
+  cols <- c("Control", "T2D", "T2D\nGSE15653", "T2D\nGSE64998", "HbA1c", ds)
+  rr <- melt(setnames(mt[, .(module, -r_T2D, r_T2D, r_T2D_GSE15653, r_T2D_GSE64998,
                              r_HbA1c_GSE15653, r_Dataset)], c("module", cols)),
              id.vars = "module", variable.name = "trait", value.name = "r")
-  pp <- melt(setnames(mt[, .(module, p_T2D, p_T2D_GSE15653, p_T2D_GSE64998,
+  pp <- melt(setnames(mt[, .(module, p_T2D, p_T2D, p_T2D_GSE15653, p_T2D_GSE64998,
                              p_HbA1c_GSE15653, p_Dataset)], c("module", cols)),
              id.vars = "module", variable.name = "trait", value.name = "p")
   d <- merge(rr, pp, by = c("module", "trait"))
@@ -181,7 +184,7 @@ if (stage %in% c("E", "panels", "all")) {
     theme(axis.ticks = element_blank(),
           axis.text.x = element_text(size = BASE - 2, lineheight = 0.9),
           axis.text.y = element_text(face = ifelse(levels(d$module) %in% km, "bold", "plain")))
-  keep(pE, "Fig1e_module_trait", 92, 150)
+  keep(pE, "Fig1e_module_trait", 105, 150)
 }
 
 # ===================================================================================================
@@ -312,7 +315,7 @@ if (stage %in% c("legend", "panels", "all")) {
             LFC, PCUT, nup, ndn),
     sprintf("**c**, Scale-free topology fit and mean connectivity against soft-thresholding power; power %d (red) was the lowest reaching a fit of 0.8 (dashed).", pwr),
     "**d**, Gene dendrogram from the signed-hybrid network with the assigned module colours beneath.",
-    sprintf("**e**, Pearson correlation between each module eigengene and T2D status (all 27 samples and within each cohort separately), HbA1c (GSE15653 only, n = 14) and dataset of origin. Each cell gives r above P. Key modules, in bold, are those with P < 0.1 for T2D pooled AND the same direction at P < 0.1 in both cohorts (decision M11b): %s.",
+    sprintf("**e**, Pearson correlation between each module eigengene and group (control and T2D, all 27 samples), T2D within each cohort separately, HbA1c (GSE15653 only, n = 14) and dataset of origin. Each cell gives r above P. Control is the complement of T2D, so its correlation is the exact negative and its P value identical. Key modules, in bold, are those with P < 0.1 for T2D pooled AND the same direction at P < 0.1 in both cohorts (decision M11b): %s.",
             paste(km, collapse = ", ")),
     "**f**, Gene significance for T2D against module membership within each key module; line, linear fit.",
     sprintf("**g**, Overlap of the %d DEGs, the %s genes in the WGCNA key modules and the %s hyperglycaemia-associated genes present in the expression universe; the %s genes shared by all three (bold) are the candidate set carried into Fig. 2.",

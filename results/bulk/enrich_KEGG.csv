@@ -1,5 +1,5 @@
 category,subcategory,ID,Description,GeneRatio,BgRatio,RichFactor,FoldEnrichment,zScore,pvalue,p.adjust,qvalue,geneID,Count
-Environmental Information Processing,Signal transduction,hsa04152,AMPK signaling pathway,4-Apr,104/6259,0.038461538,60.18269231,15.38974688,7.20E-08,5.83E-06,3.11E-06,IRS2/CCND1/PPARGC1A/IGF1,4
+Environmental Information Processing,Signal transduction,hsa04152,AMPK signaling pathway,4-Apr,104/6259,0.038461538,60.18269231,15.38974688,7.20E-08,5.83E-06,3.11E-06,IRS2/PPARGC1A/CCND1/IGF1,4
 Organismal Systems,Aging,hsa04211,Longevity regulating pathway,4-Mar,75/6259,0.04,62.59,13.56876164,6.56E-06,0.000265497,0.00014146,IRS2/PPARGC1A/IGF1,3
 Environmental Information Processing,Signal transduction,hsa04068,FoxO signaling pathway,4-Mar,117/6259,0.025641026,40.12179487,10.80167023,2.51E-05,0.000678395,0.000361458,IRS2/CCND1/IGF1,3
 Organismal Systems,Aging,hsa04213,Longevity regulating pathway - multiple species,4-Feb,50/6259,0.04,62.59,11.05652098,0.000371471,0.006763794,0.003603841,IRS2/IGF1,2
@@ -10,9 +10,9 @@ Human Diseases,Cancer: specific types,hsa05214,Glioma,4-Feb,67/6259,0.029850746,
 Human Diseases,Drug resistance: antineoplastic,hsa01522,Endocrine resistance,4-Feb,87/6259,0.022988506,35.97126437,8.306003695,0.001125461,0.010082304,0.005371988,CCND1/IGF1,2
 Human Diseases,Endocrine and metabolic disease,hsa04931,Insulin resistance,4-Feb,96/6259,0.020833333,32.59895833,7.889444347,0.001369202,0.010082304,0.005371988,IRS2/PPARGC1A,2
 Human Diseases,Cancer: specific types,hsa05215,Prostate cancer,4-Feb,96/6259,0.020833333,32.59895833,7.889444347,0.001369202,0.010082304,0.005371988,CCND1/IGF1,2
-Organismal Systems,Endocrine system,hsa04935,"Growth hormone synthesis, secretion and action",4-Feb,109/6259,0.018348624,28.71100917,7.380098381,0.001762416,0.011896305,0.006338512,s,2
-Environmental Information Processing,Signal transduction,hsa04371,Apelin signaling pathway,4-Feb,117/6259,0.017094017,26.74786325,7.10907894,0.002028401,0.012081289,0.006437074,CCND1/PPARGC1A,2
-Human Diseases,Endocrine and metabolic disease,hsa04936,Alcoholic liver disease,4-Feb,124/6259,0.016129032,25.23790323,6.893388007,0.002276049,0.012081289,0.006437074,CCND1/PPARGC1A,2
+Organismal Systems,Endocrine system,hsa04935,"Growth hormone synthesis, secretion and action",4-Feb,109/6259,0.018348624,28.71100917,7.380098381,0.001762416,0.011896305,0.006338512,IRS2/IGF1,2
+Environmental Information Processing,Signal transduction,hsa04371,Apelin signaling pathway,4-Feb,117/6259,0.017094017,26.74786325,7.10907894,0.002028401,0.012081289,0.006437074,PPARGC1A/CCND1,2
+Human Diseases,Endocrine and metabolic disease,hsa04936,Alcoholic liver disease,4-Feb,124/6259,0.016129032,25.23790323,6.893388007,0.002276049,0.012081289,0.006437074,PPARGC1A/CCND1,2
 Organismal Systems,Endocrine system,hsa04910,Insulin signaling pathway,4-Feb,125/6259,0.016,25.036,6.864034127,0.00231256,0.012081289,0.006437074,IRS2/PPARGC1A,2
 Human Diseases,Cancer: specific types,hsa05224,Breast cancer,4-Feb,127/6259,0.015748031,24.64173228,6.806348788,0.002386427,0.012081289,0.006437074,CCND1/IGF1,2
 Environmental Information Processing,Signaling molecules and interaction,hsa04518,Integrin signaling,4-Feb,139/6259,0.014388489,22.51438849,6.486266875,0.002853274,0.013595014,0.007243607,CCND1/IGF1,2

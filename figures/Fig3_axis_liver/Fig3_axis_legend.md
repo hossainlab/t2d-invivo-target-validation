@@ -1,10 +1,10 @@
 # Figure 3 (axis panels) legend - liver
 
 **Fig. 3 (continued) | Pathway-axis evidence in STZ-diabetic mouse liver.**
-**a**, AMPK-PGC-1a axis genes in cholangiocyte, the cell type with the most human-concordant axis genes. Points are pseudobulk log2 fold changes (STZ vs Control, edgeR quasi-likelihood); colour marks agreement with the human T2D direction and shape marks significance. An asterisk marks a Fig. 1g candidate gene.
+**a**, AMPK-PGC-1a axis genes in cholangiocyte, the cell type with the most human-concordant axis genes. Points are pseudobulk log2 fold changes (STZ vs Control, edgeR quasi-likelihood); colour marks agreement with the human T2D direction and shape marks significance. An asterisk marks a Fig. 1g candidate gene; the unmarked genes (PRKAA1/2, STK11, CAMKK2, SIRT1) are upstream regulators on the same KEGG map that are NOT candidates and cannot be, since they are not differentially expressed in bulk. They are included because testing the axis only with the genes that selected the map would be circular.
 **b**, UCell score of the candidate genes lying on the AMPK map, per cell type, as the STZ minus Control difference of per-mouse means.
 **c**, Cell-level Pearson correlation of Ppargc1a–Ccnd1 in cholangiocyte against 2,000 detection-matched random gene pairs from the same cell type. Bar, the 95th percentile of the null.
-**d**,**e**,**f**, As **a**,**b**,**c** for the p53 arrest axis and the Cdkn1a–Ccnd1 pair in cholangiocyte.
+**d**,**e**,**f**, As **a**,**b**,**c** for the p53 arrest axis and the Cdkn1a–Ccnd1 pair in cholangiocyte. Of these eight genes only CCND1 is a Fig. 1g candidate: CDKN1A is a bulk DEG but sits in the turquoise module, which fails the M11b replication rule, and is not in the hyperglycaemia gene set. This axis is secondary and data-driven (decisions R17, R23), not a Fig. 1 result.
 
 ## Statistics to quote
 

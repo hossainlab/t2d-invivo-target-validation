@@ -21,6 +21,7 @@
 suppressPackageStartupMessages({
   library(Seurat); library(Nebulosa); library(UCell); library(data.table)
   library(ggplot2); library(patchwork); library(Matrix)
+  library(xml2); library(babelgene); library(org.Hs.eg.db); library(AnnotationDbi)
 })
 set.seed(20260916)
 fig_main <- "results/supplementary_figures/pathway_selection"; out_dir <- "results/pathway_selection"
@@ -31,13 +32,51 @@ fig_main <- "results/supplementary_figures/pathway_selection"; out_dir <- "resul
 dir.create(fig_main, recursive = TRUE, showWarnings = FALSE)
 cols <- c(Control = "#3B7DD8", STZ = "#C8322F")
 
-pair       <- c("Ppargc1a", "Ccnd1")                       # the two Fig 1 candidates that anchor the axis
-axis_genes <- c("Prkaa1", "Prkaa2", "Stk11", "Camkk2", "Sirt1", "Ppargc1a", "Irs2", "Igf1", "Fbp1", "Ccnd1")
-human_of   <- c(Prkaa1 = "PRKAA1", Prkaa2 = "PRKAA2", Stk11 = "STK11", Camkk2 = "CAMKK2", Sirt1 = "SIRT1",
-                Ppargc1a = "PPARGC1A", Irs2 = "IRS2", Igf1 = "IGF1", Fbp1 = "FBP1", Ccnd1 = "CCND1")
-candidates <- c("PPARGC1A", "CCND1", "FBP1", "IRS2", "IGF1")   # Fig 1 candidates that lie on hsa04152
-n_bg <- 2000L
+SELECTED_MAP <- "hsa04152"     # AMPK signalling; the map script 16 selects (decision R23)
+pair         <- c("Ppargc1a", "Ccnd1")   # the two Fig 1 candidates that anchor the axis
+n_bg         <- 2000L
 fmt_p <- function(p) ifelse(is.na(p), "NA", formatC(p, format = "g", digits = 2))
+
+# ---- gene sets, derived rather than typed in ------------------------------------------------
+# The Fig 1 candidate set is read from the Fig 1g intersection every run. It used to be a literal
+# vector here, which went stale the moment decision M11b cut the set from 19 genes to 8: the list
+# still named FBP1, a turquoise-module gene that is no longer a candidate. Anything that marks
+# "this is a Fig 1 candidate" has to come from the file that defines them.
+fig1_candidates <- fread("results/bulk/intersect_genes.csv")$gene
+
+# Map membership comes from the KGML of the selected map, so "lies on the selected map" is checked
+# against KEGG rather than asserted.
+map_xml <- file.path("results/pathway_selection/kgml", paste0(SELECTED_MAP, ".xml"))
+if (!file.exists(map_xml)) map_xml <- file.path("figures/Fig2_enrichment/Fig2D_pathview",
+                                                paste0(SELECTED_MAP, ".xml"))
+stopifnot(file.exists(map_xml))
+map_ids <- unique(unlist(strsplit(
+  xml2::xml_attr(xml2::xml_find_all(xml2::read_xml(map_xml), "//entry[@type='gene']"), "name"), " ")))
+map_human <- unique(na.omit(AnnotationDbi::mapIds(
+  org.Hs.eg.db::org.Hs.eg.db, sub("^hsa:", "", map_ids[grepl("^hsa:", map_ids)]),
+  "SYMBOL", "ENTREZID", multiVals = "first")))
+
+candidates <- intersect(fig1_candidates, map_human)   # Fig 1 candidates that lie on the selected map
+stopifnot(length(candidates) > 0)
+
+# The axis panel also needs the upstream regulators and the output node. These are NOT candidates and
+# cannot be: PRKAA2, STK11 and SIRT1 are not differentially expressed in bulk, so they can never reach
+# the Fig 1g intersection. Including them is the point - testing the axis only with the genes that
+# selected the map would be circular. The set is curated, but every member is asserted to be on the
+# map, and any candidate on the map is added automatically so this cannot go stale again.
+axis_human <- union(c("PRKAA1", "PRKAA2", "STK11", "CAMKK2", "SIRT1"), candidates)
+missing_on_map <- setdiff(axis_human, map_human)
+if (length(missing_on_map))
+  stop("not on ", SELECTED_MAP, ": ", paste(missing_on_map, collapse = ", "))
+
+orth <- as.data.table(babelgene::orthologs(genes = axis_human, species = "mouse", human = TRUE))
+orth <- unique(orth[, .(human = human_symbol, mouse = symbol)])[
+  , n_h := .N, by = human][, n_m := .N, by = mouse][n_h == 1 & n_m == 1]
+human_of   <- setNames(orth$human, orth$mouse)
+axis_genes <- orth$mouse
+message(SELECTED_MAP, ": ", length(candidates), " Fig 1 candidates on the map (",
+        paste(candidates, collapse = ", "), "); axis genes tested: ",
+        paste(axis_genes, collapse = ", "))
 
 deg <- fread("results/bulk/DEG_T2D_vs_Control_all.csv")
 hum <- deg[gene %in% human_of, .(human = gene, human_logFC = logFC, human_P = P.Value, human_FDR = adj.P.Val)]

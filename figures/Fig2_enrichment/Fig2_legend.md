@@ -9,6 +9,7 @@
 ## Caveats that belong in the text, not the figure
 
 - **a**,**b** test 8 genes against a 6259-gene background; with a set this small, an over-representation q value is fragile and a single gene changes several terms.
+- **The enriched KEGG pathways are not independent findings.** All 21 pathways at q < 0.05 are driven by the same four genes, IRS2, PPARGC1A, CCND1 and IGF1, recombined: AMPK signalling has all four, and 18 of the 21 pathways rest on a single pair. Apelin signalling and alcoholic liver disease are both PPARGC1A/CCND1; melanoma, glioma, prostate cancer, breast cancer, endocrine resistance, focal adhesion, integrin signalling and proteoglycans in cancer are all CCND1/IGF1, identically. The list should be read as one signal seen through 21 annotation sets, not as 21 separate pathway results, and the cancer maps in particular are annotation artefacts of CCND1 rather than evidence of cancer biology.
 - The candidate set was defined partly by a hyperglycaemia gene set (Fig. 1g), which shares annotation with the GO and KEGG terms tested here, so **a** and **b** are not independent of that selection step.
 - **c** edges are gene-overlap similarity between pathways, not curated pathway-pathway relationships; with only 19 candidate genes most KEGG pathways share the same few genes, which is why the overlap threshold is high.
 

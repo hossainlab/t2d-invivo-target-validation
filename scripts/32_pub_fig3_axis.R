@@ -145,7 +145,8 @@ if (stage %in% c("C", "panels", "all"))
   keep(null_panel(rd("23_anchored_correlation_%s.csv")), "Fig3axc_anchored_null", 89, 34)
 
 if (stage %in% c("D", "panels", "all"))
-  keep(gene_panel(rd("18_axis_gene_stats_%s.csv")), "Fig3axd_p53_genes", 89, 62)
+  keep(gene_panel(rd("18_axis_gene_stats_%s.csv"), mark_candidates = TRUE),
+       "Fig3axd_p53_genes", 89, 62)
 
 if (stage %in% c("E", "panels", "all"))
   keep(score_panel(rd("18_axis_score_%s.csv"), "UCell p53-target score, STZ − Control"),
@@ -188,12 +189,12 @@ if (stage %in% c("legend", "panels", "all")) {
     sprintf("# Figure 3 (axis panels) legend - %s", tissue),
     "",
     sprintf("**Fig. 3 (continued) | Pathway-axis evidence in STZ-diabetic mouse %s.**", tissue),
-    sprintf("**a**, AMPK-PGC-1a axis genes in %s, the cell type with the most human-concordant axis genes. Points are pseudobulk log2 fold changes (STZ vs Control, edgeR quasi-likelihood); colour marks agreement with the human T2D direction and shape marks significance. An asterisk marks a Fig. 1g candidate gene.",
+    sprintf("**a**, AMPK-PGC-1a axis genes in %s, the cell type with the most human-concordant axis genes. Points are pseudobulk log2 fold changes (STZ vs Control, edgeR quasi-likelihood); colour marks agreement with the human T2D direction and shape marks significance. An asterisk marks a Fig. 1g candidate gene; the unmarked genes (PRKAA1/2, STK11, CAMKK2, SIRT1) are upstream regulators on the same KEGG map that are NOT candidates and cannot be, since they are not differentially expressed in bulk. They are included because testing the axis only with the genes that selected the map would be circular.",
             tolower(ac$cell_type[1])),
     "**b**, UCell score of the candidate genes lying on the AMPK map, per cell type, as the STZ minus Control difference of per-mouse means.",
     sprintf("**c**, Cell-level Pearson correlation of %s in %s against 2,000 detection-matched random gene pairs from the same cell type. Bar, the 95th percentile of the null.",
             sub("-", "–", ac$pair[1]), tolower(ac$cell_type[1])),
-    sprintf("**d**,**e**,**f**, As **a**,**b**,**c** for the p53 arrest axis and the %s pair in %s.",
+    sprintf("**d**,**e**,**f**, As **a**,**b**,**c** for the p53 arrest axis and the %s pair in %s. Of these eight genes only CCND1 is a Fig. 1g candidate: CDKN1A is a bulk DEG but sits in the turquoise module, which fails the M11b replication rule, and is not in the hyperglycaemia gene set. This axis is secondary and data-driven (decisions R17, R23), not a Fig. 1 result.",
             sub("-", "–", pc$pair[1]), tolower(pc$cell_type[1])),
     "",
     "## Statistics to quote",

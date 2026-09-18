@@ -24,6 +24,10 @@ suppressPackageStartupMessages({
 set.seed(20260914)
 args <- commandArgs(trailingOnly = TRUE)
 tissue <- tolower(args[1])
+if (is.na(tissue) || !tissue %in% c("liver", "kidney"))
+  stop("usage: Rscript scripts/09_sc_pseudobulk_DE.R <liver|kidney> [mice_to_exclude,comma,separated]\n",
+       if (is.na(tissue)) "  no tissue argument was given."
+       else paste0("  got '", tissue, "'."), call. = FALSE)
 exclude <- if (length(args) >= 2 && nzchar(args[2])) strsplit(args[2], ",")[[1]] else character(0)
 sfx <- if (length(exclude)) paste0("_excl_", paste(exclude, collapse = "-")) else ""
 out_dir <- "results/sc"; fig_dir <- "results/supplementary_figures/sc_de"

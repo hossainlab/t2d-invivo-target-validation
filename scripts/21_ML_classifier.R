@@ -26,7 +26,10 @@ suppressPackageStartupMessages({
   library(limma); library(ggplot2); library(patchwork); library(WGCNA)
 })
 set.seed(20260916)
-out_dir <- "results/ml"; fig_dir <- "figures/Fig4_ML"
+out_dir <- "results/ml"; fig_dir <- "results/supplementary_figures/ml"
+  # draft panels; figures/ is owned by the 27-31 publication figure scripts. Writing here from an
+  # analysis script silently overwrites them, because Windows filenames are case-insensitive.
+
 for (d in c(out_dir, fig_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 N_REPEATS <- 20L; K <- 5L; N_PERM <- 200L
 cols_model <- c(LASSO = "#C8322F", RF = "#3B7DD8", SVM = "#E0A100")

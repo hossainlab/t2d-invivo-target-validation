@@ -13,7 +13,10 @@ suppressPackageStartupMessages({ library(data.table); library(ggplot2) })
 source("scripts/mr_functions.R")
 set.seed(20260916)
 scratch <- Sys.getenv("MR_SCRATCH", unset = file.path(tempdir(), "mr"))
-out_dir <- "results/mr"; fig_dir <- "figures/Fig5_MR"
+out_dir <- "results/mr"; fig_dir <- "results/supplementary_figures/mr"
+  # draft panels; figures/ is owned by the 27-31 publication figure scripts. Writing here from an
+  # analysis script silently overwrites them, because Windows filenames are case-insensitive.
+
 for (d in c(out_dir, fig_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 N_CASE <- 62892; N_CTRL <- 596424; N_BLOOD <- 31684
 

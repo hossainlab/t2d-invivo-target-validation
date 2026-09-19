@@ -38,6 +38,42 @@ analysis scripts already wrote, so no number changes.
 | Fig 4 | `scripts/30_pub_fig4.R` | `Fig4_ML/Fig4_legend.md` |
 | Fig 5 | `scripts/31_pub_fig5.R` | `Fig5_MR/Fig5_legend.md` |
 
+## The reference-paper-style set (scripts 33-37)
+
+There are **two complete figure sets in this folder**, and they are alternatives:
+
+| | Contract set | Reference-paper-style set |
+|---|---|---|
+| Folders | `Fig1_bulk_DEG_WGCNA/`, `Fig2_enrichment/`, `Fig3_composite_<tissue>/`, `Fig3_axis_<tissue>/`, `Fig4_ML/`, `Fig5_MR/` | `Fig1_paper_style/`, `Fig2_paper_style/`, `Fig3_paper_style_<tissue>/`, `Fig4_paper_style/`, `Fig5_paper_style/` |
+| Style | `scripts/figure_style.R`: Nature/Cell, lowercase tags, viridis, no in-panel titles | the reference paper's own look: boxed panels, bold centred panel titles, upper-case tags, its palettes |
+| Scripts | 27-32 | 33-37 |
+
+**Ship one set or the other, never both.** Both re-draw from the same result tables, so no number
+differs between them; only the drawing does. Each paper-style folder carries its own
+`*_paper_style_legend.md` with the caption written in the reference's wording and an explicit list of
+the places this data forces a deviation from it.
+
+| Figure | Script | Reference analogue |
+|---|---|---|
+| Fig 1 | `scripts/33_fig1_paper_style.R` | Xu et al. Fig. 1, panel for panel (A-G) |
+| Fig 2 | `scripts/34_fig2_paper_style.R` | Xu et al. Fig. 2, panel for panel (A-D) |
+| Fig 3 | `scripts/35_fig3_paper_style.R <tissue>` | Xu et al. Fig. 3, panel for panel (A-G) |
+| Fig 4 | `scripts/37_fig4_paper_style.R` | **none** - the reference runs no classifier; visual language only |
+| Fig 5 | `scripts/36_fig5_paper_style.R` | Xu et al. Fig. 4, panel for panel (A-D) |
+
+The deviations that change what a reader should conclude, rather than just how it looks:
+
+- **Fig 1B** uses nominal P. 84 genes reach FDR < 0.05, but only 31 also clear |log2FC| > 0.5 and the
+  strict downstream rules then leave one intersecting gene (R17).
+- **Fig 1E** ends on MEgrey, as the reference does. Grey is recomputed for display only; script 03
+  keeps the unassigned bin out of the key-module rule.
+- **Fig 2A** has no CC column: over-representation of 8 genes returns no cellular-component term.
+- **Fig 2B, 2C** rest on the 4 candidates that map into KEGG at all, so the pathway list is one signal
+  seen through 21 annotation sets.
+- **Fig 3D, 3E, 3G** are computed inside the key cell type, not the whole atlas.
+- **Fig 5** does **not** nominate a causal druggable target, which is the opposite of the reference's
+  Fig. 4 result. Panel A therefore carries three exposures rather than one.
+
 Analysis scripts never write into `figures/`. Scripts 01-05, 08, 15b, 18, 19, 20b, 21 and 23 send their
 draft panels to `results/supplementary_figures/`, because Windows filenames are case-insensitive and a
 draft `Fig1C_soft_threshold.pdf` silently overwrites the publication `Fig1c_soft_threshold.pdf`. The one
@@ -62,7 +98,7 @@ cohort separately. That gives 4 modules (red, yellow, tan, greenyellow), 418 mod
 | Panel | Reference paper | This project |
 |---|---|---|
 | a | PCA before/after batch correction | PCA before/after ComBat (GSE15653 + GSE64998), 16 T2D vs 11 lean |
-| b | Volcano of DEGs | 96 up / 82 down at P < 0.05 and \|log2FC\| > 0.5 (M9; no gene reaches FDR < 0.05) |
+| b | Volcano of DEGs | 96 up / 82 down at P < 0.05 and \|log2FC\| > 0.5 (M9; 84 genes reach FDR < 0.05, only 31 of them at \|log2FC\| > 0.5) |
 | c | Scale independence / mean connectivity | Same; soft power 7, as in the paper |
 | d | Module dendrogram | Same |
 | e | Module–trait heatmap | T2D pooled **and per cohort**, HbA1c, Dataset†. Key modules in bold |

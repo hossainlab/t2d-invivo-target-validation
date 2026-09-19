@@ -7,7 +7,9 @@
 # Checks: paper-style ComBat -> limma; + sex covariate; per-dataset.
 # Thresholds as in the reference paper: |log2FC| > 0.5 and BH adj.P < 0.05.
 # DEG definition for downstream steps (user decision M9): nominal P < 0.05 and |log2FC| > 0.5,
-# because no gene reaches FDR < 0.05 for T2D vs Control. Reported as exploratory.
+# because the FDR-significant set is too small to carry the strict downstream rules: 84 genes reach
+# FDR < 0.05 for T2D vs Control, only 31 of them at |log2FC| > 0.5, and those leave one intersecting
+# gene at the end of the chain (SREBF2, decision R17). Reported as exploratory.
 #
 # Outputs: results/bulk/DEG_T2D_vs_Control_all.csv, DEG_summary.csv, DEG_concordance.csv,
 #          HbA1c_assoc_GSE15653.csv

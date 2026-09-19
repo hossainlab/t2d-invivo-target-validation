@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Executive Summary & Central Conclusion</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm 12mm 14mm;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #0f172a;
+    line-height: 1.4;
+    font-size: 9.5pt;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    font-size: 16pt;
+    font-weight: 800;
+    color: #0f172a;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 4px;
+    margin-top: 0;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: 11.5pt;
+    font-weight: 750;
+    color: #1e293b;
+    border-bottom: 1.2px solid #cbd5e1;
+    padding-bottom: 2px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 10pt;
+    font-weight: 650;
+    color: #334155;
+    margin-top: 8px;
+    margin-bottom: 3px;
+    page-break-after: avoid;
+  }
+  p {
+    margin-top: 2px;
+    margin-bottom: 5px;
+  }
+  strong {
+    color: #0f172a;
+  }
+  hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 8px 0;
+  }
+  pre {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+    font-size: 7.2pt;
+    line-height: 1.2;
+    overflow-x: auto;
+    color: #0f172a;
+    margin: 6px 0;
+    page-break-inside: avoid;
+  }
+  code {
+    font-family: "Cascadia Code", "Consolas", monospace;
+    background-color: #f1f5f9;
+    padding: 1px 3px;
+    border-radius: 3px;
+    font-size: 8.5pt;
+    color: #0369a1;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0;
+    font-size: 8pt;
+    page-break-inside: avoid;
+  }
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 4.5px 6px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: #f1f5f9;
+    font-weight: 650;
+    color: #1e293b;
+  }
+  tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+  blockquote {
+    border-left: 3.5px solid #2563eb;
+    background-color: #eff6ff;
+    padding: 6px 10px;
+    margin: 6px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 9pt;
+    page-break-inside: avoid;
+  }
+  ul, ol {
+    margin-top: 2px;
+    margin-bottom: 4px;
+    padding-left: 18px;
+  }
+  li {
+    margin-bottom: 2px;
+  }
+</style>
+</head>
+<body>
+<h1>Executive Summary &amp; Central Conclusion</h1>
+<p><strong>Project:</strong> Integrated Multi-Omics Target Validation for In Vivo Type 2 Diabetes (T2D) Study<br />
+<strong>Framework:</strong> Adapted from <em>Xu et al., Phytomedicine 154 (2026) 158050</em><br />
+<strong>Date:</strong> September 2026  </p>
+<hr />
+<h2>1. Executive Summary</h2>
+<p>This study establishes a rigorous, end-to-end multi-omics target nomination and validation pipeline for Type 2 Diabetes (T2D). By integrating <strong>human liver bulk transcriptomics (WGCNA)</strong>, <strong>KEGG pathway topology (KGML)</strong>, <strong>mouse single-cell RNA sequencing (liver &amp; kidney atlases)</strong>, <strong>machine learning consensus modeling</strong>, and <strong>Mendelian Randomization (MR)</strong>, we identify the primary mechanistic regulatory axis driving diabetic tissue stress and nominate prioritized targets for in vivo pharmacological validation.</p>
+<pre><code>┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 THE 5-STAGE ANALYTIC FUNNEL                            │
+│                                                                                        │
+│  [Stage 1: Human Bulk]    1,648 DEGs ∩ WGCNA Key Modules ∩ Hyperglycemia Set           │
+│                                           │ (8 Core Candidates)                        │
+│  [Stage 2: Pathway/KGML]  Top KEGG Map: AMPK Signaling (hsa04152; ORA q = 5.8e-6)      │
+│                                           │ (Candidate-Anchored Axis)                  │
+│  [Stage 3: scRNA Atlas]   Cross-Species Cell Confirmation (Liver Cholang. &amp; Kidney EC) │
+│                                           │ (Spatial Co-Localization Gate)             │
+│  [Stage 4: ML Consensus]  Feature Ranking (LASSO / Random Forest / SVM Consensus)      │
+│                                           │ (Multi-Variable Predictability)            │
+│  [Stage 5: Human Genetics] cis-eQTL Mendelian Randomization (Outcome: 74k T2D Cases)   │
+│                                           │                                            │
+│  [DELIVERABLE]            Tiered Target Portfolio for In Vivo Validation (GV1 vs Met)  │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2>2. Central Biological Conclusion</h2>
+<h3>Suppression of the AMPK Signaling Axis Output</h3>
+<p>The central finding across human and rodent diabetic datasets is the <strong>functional suppression of AMPK pathway activity</strong> under chronic hyperglycemic/insulin-resistant stress:</p>
+<blockquote>
+<p><strong>Suppressed AMPK Output:</strong><br />
+* <strong>PPARGC1A (PGC-1α) ↓</strong> → Loss of mitochondrial biogenesis and hepatic metabolic control.<br />
+* <strong>CCND1 (Cyclin D1) ↑</strong> → De-repressed cellular stress and aberrant proliferation signal.</p>
+</blockquote>
+<h3>Key Mechanistic Insights:</h3>
+<ol>
+<li><strong>Post-Translational Control Signature:</strong><br />
+   The human KEGG network displays discordant edge dynamics: the AMPK kinase subunit (<em>PRKAA2</em>) is transcriptionally maintained while its activated downstream targets fall. AMPK activity is governed by <strong>Thr172 phosphorylation</strong> and cofactor ratios, not mRNA abundance.</li>
+<li><strong>Epithelial &amp; Endothelial Compartmentalization:</strong>  </li>
+<li>In <strong>liver</strong>, metabolic suppression (<em>Ppargc1a</em> downregulation) localizes specifically to epithelial <strong>cholangiocytes</strong> (per-mouse <em>P</em> = 0.011, detection dropping from 31.7% to 11.4%).</li>
+<li>In <strong>kidney</strong>, stress/cell-cycle de-repression (<em>Ccnd1</em> upregulation) localizes to <strong>microvascular endothelial cells</strong> (pseudobulk <em>P</em> = 1.2 × 10⁻⁶).</li>
+<li><strong>Cross-Species Concordance:</strong><br />
+   The directional shifts of both primary anchors (<em>PPARGC1A</em> down, <em>CCND1</em> up) replicate across human clinical cohorts and mouse diabetic models.</li>
+</ol>
+<hr />
+<h2>3. Core Target Tiers &amp; Evidence Hierarchy</h2>
+<p>Targets are classified mechanically into prioritized tiers based on evidence convergence across all five analytical stages:</p>
+<pre><code>                               ┌──────────────────────────────────────────────┐
+                               │       UPSTREAM MECHANISM (Tier 3)            │
+                               │  p-AMPKα (PRKAA1/2) · SIRT1 · STK11 (LKB1)   │
+                               │  (Phosphorylation / Post-translational node) │
+                               └──────────────────────┬───────────────────────┘
+                                                      │
+                       ┌──────────────────────────────┴──────────────────────────────┐
+                       ▼                                                             ▼
+         ┌───────────────────────────┐                                 ┌───────────────────────────┐
+         │     PRIMARY TARGET 1      │                                 │     PRIMARY TARGET 2      │
+         │    PPARGC1A (PGC-1α)      │                                 │      CCND1 (Cyclin D1)    │
+         │  Metabolic Co-activator   │                                 │    Pathway Output Node    │
+         │   Human T2D: log2FC -0.61 │                                 │   Human T2D: log2FC +0.80 │
+         │   Mouse Liver Cholang: ↓  │                                 │    Mouse Endothelium: ↑   │
+         │     (ML Rank 3 / 19)      │                                 │    (GSE23343 Replicated)  │
+         └───────────────────────────┘                                 └───────────────────────────┘
+                       │                                                             │
+                       ▼                                                             ▼
+         ┌───────────────────────────┐                                 ┌───────────────────────────┐
+         │     READOUT: GLYCOLYSIS   │                                 │     READOUT: ARREST/p53   │
+         │           PFKFB3          │                                 │     CDKN1A (p21) · BAX    │
+         └───────────────────────────┘                                 └───────────────────────────┘
+</code></pre>
+<h3>Target Classification Table</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Target</th>
+<th style="text-align: left;">Tier</th>
+<th style="text-align: left;">Role &amp; Mechanism</th>
+<th style="text-align: left;">Key Supporting Evidence</th>
+<th style="text-align: left;">Planned In Vivo Assay</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>PPARGC1A</code></strong> <em>(PGC-1α)</em></td>
+<td style="text-align: left;"><strong>Tier 1 (Primary)</strong></td>
+<td style="text-align: left;">Master transcriptional coactivator of mitochondrial respiration &amp; gluconeogenesis.</td>
+<td style="text-align: left;">• Human liver: log₂FC = −0.61, <em>P</em> = 6.0 × 10⁻⁴<br>• Mouse cholangiocytes: <em>P</em> = 0.011, cell BH <em>P</em> = 2.0 × 10⁻⁸<br>• ML Consensus: Rank 3 / 19</td>
+<td style="text-align: left;">• RT-qPCR &amp; Western blot (liver)<br>• IF co-staining: PGC-1α × CK19</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>CCND1</code></strong> <em>(Cyclin D1)</em></td>
+<td style="text-align: left;"><strong>Tier 1 (Primary)</strong></td>
+<td style="text-align: left;">De-repressed downstream output of AMPK ⊣ HuR/ELAVL1 axis.</td>
+<td style="text-align: left;">• Human liver: log₂FC = +0.80, <em>P</em> = 7.5 × 10⁻⁴<br>• Replicated in human cohort GSE23343 (<em>P</em> = 0.016, AUC = 0.81)<br>• Mouse kidney endothelium: <em>P</em> = 1.2 × 10⁻⁶</td>
+<td style="text-align: left;">• RT-qPCR &amp; Western blot (kidney &amp; liver)<br>• IF co-staining: Cyclin D1 × CD31</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>CDKN1A</code></strong> <em>(p21)</em></td>
+<td style="text-align: left;"><strong>Tier 2 (Readout)</strong></td>
+<td style="text-align: left;">Cell-cycle arrest / senescence effector downstream of metabolic stress.</td>
+<td style="text-align: left;">• Human liver DEG: log₂FC = +0.96, FDR = 0.016<br>• Elevated in mouse cholangiocytes (FDR = 0.009) &amp; kidney endothelium (FDR = 0.008)</td>
+<td style="text-align: left;">• RT-qPCR &amp; Western blot<br>• IF co-staining with CD31 in kidney</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>PFKFB3</code></strong></td>
+<td style="text-align: left;"><strong>Tier 2 (Readout)</strong></td>
+<td style="text-align: left;">Inducible glycolytic regulator connected to AMPK.</td>
+<td style="text-align: left;">• Human liver: FDR = 0.042<br>• Mouse liver LSEC (<em>P</em> = 0.049) &amp; kidney LoH (BH <em>P</em> = 0.03)</td>
+<td style="text-align: left;">• RT-qPCR &amp; Western blot (liver &amp; kidney)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>PRKAA1/2</code></strong> <em>(AMPKα)</em></td>
+<td style="text-align: left;"><strong>Tier 3 (Master Node)</strong></td>
+<td style="text-align: left;">Central metabolic sensor and upstream serine/threonine kinase.</td>
+<td style="text-align: left;">• Upstream driver on KEGG hsa04152; acts via Thr172 phosphorylation.</td>
+<td style="text-align: left;">• Western blot for <strong>p-AMPKα (Thr172) / total AMPKα</strong><br>• Metformin positive control</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. Multi-Modal Evidence Matrix</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Candidate Gene</th>
+<th style="text-align: center;">Human Bulk DE</th>
+<th style="text-align: center;">WGCNA Module</th>
+<th style="text-align: center;">KEGG AMPK Map</th>
+<th style="text-align: center;">Mouse scRNA Validation</th>
+<th style="text-align: center;">Human Replication</th>
+<th style="text-align: center;">ML Consensus</th>
+<th style="text-align: center;">Causal MR (GWAS)</th>
+<th style="text-align: center;">Target Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>PPARGC1A</strong></td>
+<td style="text-align: center;">Down (<em>P</em> = 6.0 × 10⁻⁴)</td>
+<td style="text-align: center;">Key Module</td>
+<td style="text-align: center;">Direct Step (+1)</td>
+<td style="text-align: center;">Down (Cholang. <em>P</em> = 0.011)</td>
+<td style="text-align: center;">Concordant</td>
+<td style="text-align: center;">Rank 3</td>
+<td style="text-align: center;">Null (<em>P</em> = 0.16)</td>
+<td style="text-align: center;"><strong>Tier 1</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CCND1</strong></td>
+<td style="text-align: center;">Up (<em>P</em> = 7.5 × 10⁻⁴)</td>
+<td style="text-align: center;">Key Module</td>
+<td style="text-align: center;">2 Steps via HuR (−1)</td>
+<td style="text-align: center;">Up (Kidney EC <em>P</em> = 1.2 × 10⁻⁶)</td>
+<td style="text-align: center;">Replicated (<em>P</em> = 0.016)</td>
+<td style="text-align: center;">Rank 14</td>
+<td style="text-align: center;">Null (<em>P</em> = 0.55)</td>
+<td style="text-align: center;"><strong>Tier 1</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CDKN1A</strong></td>
+<td style="text-align: center;">Up (FDR = 0.016)</td>
+<td style="text-align: center;">Key Module</td>
+<td style="text-align: center;">p53 / Arrest Map</td>
+<td style="text-align: center;">Up (Cholang. &amp; Kidney EC)</td>
+<td style="text-align: center;">Concordant</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">Null</td>
+<td style="text-align: center;"><strong>Tier 2</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PFKFB3</strong></td>
+<td style="text-align: center;">Down (FDR = 0.042)</td>
+<td style="text-align: center;">Turquoise</td>
+<td style="text-align: center;">Direct Step (+1)</td>
+<td style="text-align: center;">Down (LSEC <em>P</em> = 0.049)</td>
+<td style="text-align: center;">Concordant</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">Null</td>
+<td style="text-align: center;"><strong>Tier 2</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IRS2</strong></td>
+<td style="text-align: center;">Down (<em>P</em> = 0.011)</td>
+<td style="text-align: center;">Key Module</td>
+<td style="text-align: center;">Input Node</td>
+<td style="text-align: center;">Minor Cells only</td>
+<td style="text-align: center;">Concordant</td>
+<td style="text-align: center;">Rank 6</td>
+<td style="text-align: center;">Null</td>
+<td style="text-align: center;"><strong>Tier 2</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IGF1</strong></td>
+<td style="text-align: center;">Down (<em>P</em> = 0.021)</td>
+<td style="text-align: center;">Key Module</td>
+<td style="text-align: center;">Input Node</td>
+<td style="text-align: center;">Sparse (Hepatocyte gap)</td>
+<td style="text-align: center;">Concordant</td>
+<td style="text-align: center;">Rank 8</td>
+<td style="text-align: center;">Null</td>
+<td style="text-align: center;"><strong>Tier 2b</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PRKAA2</strong></td>
+<td style="text-align: center;">Up (<em>P</em> = 0.017)</td>
+<td style="text-align: center;">Network Node</td>
+<td style="text-align: center;">Master Kinase</td>
+<td style="text-align: center;">Post-translational</td>
+<td style="text-align: center;">Concordant</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">Null</td>
+<td style="text-align: center;"><strong>Tier 3</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SREBF1</strong></td>
+<td style="text-align: center;">Down (<em>P</em> = 0.041)</td>
+<td style="text-align: center;">Network Node</td>
+<td style="text-align: center;">Lipogenic Output</td>
+<td style="text-align: center;">Inverted (STZ model)</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">Causal (Blood, <em>P</em> = 9.0 × 10⁻⁹)</td>
+<td style="text-align: center;"><strong>Exploratory</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VSNL1 / LZTFL1</strong></td>
+<td style="text-align: center;">DE (FDR &lt; 0.05)</td>
+<td style="text-align: center;">Key Module</td>
+<td style="text-align: center;">Off-Map</td>
+<td style="text-align: center;">Not DE in mouse</td>
+<td style="text-align: center;">Weak</td>
+<td style="text-align: center;">Rank 1 &amp; 2</td>
+<td style="text-align: center;">Null</td>
+<td style="text-align: center;"><strong>Non-Target</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. In Vivo Experimental Validation &amp; Pharmacological Rescue Plan</h2>
+<p>The findings directly define the experimental design and endpoints for the in vivo animal validation study:</p>
+<pre><code>┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                              IN VIVO VALIDATION DESIGN (GV1 vs MET)                     │
+│                                                                                        │
+│  [Groups]       1. Normal Control (Saline)                                             │
+│                 2. Ob-T2D Disease Model (High-Fat Diet / STZ)                          │
+│                 3. Ob-T2D + GV1 Low Dose                                               │
+│                 4. Ob-T2D + GV1 Medium Dose                                            │
+│                 5. Ob-T2D + GV1 High Dose                                              │
+│                 6. Ob-T2D + Metformin (Positive Control, 200 mg/kg)                    │
+│                                                                                        │
+│  [Primary]      1. Glycemic &amp; Metabolic Efficacy: OGTT, Fasting Glucose, HbA1c, HOMA-IR│
+│  [Molecular]    2. Hepatic AMPK Restoration: Western blot p-AMPKα (Thr172) / total     │
+│                 3. Mitochondrial Rescue: PGC-1α expression (RT-qPCR &amp; Western blot)    │
+│                 4. Proliferation / Stress Normalization: Cyclin D1 &amp; p21 (qPCR &amp; WB)   │
+│  [Histology]    5. Immunofluorescence: PGC-1α × CK19 (liver); Cyclin D1 × CD31 (kidney)│
+└────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>Hypothesized Therapeutic Mechanism of Action:</h3>
+<p>Administration of the active formulation (<strong>GV1</strong>) is hypothesized to mirror the therapeutic action of <strong>Metformin</strong> by:<br />
+1. Re-activating hepatic <strong>AMPK phosphorylation (Thr172)</strong>.<br />
+2. Restoring downstream <strong>PGC-1α</strong> expression and mitochondrial function.<br />
+3. Normalizing aberrant <strong>Cyclin D1</strong> and <strong>p21</strong> levels, resolving chronic tissue stress in liver and kidney.</p>
+</body>
+</html>

@@ -159,17 +159,17 @@ if (stage %in% c("B", "panels", "all")) {
 
   pB <- ggplot(d[pct_expr > 0], aes(gene, cell_type)) +
     geom_point(aes(size = pct_expr, colour = avg_expr)) +
+    scale_size_continuous(range = c(0.15, 1.9), name = "Percent Expressed",
+                          breaks = c(0, 25, 50, 75, 100), limits = c(0, 100),
+                          guide = guide_legend(title.position = "top", nrow = 1, order = 1)) +
     scale_colour_gradient(low = col_dot_lo, high = col_dot_hi, name = "Average Expression",
                           guide = guide_colourbar(barheight = unit(1.8, "mm"),
                                                   barwidth = unit(16, "mm"),
-                                                  title.position = "top")) +
-    scale_size_continuous(range = c(0.15, 1.9), name = "Percent Expressed",
-                          breaks = c(0, 25, 50, 75, 100), limits = c(0, 100),
-                          guide = guide_legend(title.position = "top", nrow = 1)) +
+                                                  title.position = "top", order = 2)) +
     scale_y_discrete(labels = nice_ct) +
     labs(x = NULL, y = NULL) +
     theme_baseR() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 3.6),
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, size = 3.6),
           axis.text.y = element_text(size = 5),
           legend.position = "top", legend.box = "horizontal",
           legend.title = element_text(size = 6), legend.text = element_text(size = 5.5),
@@ -221,18 +221,22 @@ build_violin <- function(g) {
   md <- copy(st$md); pm <- copy(st$per_mouse)
   p_show <- if (SIG_UNIT == "mouse") st$mouse_p else st$cell_p
   md[, condition := factor(condition, levels = names(cols_grp))]
-  pm[, condition := factor(condition, levels = names(cols_grp))]
-  ymax <- max(md[[g]])
+  md[, ct_label := factor(nice_ct(cc$key))]
+  ymax <- max(md[[g]], na.rm = TRUE)
 
-  ggplot(md, aes(condition, .data[[g]], fill = condition)) +
-    geom_violin(scale = "width", trim = TRUE, colour = "black", linewidth = 0.25, width = 0.82) +
-    geom_point(data = pm, aes(condition, expr), shape = 21, size = 0.9, fill = "white",
-               colour = "black", stroke = 0.3, inherit.aes = FALSE,
-               position = position_jitter(width = 0.09, height = 0, seed = 1)) +
-    annotate("segment", x = 1, xend = 2, y = ymax * 1.07, yend = ymax * 1.07, linewidth = 0.25) +
-    annotate("segment", x = 1, xend = 1, y = ymax * 1.03, yend = ymax * 1.07, linewidth = 0.25) +
-    annotate("segment", x = 2, xend = 2, y = ymax * 1.03, yend = ymax * 1.07, linewidth = 0.25) +
-    annotate("text", x = 1.5, y = ymax * 1.10, label = stars(p_show), vjust = 0, size = 2.4) +
+  # Group medians for the reference paper's central diamond marker
+  meds <- md[, .(expr = median(get(g), na.rm = TRUE)), by = .(condition, ct_label)]
+
+  ggplot(md, aes(ct_label, .data[[g]], fill = condition)) +
+    geom_violin(position = position_dodge(width = 0.8), scale = "width", trim = TRUE,
+                colour = "black", linewidth = 0.25, width = 0.78) +
+    geom_point(data = meds, aes(ct_label, expr, group = condition),
+               shape = 23, size = 1.3, fill = "white", colour = "black", stroke = 0.35,
+               position = position_dodge(width = 0.8), inherit.aes = FALSE) +
+    annotate("segment", x = 0.8, xend = 1.2, y = ymax * 1.07, yend = ymax * 1.07, linewidth = 0.25) +
+    annotate("segment", x = 0.8, xend = 0.8, y = ymax * 1.03, yend = ymax * 1.07, linewidth = 0.25) +
+    annotate("segment", x = 1.2, xend = 1.2, y = ymax * 1.03, yend = ymax * 1.07, linewidth = 0.25) +
+    annotate("text", x = 1.0, y = ymax * 1.10, label = stars(p_show), vjust = 0, size = 2.4) +
     scale_fill_manual(values = cols_grp, name = "Group") +
     scale_y_continuous(expand = expansion(mult = c(0.03, 0.17)),
                        breaks = scales::breaks_pretty(4)) +
@@ -241,7 +245,7 @@ build_violin <- function(g) {
     theme(legend.position = "top", legend.title = element_text(size = 6),
           legend.text = element_text(size = 5.5), legend.key.size = unit(2.6, "mm"),
           legend.margin = margin(0, 0, 0, 0), legend.box.margin = margin(0, 0, -2, 0),
-          axis.text.x = element_text(size = 6))
+          axis.text.x = element_text(size = 6, angle = 45, hjust = 1, vjust = 1))
 }
 if (stage %in% c("D", "panels", "all")) keep(build_violin(cc$pair[1]), "Fig3D_violin1", 48, 62)
 if (stage %in% c("E", "panels", "all")) keep(build_violin(cc$pair[2]), "Fig3E_violin2", 48, 62)
@@ -275,7 +279,7 @@ if (stage %in% c("G", "panels", "all")) {
     geom_smooth(method = "lm", formula = y ~ x, colour = "red", fill = "grey70",
                 alpha = 0.4, linewidth = 0.5) +
     annotate("label", x = -Inf, y = Inf, label = lab, hjust = -0.06, vjust = 1.25,
-             size = 2.1, linewidth = 0.2, label.padding = unit(0.8, "mm")) +
+             size = 2.1, linewidth = 0.2, label.padding = unit(0.8, "mm"), fill = "white") +
     labs(x = bquote(italic(.(cc$pair[2]))), y = bquote(italic(.(cc$pair[1])))) +
     theme_baseR()
   keep(pG, "Fig3G_correlation", 72, 62)

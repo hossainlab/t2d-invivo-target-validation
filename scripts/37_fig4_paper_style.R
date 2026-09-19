@@ -23,12 +23,11 @@
 # The point of the figure is that the optimistic estimate and the honest one disagree and that nothing
 # generalises to the independent cohort. That is a negative result, and the legend says so plainly.
 #
-# This is deliberately NOT the figure_style.R contract used by scripts 27-32. It is kept as a separate
-# deliverable in figures/Fig4_paper_style/ so the Nature/Cell version in figures/Fig4_ML/ is untouched.
-# Pick one for submission; do not ship both.
+# This is the shipped Figure 4. It follows the reference paper's visual language, not the
+# figure_style.R Nature/Cell contract that scripts 27-32 use; that set is no longer built.
 #
-# Outputs: figures/Fig4_paper_style/Fig4<A-E>_*.pdf, Fig4_paper_style.pdf,
-#          Fig4_paper_style_legend.md, results/figure_exports/Fig4_paper_style.tiff
+# Outputs: figures/Fig4/Fig4<A-E>_*.pdf, Fig4.pdf, Fig4_legend.md
+#          results/figure_exports/Fig4.tiff
 
 suppressPackageStartupMessages({
   library(data.table); library(ggplot2); library(patchwork); library(pROC)
@@ -39,12 +38,16 @@ args  <- commandArgs(trailingOnly = TRUE)
 stage <- if (length(args) >= 1) args[1] else "all"
 # Optional second argument selects a pathway-restricted ML run, e.g. "hsa04152" for the panel
 # restricted to the selected KEGG map. It reads results/ml_<map>/ and writes its own figure folder.
-PANEL_MAP <- if (length(args) >= 2 && nzchar(args[2])) args[2] else ""
+# The shipped panel is the Fig 1 candidates that are nodes of the selected KEGG map. Pass "" as the
+# second argument to draw the unrestricted 8-gene panel instead; it then gets its own folder.
+MAP_DEFAULT <- "hsa04152"
+PANEL_MAP <- if (length(args) >= 2) args[2] else MAP_DEFAULT
 tag       <- if (nzchar(PANEL_MAP)) paste0("_", PANEL_MAP) else ""
+dir_tag   <- if (identical(PANEL_MAP, MAP_DEFAULT)) "" else if (nzchar(PANEL_MAP)) tag else "_allcandidates"
 set.seed(20260918)
 
-fig_dir   <- paste0("figures/Fig4_paper_style", tag)
-panel_dir <- file.path("results/figure_exports", paste0("fig4paper_panels", tag))
+fig_dir   <- paste0("figures/Fig4", dir_tag)
+panel_dir <- file.path("results/figure_exports", paste0("fig4_panels_ref", dir_tag))
 mld       <- paste0("results/ml", tag)
 if (!dir.exists(mld))
   stop("missing ", mld, "
@@ -255,9 +258,9 @@ EEEEEEEEE
     plot_layout(design = design) +
     plot_annotation(tag_levels = "A") &
     theme(plot.tag = element_text(size = 13, face = "bold"))
-  out <- file.path(fig_dir, paste0("Fig4_paper_style", tag))
+  out <- file.path(fig_dir, paste0("Fig4", dir_tag))
   ggsave(paste0(out, ".pdf"), comp, width = 230, height = 205, units = "mm", device = cairo_pdf)
-  tif <- file.path("results/figure_exports", paste0("Fig4_paper_style", tag, ".tiff"))
+  tif <- file.path("results/figure_exports", paste0("Fig4", dir_tag, ".tiff"))
   unlink(tif)
   ggsave(tif, comp, width = 230, height = 205, units = "mm", dpi = 400, bg = "white",
          compression = "lzw")
@@ -278,8 +281,6 @@ if (stage %in% c("legend", "panels", "all")) {
     "# Figure 4, reference-paper style - legend",
     "",
     "Drawn in the visual language of Xu et al., *Phytomedicine* 154 (2026) 158050.",
-    "The Nature/Cell-contract version of the same figure is in `figures/Fig4_ML/`.",
-    "**Ship one or the other, not both.**",
     "",
     "## This figure has no panel-for-panel source in the reference",
     "",
@@ -347,6 +348,6 @@ if (stage %in% c("legend", "panels", "all")) {
     } else NULL
   )
   l <- l[!vapply(l, is.null, TRUE)]
-  writeLines(l, file.path(fig_dir, "Fig4_paper_style_legend.md"))
-  message("wrote ", file.path(fig_dir, "Fig4_paper_style_legend.md"))
+  writeLines(l, file.path(fig_dir, "Fig4_legend.md"))
+  message("wrote ", file.path(fig_dir, "Fig4_legend.md"))
 }

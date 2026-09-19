@@ -47,7 +47,7 @@ fig1_candidates <- fread("results/bulk/intersect_genes.csv")$gene
 # Map membership comes from the KGML of the selected map, so "lies on the selected map" is checked
 # against KEGG rather than asserted.
 map_xml <- file.path("results/pathway_selection/kgml", paste0(SELECTED_MAP, ".xml"))
-if (!file.exists(map_xml)) map_xml <- file.path("figures/Fig2_enrichment/Fig2D_pathview",
+if (!file.exists(map_xml)) map_xml <- file.path("results/pathway_selection/pathview",
                                                 paste0(SELECTED_MAP, ".xml"))
 stopifnot(file.exists(map_xml))
 map_ids <- unique(unlist(strsplit(

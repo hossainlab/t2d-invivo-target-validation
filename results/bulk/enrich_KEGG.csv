@@ -1,82 +1,82 @@
 category,subcategory,ID,Description,GeneRatio,BgRatio,RichFactor,FoldEnrichment,zScore,pvalue,p.adjust,qvalue,geneID,Count
-Environmental Information Processing,Signal transduction,hsa04152,AMPK signaling pathway,4-Apr,104/6259,0.038461538,60.18269231,15.38974688,7.20E-08,5.83E-06,3.11E-06,IRS2/PPARGC1A/CCND1/IGF1,4
-Organismal Systems,Aging,hsa04211,Longevity regulating pathway,4-Mar,75/6259,0.04,62.59,13.56876164,6.56E-06,0.000265497,0.00014146,IRS2/PPARGC1A/IGF1,3
-Environmental Information Processing,Signal transduction,hsa04068,FoxO signaling pathway,4-Mar,117/6259,0.025641026,40.12179487,10.80167023,2.51E-05,0.000678395,0.000361458,IRS2/CCND1/IGF1,3
-Organismal Systems,Aging,hsa04213,Longevity regulating pathway - multiple species,4-Feb,50/6259,0.04,62.59,11.05652098,0.000371471,0.006763794,0.003603841,IRS2/IGF1,2
-Organismal Systems,Endocrine system,hsa04920,Adipocytokine signaling pathway,4-Feb,65/6259,0.030769231,48.14615385,9.661653651,0.000628718,0.006763794,0.003603841,IRS2/PPARGC1A,2
-Cellular Processes,Cell growth and death,hsa04115,p53 signaling pathway,4-Feb,66/6259,0.03030303,47.41666667,9.585824972,0.000648227,0.006763794,0.003603841,CCND1/IGF1,2
-Human Diseases,Cancer: specific types,hsa05218,Melanoma,4-Feb,66/6259,0.03030303,47.41666667,9.585824972,0.000648227,0.006763794,0.003603841,CCND1/IGF1,2
-Human Diseases,Cancer: specific types,hsa05214,Glioma,4-Feb,67/6259,0.029850746,46.70895522,9.511682394,0.000668029,0.006763794,0.003603841,CCND1/IGF1,2
-Human Diseases,Drug resistance: antineoplastic,hsa01522,Endocrine resistance,4-Feb,87/6259,0.022988506,35.97126437,8.306003695,0.001125461,0.010082304,0.005371988,CCND1/IGF1,2
-Human Diseases,Endocrine and metabolic disease,hsa04931,Insulin resistance,4-Feb,96/6259,0.020833333,32.59895833,7.889444347,0.001369202,0.010082304,0.005371988,IRS2/PPARGC1A,2
-Human Diseases,Cancer: specific types,hsa05215,Prostate cancer,4-Feb,96/6259,0.020833333,32.59895833,7.889444347,0.001369202,0.010082304,0.005371988,CCND1/IGF1,2
-Organismal Systems,Endocrine system,hsa04935,"Growth hormone synthesis, secretion and action",4-Feb,109/6259,0.018348624,28.71100917,7.380098381,0.001762416,0.011896305,0.006338512,IRS2/IGF1,2
-Environmental Information Processing,Signal transduction,hsa04371,Apelin signaling pathway,4-Feb,117/6259,0.017094017,26.74786325,7.10907894,0.002028401,0.012081289,0.006437074,PPARGC1A/CCND1,2
-Human Diseases,Endocrine and metabolic disease,hsa04936,Alcoholic liver disease,4-Feb,124/6259,0.016129032,25.23790323,6.893388007,0.002276049,0.012081289,0.006437074,PPARGC1A/CCND1,2
-Organismal Systems,Endocrine system,hsa04910,Insulin signaling pathway,4-Feb,125/6259,0.016,25.036,6.864034127,0.00231256,0.012081289,0.006437074,IRS2/PPARGC1A,2
-Human Diseases,Cancer: specific types,hsa05224,Breast cancer,4-Feb,127/6259,0.015748031,24.64173228,6.806348788,0.002386427,0.012081289,0.006437074,CCND1/IGF1,2
-Environmental Information Processing,Signaling molecules and interaction,hsa04518,Integrin signaling,4-Feb,139/6259,0.014388489,22.51438849,6.486266875,0.002853274,0.013595014,0.007243607,CCND1/IGF1,2
-Human Diseases,Cancer: overview,hsa05206,MicroRNAs in cancer,4-Feb,144/6259,0.013888889,21.73263889,6.364608828,0.003059704,0.013768666,0.007336131,IRS2/CCND1,2
-Human Diseases,Cancer: overview,hsa05205,Proteoglycans in cancer,4-Feb,183/6259,0.010928962,17.1010929,5.589926995,0.004907257,0.020303578,0.010818021,CCND1/IGF1,2
-Cellular Processes,Cellular community - eukaryotes,hsa04510,Focal adhesion,4-Feb,185/6259,0.010810811,16.91621622,5.556769967,0.005013229,0.020303578,0.010818021,CCND1/IGF1,2
-Environmental Information Processing,Signaling molecules and interaction,hsa04081,Hormone signaling,4-Feb,195/6259,0.01025641,16.04871795,5.398477926,0.005559329,0.021443126,0.011425187,IRS2/IGF1,2
-Environmental Information Processing,Signal transduction,hsa04151,PI3K-Akt signaling pathway,4-Feb,315/6259,0.006349206,9.934920635,4.114723849,0.014159663,0.052133304,0.027777329,CCND1/IGF1,2
-Organismal Systems,Excretory system,hsa04960,Aldosterone-regulated sodium reabsorption,4-Jan,32/6259,0.03125,48.8984375,6.868960529,0.020299079,0.07148806,0.038089805,IGF1,1
-Human Diseases,Cancer: specific types,hsa05216,Thyroid cancer,4-Jan,34/6259,0.029411765,46.02205882,6.656244247,0.021557425,0.072756308,0.038765544,CCND1,1
-Human Diseases,Cancer: specific types,hsa05219,Bladder cancer,4-Jan,38/6259,0.026315789,41.17763158,6.281742758,0.024070479,0.076888352,0.040967153,CCND1,1
-Organismal Systems,Endocrine system,hsa04913,Ovarian steroidogenesis,4-Jan,39/6259,0.025641026,40.12179487,6.197121355,0.024697986,0.076888352,0.040967153,IGF1,1
-Human Diseases,Endocrine and metabolic disease,hsa04930,Type II diabetes mellitus,4-Jan,41/6259,0.024390244,38.16463415,6.037130301,0.025952091,0.076888352,0.040967153,IRS2,1
-Environmental Information Processing,Signal transduction,hsa04340,Hedgehog signaling pathway,4-Jan,42/6259,0.023809524,37.25595238,5.961391546,0.02657869,0.076888352,0.040967153,CCND1,1
-Human Diseases,Cancer: overview,hsa05200,Pathways in cancer,4-Feb,474/6259,0.004219409,6.602320675,3.208038498,0.030987137,0.08467371,0.045115297,CCND1/IGF1,2
-Organismal Systems,Nervous system,hsa04730,Long-term depression,4-Jan,51/6259,0.019607843,30.68137255,5.381797245,0.032204485,0.08467371,0.045115297,IGF1,1
-Organismal Systems,Endocrine system,hsa04923,Regulation of lipolysis in adipocytes,4-Jan,53/6259,0.018867925,29.52358491,5.273151815,0.033451342,0.08467371,0.045115297,IRS2,1
-Human Diseases,Cancer: specific types,hsa05213,Endometrial cancer,4-Jan,53/6259,0.018867925,29.52358491,5.273151815,0.033451342,0.08467371,0.045115297,CCND1,1
-Human Diseases,Cardiovascular disease,hsa05416,Viral myocarditis,4-Jan,57/6259,0.01754386,27.45175439,5.072944914,0.035941443,0.088219906,0.047004758,CCND1,1
-Human Diseases,Cancer: specific types,hsa05221,Acute myeloid leukemia,4-Jan,62/6259,0.016129032,25.23790323,4.849916504,0.0390473,0.093024449,0.049564684,CCND1,1
-Organismal Systems,Endocrine system,hsa04917,Prolactin signaling pathway,4-Jan,65/6259,0.015384615,24.07307692,4.728361907,0.040907207,0.094103238,0.050139477,CCND1,1
-Human Diseases,Cancer: specific types,hsa05223,Non-small cell lung cancer,4-Jan,67/6259,0.014925373,23.35447761,4.651795038,0.042145645,0.094103238,0.050139477,CCND1,1
-Human Diseases,Cancer: specific types,hsa05220,Chronic myeloid leukemia,4-Jan,69/6259,0.014492754,22.67753623,4.578500434,0.043382883,0.094103238,0.050139477,CCND1,1
-Organismal Systems,Endocrine system,hsa04914,Progesterone-mediated oocyte maturation,4-Jan,73/6259,0.01369863,21.43493151,4.440826201,0.045853763,0.094103238,0.050139477,IGF1,1
-Human Diseases,Cancer: specific types,hsa05212,Pancreatic cancer,4-Jan,73/6259,0.01369863,21.43493151,4.440826201,0.045853763,0.094103238,0.050139477,CCND1,1
-Human Diseases,Drug resistance: antineoplastic,hsa01521,EGFR tyrosine kinase inhibitor resistance,4-Jan,74/6259,0.013513514,21.14527027,4.408118129,0.046470735,0.094103238,0.050139477,IGF1,1
-Human Diseases,Cancer: specific types,hsa05210,Colorectal cancer,4-Jan,81/6259,0.012345679,19.31790123,4.195931491,0.050781161,0.100166885,0.05337027,CCND1,1
-Organismal Systems,Sensory system,hsa04750,Inflammatory mediator regulation of TRP channels,4-Jan,83/6259,0.012048193,18.85240964,4.140152745,0.052010022,0.100166885,0.05337027,IGF1,1
-Human Diseases,Cardiovascular disease,hsa05410,Hypertrophic cardiomyopathy,4-Jan,89/6259,0.011235955,17.58146067,3.983908219,0.055689449,0.100166885,0.05337027,IGF1,1
-Human Diseases,Cancer: specific types,hsa05222,Small cell lung cancer,4-Jan,90/6259,0.011111111,17.38611111,3.959349897,0.056301643,0.100166885,0.05337027,CCND1,1
-Organismal Systems,Endocrine system,hsa04922,Glucagon signaling pathway,4-Jan,91/6259,0.010989011,17.19505495,3.935184124,0.056913541,0.100166885,0.05337027,PPARGC1A,1
-Human Diseases,Cardiovascular disease,hsa05414,Dilated cardiomyopathy,4-Jan,93/6259,0.010752688,16.82526882,3.887988109,0.058136442,0.100166885,0.05337027,IGF1,1
-Cellular Processes,Cell growth and death,hsa04114,Oocyte meiosis,4-Jan,95/6259,0.010526316,16.47105263,3.842239826,0.059358154,0.100166885,0.05337027,IGF1,1
-Human Diseases,Endocrine and metabolic disease,hsa04933,AGE-RAGE signaling pathway in diabetic complications,4-Jan,95/6259,0.010526316,16.47105263,3.842239826,0.059358154,0.100166885,0.05337027,CCND1,1
-Environmental Information Processing,Signal transduction,hsa04066,HIF-1 signaling pathway,4-Jan,102/6259,0.009803922,15.34068627,3.692491992,0.063624788,0.105175669,0.056039018,IGF1,1
-Organismal Systems,Endocrine system,hsa04919,Thyroid hormone signaling pathway,4-Jan,110/6259,0.009090909,14.225,3.538538253,0.068483149,0.107665918,0.057365856,CCND1,1
-Cellular Processes,Cellular community - eukaryotes,hsa04550,Signaling pathways regulating pluripotency of stem cells,4-Jan,121/6259,0.008264463,12.93181818,3.35135156,0.075132497,0.107665918,0.057365856,IGF1,1
-Human Diseases,Infectious disease: viral,hsa05162,Measles,4-Jan,121/6259,0.008264463,12.93181818,3.35135156,0.075132497,0.107665918,0.057365856,CCND1,1
-Environmental Information Processing,Signal transduction,hsa04150,mTOR signaling pathway,4-Jan,122/6259,0.008196721,12.82581967,3.335548225,0.075735213,0.107665918,0.057365856,IGF1,1
-Organismal Systems,Endocrine system,hsa04921,Oxytocin signaling pathway,4-Jan,129/6259,0.007751938,12.12984496,3.229890883,0.07994598,0.107665918,0.057365856,CCND1,1
-Environmental Information Processing,Signal transduction,hsa04390,Hippo signaling pathway,4-Jan,131/6259,0.007633588,11.94465649,3.201197896,0.081146409,0.107665918,0.057365856,CCND1,1
-Human Diseases,Cancer: specific types,hsa05226,Gastric cancer,4-Jan,131/6259,0.007633588,11.94465649,3.201197896,0.081146409,0.107665918,0.057365856,CCND1,1
-Human Diseases,Infectious disease: viral,hsa05160,Hepatitis C,4-Jan,132/6259,0.007575758,11.85416667,3.187084876,0.081746183,0.107665918,0.057365856,CCND1,1
-Human Diseases,Endocrine and metabolic disease,hsa04934,Cushing syndrome,4-Jan,133/6259,0.007518797,11.76503759,3.173123629,0.082345663,0.107665918,0.057365856,CCND1,1
-Cellular Processes,Cell growth and death,hsa04218,Cellular senescence,4-Jan,134/6259,0.007462687,11.67723881,3.159311344,0.082944849,0.107665918,0.057365856,CCND1,1
-Human Diseases,Endocrine and metabolic disease,hsa04932,Non-alcoholic fatty liver disease,4-Jan,135/6259,0.007407407,11.59074074,3.145645283,0.083543743,0.107665918,0.057365856,IRS2,1
-Cellular Processes,Cell growth and death,hsa04110,Cell cycle,4-Jan,136/6259,0.007352941,11.50551471,3.132122776,0.084142342,0.107665918,0.057365856,CCND1,1
-Cellular Processes,Transport and catabolism,hsa04140,Autophagy - animal,4-Jan,137/6259,0.00729927,11.42153285,3.118741223,0.084740649,0.107665918,0.057365856,IRS2,1
-Cellular Processes,Cellular community - eukaryotes,hsa04530,Tight junction,4-Jan,137/6259,0.00729927,11.42153285,3.118741223,0.084740649,0.107665918,0.057365856,CCND1,1
-Human Diseases,Cancer: specific types,hsa05225,Hepatocellular carcinoma,4-Jan,140/6259,0.007142857,11.17678571,3.079417257,0.08653381,0.107665918,0.057365856,CCND1,1
-Environmental Information Processing,Signal transduction,hsa04310,Wnt signaling pathway,4-Jan,141/6259,0.007092199,11.09751773,3.0665748,0.087130944,0.107665918,0.057365856,CCND1,1
-Environmental Information Processing,Signal transduction,hsa04630,JAK-STAT signaling pathway,4-Jan,142/6259,0.007042254,11.0193662,3.05386124,0.087727785,0.107665918,0.057365856,CCND1,1
-Environmental Information Processing,Signal transduction,hsa04022,cGMP-PKG signaling pathway,4-Jan,146/6259,0.006849315,10.71746575,3.004252054,0.090112225,0.108941645,0.058045581,IRS2,1
-Human Diseases,Cancer: overview,hsa05207,Chemical carcinogenesis - receptor activation,4-Jan,157/6259,0.006369427,9.96656051,2.877224344,0.096645336,0.11512165,0.061338371,CCND1,1
-Human Diseases,Infectious disease: viral,hsa05167,Kaposi sarcoma-associated herpesvirus infection,4-Jan,165/6259,0.006060606,9.483333333,2.792488525,0.101374544,0.1190049,0.063407419,CCND1,1
-Human Diseases,Cancer: overview,hsa05202,Transcriptional misregulation in cancer,4-Jan,172/6259,0.005813953,9.097383721,2.722960936,0.105497348,0.121026732,0.064484679,IGF1,1
-Human Diseases,Cancer: overview,hsa05203,Viral carcinogenesis,4-Jan,173/6259,0.005780347,9.044797688,2.713353153,0.10608516,0.121026732,0.064484679,CCND1,1
-Human Diseases,Infectious disease: viral,hsa05169,Epstein-Barr virus infection,4-Jan,179/6259,0.005586592,8.741620112,2.657300689,0.10960595,0.122267542,0.065145799,CCND1,1
-Organismal Systems,Environmental adaptation,hsa04714,Thermogenesis,4-Jan,180/6259,0.005555556,8.693055556,2.648214552,0.110191735,0.122267542,0.065145799,PPARGC1A,1
-Environmental Information Processing,Signal transduction,hsa04015,Rap1 signaling pathway,4-Jan,188/6259,0.005319149,8.323138298,2.577983671,0.114867621,0.124909077,0.066553245,IGF1,1
-Human Diseases,Infectious disease: viral,hsa05163,Human cytomegalovirus infection,4-Jan,191/6259,0.005235602,8.192408377,2.552715138,0.116616318,0.124909077,0.066553245,CCND1,1
-Human Diseases,Infectious disease: viral,hsa05166,Human T-cell leukemia virus 1 infection,4-Jan,192/6259,0.005208333,8.149739583,2.544415067,0.11719864,0.124909077,0.066553245,CCND1,1
-Environmental Information Processing,Signal transduction,hsa04014,Ras signaling pathway,4-Jan,202/6259,0.004950495,7.746287129,2.464596556,0.123006047,0.129395972,0.068943922,IGF1,1
-Human Diseases,Neurodegenerative disease,hsa05016,Huntington disease,4-Jan,253/6259,0.003952569,6.184782609,2.128787279,0.152179407,0.158032461,0.084201831,PPARGC1A,1
-Environmental Information Processing,Signal transduction,hsa04010,MAPK signaling pathway,4-Jan,274/6259,0.003649635,5.710766423,2.016363805,0.163977924,0.168129264,0.089581544,IGF1,1
-Human Diseases,Infectious disease: viral,hsa05165,Human papillomavirus infection,4-Jan,283/6259,0.003533569,5.529151943,1.971691354,0.168996551,0.171109008,0.091169192,CCND1,1
-Human Diseases,Neurodegenerative disease,hsa05010,Alzheimer disease,4-Jan,319/6259,0.003134796,4.905172414,1.810407958,0.188845453,0.188845453,0.10061941,IRS2,1
+Environmental Information Processing,Signal transduction,hsa04152,AMPK signaling pathway,4/4,104/6259,0.038461538,60.18269231,15.38974688,7.20E-08,5.83E-06,3.11E-06,IRS2/PPARGC1A/CCND1/IGF1,4
+Organismal Systems,Aging,hsa04211,Longevity regulating pathway,3/4,75/6259,0.04,62.59,13.56876164,6.56E-06,0.000265497,0.00014146,IRS2/PPARGC1A/IGF1,3
+Environmental Information Processing,Signal transduction,hsa04068,FoxO signaling pathway,3/4,117/6259,0.025641026,40.12179487,10.80167023,2.51E-05,0.000678395,0.000361458,IRS2/CCND1/IGF1,3
+Organismal Systems,Aging,hsa04213,Longevity regulating pathway - multiple species,2/4,50/6259,0.04,62.59,11.05652098,0.000371471,0.006763794,0.003603841,IRS2/IGF1,2
+Organismal Systems,Endocrine system,hsa04920,Adipocytokine signaling pathway,2/4,65/6259,0.030769231,48.14615385,9.661653651,0.000628718,0.006763794,0.003603841,IRS2/PPARGC1A,2
+Cellular Processes,Cell growth and death,hsa04115,p53 signaling pathway,2/4,66/6259,0.03030303,47.41666667,9.585824972,0.000648227,0.006763794,0.003603841,CCND1/IGF1,2
+Human Diseases,Cancer: specific types,hsa05218,Melanoma,2/4,66/6259,0.03030303,47.41666667,9.585824972,0.000648227,0.006763794,0.003603841,CCND1/IGF1,2
+Human Diseases,Cancer: specific types,hsa05214,Glioma,2/4,67/6259,0.029850746,46.70895522,9.511682394,0.000668029,0.006763794,0.003603841,CCND1/IGF1,2
+Human Diseases,Drug resistance: antineoplastic,hsa01522,Endocrine resistance,2/4,87/6259,0.022988506,35.97126437,8.306003695,0.001125461,0.010082304,0.005371988,CCND1/IGF1,2
+Human Diseases,Endocrine and metabolic disease,hsa04931,Insulin resistance,2/4,96/6259,0.020833333,32.59895833,7.889444347,0.001369202,0.010082304,0.005371988,IRS2/PPARGC1A,2
+Human Diseases,Cancer: specific types,hsa05215,Prostate cancer,2/4,96/6259,0.020833333,32.59895833,7.889444347,0.001369202,0.010082304,0.005371988,CCND1/IGF1,2
+Organismal Systems,Endocrine system,hsa04935,"Growth hormone synthesis, secretion and action",2/4,109/6259,0.018348624,28.71100917,7.380098381,0.001762416,0.011896305,0.006338512,IRS2/IGF1,2
+Environmental Information Processing,Signal transduction,hsa04371,Apelin signaling pathway,2/4,117/6259,0.017094017,26.74786325,7.10907894,0.002028401,0.012081289,0.006437074,PPARGC1A/CCND1,2
+Human Diseases,Endocrine and metabolic disease,hsa04936,Alcoholic liver disease,2/4,124/6259,0.016129032,25.23790323,6.893388007,0.002276049,0.012081289,0.006437074,PPARGC1A/CCND1,2
+Organismal Systems,Endocrine system,hsa04910,Insulin signaling pathway,2/4,125/6259,0.016,25.036,6.864034127,0.00231256,0.012081289,0.006437074,IRS2/PPARGC1A,2
+Human Diseases,Cancer: specific types,hsa05224,Breast cancer,2/4,127/6259,0.015748031,24.64173228,6.806348788,0.002386427,0.012081289,0.006437074,CCND1/IGF1,2
+Environmental Information Processing,Signaling molecules and interaction,hsa04518,Integrin signaling,2/4,139/6259,0.014388489,22.51438849,6.486266875,0.002853274,0.013595014,0.007243607,CCND1/IGF1,2
+Human Diseases,Cancer: overview,hsa05206,MicroRNAs in cancer,2/4,144/6259,0.013888889,21.73263889,6.364608828,0.003059704,0.013768666,0.007336131,IRS2/CCND1,2
+Human Diseases,Cancer: overview,hsa05205,Proteoglycans in cancer,2/4,183/6259,0.010928962,17.1010929,5.589926995,0.004907257,0.020303578,0.010818021,CCND1/IGF1,2
+Cellular Processes,Cellular community - eukaryotes,hsa04510,Focal adhesion,2/4,185/6259,0.010810811,16.91621622,5.556769967,0.005013229,0.020303578,0.010818021,CCND1/IGF1,2
+Environmental Information Processing,Signaling molecules and interaction,hsa04081,Hormone signaling,2/4,195/6259,0.01025641,16.04871795,5.398477926,0.005559329,0.021443126,0.011425187,IRS2/IGF1,2
+Environmental Information Processing,Signal transduction,hsa04151,PI3K-Akt signaling pathway,2/4,315/6259,0.006349206,9.934920635,4.114723849,0.014159663,0.052133304,0.027777329,CCND1/IGF1,2
+Organismal Systems,Excretory system,hsa04960,Aldosterone-regulated sodium reabsorption,1/4,32/6259,0.03125,48.8984375,6.868960529,0.020299079,0.07148806,0.038089805,IGF1,1
+Human Diseases,Cancer: specific types,hsa05216,Thyroid cancer,1/4,34/6259,0.029411765,46.02205882,6.656244247,0.021557425,0.072756308,0.038765544,CCND1,1
+Human Diseases,Cancer: specific types,hsa05219,Bladder cancer,1/4,38/6259,0.026315789,41.17763158,6.281742758,0.024070479,0.076888352,0.040967153,CCND1,1
+Organismal Systems,Endocrine system,hsa04913,Ovarian steroidogenesis,1/4,39/6259,0.025641026,40.12179487,6.197121355,0.024697986,0.076888352,0.040967153,IGF1,1
+Human Diseases,Endocrine and metabolic disease,hsa04930,Type II diabetes mellitus,1/4,41/6259,0.024390244,38.16463415,6.037130301,0.025952091,0.076888352,0.040967153,IRS2,1
+Environmental Information Processing,Signal transduction,hsa04340,Hedgehog signaling pathway,1/4,42/6259,0.023809524,37.25595238,5.961391546,0.02657869,0.076888352,0.040967153,CCND1,1
+Human Diseases,Cancer: overview,hsa05200,Pathways in cancer,2/4,474/6259,0.004219409,6.602320675,3.208038498,0.030987137,0.08467371,0.045115297,CCND1/IGF1,2
+Organismal Systems,Nervous system,hsa04730,Long-term depression,1/4,51/6259,0.019607843,30.68137255,5.381797245,0.032204485,0.08467371,0.045115297,IGF1,1
+Organismal Systems,Endocrine system,hsa04923,Regulation of lipolysis in adipocytes,1/4,53/6259,0.018867925,29.52358491,5.273151815,0.033451342,0.08467371,0.045115297,IRS2,1
+Human Diseases,Cancer: specific types,hsa05213,Endometrial cancer,1/4,53/6259,0.018867925,29.52358491,5.273151815,0.033451342,0.08467371,0.045115297,CCND1,1
+Human Diseases,Cardiovascular disease,hsa05416,Viral myocarditis,1/4,57/6259,0.01754386,27.45175439,5.072944914,0.035941443,0.088219906,0.047004758,CCND1,1
+Human Diseases,Cancer: specific types,hsa05221,Acute myeloid leukemia,1/4,62/6259,0.016129032,25.23790323,4.849916504,0.0390473,0.093024449,0.049564684,CCND1,1
+Organismal Systems,Endocrine system,hsa04917,Prolactin signaling pathway,1/4,65/6259,0.015384615,24.07307692,4.728361907,0.040907207,0.094103238,0.050139477,CCND1,1
+Human Diseases,Cancer: specific types,hsa05223,Non-small cell lung cancer,1/4,67/6259,0.014925373,23.35447761,4.651795038,0.042145645,0.094103238,0.050139477,CCND1,1
+Human Diseases,Cancer: specific types,hsa05220,Chronic myeloid leukemia,1/4,69/6259,0.014492754,22.67753623,4.578500434,0.043382883,0.094103238,0.050139477,CCND1,1
+Organismal Systems,Endocrine system,hsa04914,Progesterone-mediated oocyte maturation,1/4,73/6259,0.01369863,21.43493151,4.440826201,0.045853763,0.094103238,0.050139477,IGF1,1
+Human Diseases,Cancer: specific types,hsa05212,Pancreatic cancer,1/4,73/6259,0.01369863,21.43493151,4.440826201,0.045853763,0.094103238,0.050139477,CCND1,1
+Human Diseases,Drug resistance: antineoplastic,hsa01521,EGFR tyrosine kinase inhibitor resistance,1/4,74/6259,0.013513514,21.14527027,4.408118129,0.046470735,0.094103238,0.050139477,IGF1,1
+Human Diseases,Cancer: specific types,hsa05210,Colorectal cancer,1/4,81/6259,0.012345679,19.31790123,4.195931491,0.050781161,0.100166885,0.05337027,CCND1,1
+Organismal Systems,Sensory system,hsa04750,Inflammatory mediator regulation of TRP channels,1/4,83/6259,0.012048193,18.85240964,4.140152745,0.052010022,0.100166885,0.05337027,IGF1,1
+Human Diseases,Cardiovascular disease,hsa05410,Hypertrophic cardiomyopathy,1/4,89/6259,0.011235955,17.58146067,3.983908219,0.055689449,0.100166885,0.05337027,IGF1,1
+Human Diseases,Cancer: specific types,hsa05222,Small cell lung cancer,1/4,90/6259,0.011111111,17.38611111,3.959349897,0.056301643,0.100166885,0.05337027,CCND1,1
+Organismal Systems,Endocrine system,hsa04922,Glucagon signaling pathway,1/4,91/6259,0.010989011,17.19505495,3.935184124,0.056913541,0.100166885,0.05337027,PPARGC1A,1
+Human Diseases,Cardiovascular disease,hsa05414,Dilated cardiomyopathy,1/4,93/6259,0.010752688,16.82526882,3.887988109,0.058136442,0.100166885,0.05337027,IGF1,1
+Cellular Processes,Cell growth and death,hsa04114,Oocyte meiosis,1/4,95/6259,0.010526316,16.47105263,3.842239826,0.059358154,0.100166885,0.05337027,IGF1,1
+Human Diseases,Endocrine and metabolic disease,hsa04933,AGE-RAGE signaling pathway in diabetic complications,1/4,95/6259,0.010526316,16.47105263,3.842239826,0.059358154,0.100166885,0.05337027,CCND1,1
+Environmental Information Processing,Signal transduction,hsa04066,HIF-1 signaling pathway,1/4,102/6259,0.009803922,15.34068627,3.692491992,0.063624788,0.105175669,0.056039018,IGF1,1
+Organismal Systems,Endocrine system,hsa04919,Thyroid hormone signaling pathway,1/4,110/6259,0.009090909,14.225,3.538538253,0.068483149,0.107665918,0.057365856,CCND1,1
+Cellular Processes,Cellular community - eukaryotes,hsa04550,Signaling pathways regulating pluripotency of stem cells,1/4,121/6259,0.008264463,12.93181818,3.35135156,0.075132497,0.107665918,0.057365856,IGF1,1
+Human Diseases,Infectious disease: viral,hsa05162,Measles,1/4,121/6259,0.008264463,12.93181818,3.35135156,0.075132497,0.107665918,0.057365856,CCND1,1
+Environmental Information Processing,Signal transduction,hsa04150,mTOR signaling pathway,1/4,122/6259,0.008196721,12.82581967,3.335548225,0.075735213,0.107665918,0.057365856,IGF1,1
+Organismal Systems,Endocrine system,hsa04921,Oxytocin signaling pathway,1/4,129/6259,0.007751938,12.12984496,3.229890883,0.07994598,0.107665918,0.057365856,CCND1,1
+Environmental Information Processing,Signal transduction,hsa04390,Hippo signaling pathway,1/4,131/6259,0.007633588,11.94465649,3.201197896,0.081146409,0.107665918,0.057365856,CCND1,1
+Human Diseases,Cancer: specific types,hsa05226,Gastric cancer,1/4,131/6259,0.007633588,11.94465649,3.201197896,0.081146409,0.107665918,0.057365856,CCND1,1
+Human Diseases,Infectious disease: viral,hsa05160,Hepatitis C,1/4,132/6259,0.007575758,11.85416667,3.187084876,0.081746183,0.107665918,0.057365856,CCND1,1
+Human Diseases,Endocrine and metabolic disease,hsa04934,Cushing syndrome,1/4,133/6259,0.007518797,11.76503759,3.173123629,0.082345663,0.107665918,0.057365856,CCND1,1
+Cellular Processes,Cell growth and death,hsa04218,Cellular senescence,1/4,134/6259,0.007462687,11.67723881,3.159311344,0.082944849,0.107665918,0.057365856,CCND1,1
+Human Diseases,Endocrine and metabolic disease,hsa04932,Non-alcoholic fatty liver disease,1/4,135/6259,0.007407407,11.59074074,3.145645283,0.083543743,0.107665918,0.057365856,IRS2,1
+Cellular Processes,Cell growth and death,hsa04110,Cell cycle,1/4,136/6259,0.007352941,11.50551471,3.132122776,0.084142342,0.107665918,0.057365856,CCND1,1
+Cellular Processes,Transport and catabolism,hsa04140,Autophagy - animal,1/4,137/6259,0.00729927,11.42153285,3.118741223,0.084740649,0.107665918,0.057365856,IRS2,1
+Cellular Processes,Cellular community - eukaryotes,hsa04530,Tight junction,1/4,137/6259,0.00729927,11.42153285,3.118741223,0.084740649,0.107665918,0.057365856,CCND1,1
+Human Diseases,Cancer: specific types,hsa05225,Hepatocellular carcinoma,1/4,140/6259,0.007142857,11.17678571,3.079417257,0.08653381,0.107665918,0.057365856,CCND1,1
+Environmental Information Processing,Signal transduction,hsa04310,Wnt signaling pathway,1/4,141/6259,0.007092199,11.09751773,3.0665748,0.087130944,0.107665918,0.057365856,CCND1,1
+Environmental Information Processing,Signal transduction,hsa04630,JAK-STAT signaling pathway,1/4,142/6259,0.007042254,11.0193662,3.05386124,0.087727785,0.107665918,0.057365856,CCND1,1
+Environmental Information Processing,Signal transduction,hsa04022,cGMP-PKG signaling pathway,1/4,146/6259,0.006849315,10.71746575,3.004252054,0.090112225,0.108941645,0.058045581,IRS2,1
+Human Diseases,Cancer: overview,hsa05207,Chemical carcinogenesis - receptor activation,1/4,157/6259,0.006369427,9.96656051,2.877224344,0.096645336,0.11512165,0.061338371,CCND1,1
+Human Diseases,Infectious disease: viral,hsa05167,Kaposi sarcoma-associated herpesvirus infection,1/4,165/6259,0.006060606,9.483333333,2.792488525,0.101374544,0.1190049,0.063407419,CCND1,1
+Human Diseases,Cancer: overview,hsa05202,Transcriptional misregulation in cancer,1/4,172/6259,0.005813953,9.097383721,2.722960936,0.105497348,0.121026732,0.064484679,IGF1,1
+Human Diseases,Cancer: overview,hsa05203,Viral carcinogenesis,1/4,173/6259,0.005780347,9.044797688,2.713353153,0.10608516,0.121026732,0.064484679,CCND1,1
+Human Diseases,Infectious disease: viral,hsa05169,Epstein-Barr virus infection,1/4,179/6259,0.005586592,8.741620112,2.657300689,0.10960595,0.122267542,0.065145799,CCND1,1
+Organismal Systems,Environmental adaptation,hsa04714,Thermogenesis,1/4,180/6259,0.005555556,8.693055556,2.648214552,0.110191735,0.122267542,0.065145799,PPARGC1A,1
+Environmental Information Processing,Signal transduction,hsa04015,Rap1 signaling pathway,1/4,188/6259,0.005319149,8.323138298,2.577983671,0.114867621,0.124909077,0.066553245,IGF1,1
+Human Diseases,Infectious disease: viral,hsa05163,Human cytomegalovirus infection,1/4,191/6259,0.005235602,8.192408377,2.552715138,0.116616318,0.124909077,0.066553245,CCND1,1
+Human Diseases,Infectious disease: viral,hsa05166,Human T-cell leukemia virus 1 infection,1/4,192/6259,0.005208333,8.149739583,2.544415067,0.11719864,0.124909077,0.066553245,CCND1,1
+Environmental Information Processing,Signal transduction,hsa04014,Ras signaling pathway,1/4,202/6259,0.004950495,7.746287129,2.464596556,0.123006047,0.129395972,0.068943922,IGF1,1
+Human Diseases,Neurodegenerative disease,hsa05016,Huntington disease,1/4,253/6259,0.003952569,6.184782609,2.128787279,0.152179407,0.158032461,0.084201831,PPARGC1A,1
+Environmental Information Processing,Signal transduction,hsa04010,MAPK signaling pathway,1/4,274/6259,0.003649635,5.710766423,2.016363805,0.163977924,0.168129264,0.089581544,IGF1,1
+Human Diseases,Infectious disease: viral,hsa05165,Human papillomavirus infection,1/4,283/6259,0.003533569,5.529151943,1.971691354,0.168996551,0.171109008,0.091169192,CCND1,1
+Human Diseases,Neurodegenerative disease,hsa05010,Alzheimer disease,1/4,319/6259,0.003134796,4.905172414,1.810407958,0.188845453,0.188845453,0.10061941,IRS2,1

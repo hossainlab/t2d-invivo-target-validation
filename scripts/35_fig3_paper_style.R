@@ -17,9 +17,8 @@
 #   G  cell-level correlation of the pair in the key cell type, red fit over a grey ribbon, with the
 #      R and P written in a box inside the panel
 #
-# This is deliberately NOT the figure_style.R contract used by scripts 27-32. It is the reference
-# paper's style, kept as a separate deliverable in figures/Fig3_paper_style_<tissue>/ so the
-# Nature/Cell version in figures/Fig3_composite_<tissue>/ is untouched. Pick one; do not ship both.
+# This is the shipped Figure 3. It follows the reference paper's visual language, not the
+# figure_style.R Nature/Cell contract that scripts 27-32 use; that set is no longer built.
 #
 # Deviations from the reference forced by this dataset, all of them stated in the legend:
 #   - Two groups, not three. The reference contrasts Ctrl / CIA / Treat; this atlas has Control and
@@ -33,8 +32,8 @@
 # Reads only results/figure_exports/fig3_composite_<tissue>_cache.rds, the cache script 27 writes, so
 # it never loads the Seurat object. Run script 27 stage `cache` first if that file is missing.
 #
-# Outputs: figures/Fig3_paper_style_<tissue>/Fig3<A-G>_*.pdf, Fig3_paper_style_<tissue>.pdf,
-#          Fig3_paper_style_legend.md, results/figure_exports/Fig3_paper_style_<tissue>.tiff
+# Outputs: figures/Fig3_<tissue>/Fig3<A-G>_*.pdf, Fig3_<tissue>.pdf, Fig3_legend.md
+#          results/figure_exports/Fig3_<tissue>.tiff
 
 suppressPackageStartupMessages({
   library(data.table); library(ggplot2); library(patchwork); library(ggrepel)
@@ -51,17 +50,23 @@ tissue <- tolower(args[1])
 stage  <- if (length(args) >= 2) args[2] else "all"
 # optional third argument selects the pair, matching script 27's cache naming. The default is the p53
 # arrest readout; "Ppargc1a,Ccnd1" is the axis pair drawn from the selected KEGG map, hsa04152.
-PAIR_DEFAULT <- c("Cdkn1a", "Ccnd1")
-pair_arg <- if (length(args) >= 3) trimws(strsplit(args[3], ",")[[1]]) else PAIR_DEFAULT
-pair_tag <- if (identical(pair_arg, PAIR_DEFAULT)) "" else paste0("_", paste(tolower(pair_arg), collapse = "_"))
+# The shipped pair is Ppargc1a-Ccnd1, both nodes of the selected KEGG map hsa04152, because the
+# reference takes its single-cell genes from its own selected map. Any other pair can still be drawn
+# by passing it as the third argument; it then gets a suffixed folder of its own so the deliverable is
+# not overwritten. The cache is always addressed by the pair, never by a bare default, so a figure can
+# never be built from a cache that holds different genes.
+PAIR_DEFAULT <- c("Ppargc1a", "Ccnd1")
+pair_arg   <- if (length(args) >= 3) trimws(strsplit(args[3], ",")[[1]]) else PAIR_DEFAULT
+cache_tag  <- paste0("_", paste(tolower(pair_arg), collapse = "_"))
+pair_tag   <- if (identical(pair_arg, PAIR_DEFAULT)) "" else cache_tag
 set.seed(20260918)
 
 SIG_UNIT <- "mouse"     # "mouse" (per-mouse t-test) or "cell" (cell-level Wilcoxon)
 
-fig_dir   <- file.path("figures", paste0("Fig3_paper_style_", tissue, pair_tag))
-panel_dir <- file.path("results/figure_exports", paste0("fig3paper_panels_", tissue, pair_tag))
+fig_dir   <- file.path("figures", paste0("Fig3_", tissue, pair_tag))
+panel_dir <- file.path("results/figure_exports", paste0("fig3_panels_ref_", tissue, pair_tag))
 cache_f   <- file.path("results/figure_exports",
-                       paste0("fig3_composite_", tissue, pair_tag, "_cache.rds"))
+                       paste0("fig3_composite_", tissue, cache_tag, "_cache.rds"))
 for (d in c(fig_dir, panel_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 
 if (!file.exists(cache_f))
@@ -299,10 +304,9 @@ DDDEEEFFFFGGGG
     plot_layout(design = design) +
     plot_annotation(tag_levels = "A") &
     theme(plot.tag = element_text(size = 13, face = "bold"))
-  out <- file.path(fig_dir, paste0("Fig3_paper_style_", tissue, pair_tag))
+  out <- file.path(fig_dir, paste0("Fig3_", tissue, pair_tag))
   ggsave(paste0(out, ".pdf"), comp, width = 260, height = 190, units = "mm", device = cairo_pdf)
-  tif <- file.path("results/figure_exports",
-                   paste0("Fig3_paper_style_", tissue, pair_tag, ".tiff"))
+  tif <- file.path("results/figure_exports", paste0("Fig3_", tissue, pair_tag, ".tiff"))
   unlink(tif)
   ggsave(tif, comp, width = 260, height = 190, units = "mm", dpi = 400, bg = "white",
          compression = "lzw")
@@ -322,9 +326,8 @@ if (stage %in% c("legend", "panels", "all")) {
     sprintf("# Figure 3, reference-paper style (%s) - legend", tissue),
     "",
     "Drawn to match Xu et al., *Phytomedicine* 154 (2026) 158050, Fig. 3, with this project's data.",
-    sprintf("The Nature/Cell-contract version of the same figure is in `figures/Fig3_composite_%s%s/`.",
-            tissue, pair_tag),
-    "**Ship one or the other, not both.**",
+    sprintf("Pair: **%s**, both nodes of the selected KEGG map hsa04152.",
+            paste(cc$pair, collapse = " and ")),
     "",
     sprintf("**Fig. 3. Results of scRNA-seq analysis.** (A) UMAP projection illustrating the single-cell atlas of mouse %s tissue. (B) Bubble plot showing marker genes for each cell type. (C) Bar plot displaying the proportion and number of cells from each sample source. (D-E) Analysis of %s and %s expression levels in %s across experimental groups. %s; ns: P > 0.05, *: P < 0.05, **: P < 0.01, ***: P < 0.001, ****: P < 0.0001. (F) UMAP-based heatmap showing co-localization of %s and %s across the atlas. (G) Correlation between %s and %s expression levels in %s.",
             tissue, cc$pair[1], cc$pair[2], tolower(nice_ct(cc$key)),
@@ -377,6 +380,6 @@ if (stage %in% c("legend", "panels", "all")) {
     sprintf("| Pair correlation in %s | R = %.2f, P = %s, empirical P = %.3f |",
             nice_ct(cc$key), cr$cell_R, format(signif(cr$cell_p, 2)), cr$empirical_p)
   )
-  writeLines(l, file.path(fig_dir, "Fig3_paper_style_legend.md"))
-  message("wrote ", file.path(fig_dir, "Fig3_paper_style_legend.md"))
+  writeLines(l, file.path(fig_dir, "Fig3_legend.md"))
+  message("wrote ", file.path(fig_dir, "Fig3_legend.md"))
 }

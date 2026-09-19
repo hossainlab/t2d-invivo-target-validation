@@ -13,11 +13,10 @@
 #   F  MM vs GS for the single strongest module, open circles, threshold lines
 #   G  ggvenn with counts and percentages, set names in the circle colours
 #
-# This is deliberately NOT the figure_style.R contract used by scripts 27-32. It is the reference
-# paper's style, kept as a separate deliverable in figures/Fig1_paper_style/ so the Nature/Cell version
-# in figures/Fig1_bulk_DEG_WGCNA/ is untouched. Pick one for submission; do not ship both.
+# This is the shipped Figure 1. It follows the reference paper's visual language, not the
+# figure_style.R Nature/Cell contract that scripts 27-32 use; that set is no longer built.
 #
-# Deviations from the reference forced by this dataset, all of them stated in Fig1_paper_style_legend.md:
+# Deviations from the reference forced by this dataset, all of them stated in Fig1_legend.md:
 #   - B uses nominal P, not adjusted P (decision M9). 84 genes do reach FDR < 0.05, but only 31 of them
 #     also clear |log2FC| > 0.5, and the paper's strict downstream rules then leave one intersecting
 #     gene (SREBF2, decision R17). The paper had 1,648 DEGs at adjusted P < 0.05.
@@ -27,8 +26,8 @@
 #   - F shows the red module and the M10 hub thresholds (|kME| > 0.7, |GS| > 0.2), not 0.7 / 0.7. Its
 #     threshold lines are black dashed because the module colour is red.
 #
-# Outputs: figures/Fig1_paper_style/Fig1<A-G>_*.pdf, Fig1_paper_style.pdf, Fig1_paper_style_legend.md
-#          results/figure_exports/Fig1_paper_style.tiff
+# Outputs: figures/Fig1/Fig1<A-G>_*.pdf, Fig1.pdf, Fig1_legend.md
+#          results/figure_exports/Fig1.tiff
 
 suppressPackageStartupMessages({
   library(data.table); library(ggplot2); library(patchwork); library(WGCNA)
@@ -40,8 +39,8 @@ args  <- commandArgs(trailingOnly = TRUE)
 stage <- if (length(args) >= 1) args[1] else "all"
 set.seed(20260918)
 
-fig_dir   <- "figures/Fig1_paper_style"
-panel_dir <- file.path("results/figure_exports", "fig1paper_panels")
+fig_dir   <- "figures/Fig1"
+panel_dir <- file.path("results/figure_exports", "fig1_panels_ref")
 bulk      <- "results/bulk"
 for (d in c(fig_dir, panel_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 
@@ -301,9 +300,9 @@ EEEEFFFFFGGGGG
     plot_layout(design = design) +
     plot_annotation(tag_levels = "A") &
     theme(plot.tag = element_text(size = 13, face = "bold"))
-  out <- file.path(fig_dir, "Fig1_paper_style")
+  out <- file.path(fig_dir, "Fig1")
   ggsave(paste0(out, ".pdf"), comp, width = 260, height = 250, units = "mm", device = cairo_pdf)
-  tif <- file.path("results/figure_exports", "Fig1_paper_style.tiff")
+  tif <- file.path("results/figure_exports", "Fig1.tiff")
   unlink(tif)
   ggsave(tif, comp, width = 260, height = 250, units = "mm", dpi = 400, bg = "white",
          compression = "lzw")
@@ -327,8 +326,6 @@ if (stage %in% c("legend", "panels", "all")) {
     "# Figure 1, reference-paper style - legend",
     "",
     "Drawn to match Xu et al., *Phytomedicine* 154 (2026) 158050, Fig. 1, with this project's data.",
-    "The Nature/Cell-contract version of the same figure is in `figures/Fig1_bulk_DEG_WGCNA/`.",
-    "**Ship one or the other, not both.**",
     "",
     sprintf("**Fig. 1. Screening of DEGs related to T2D in human liver.** (A) PCA plot before and after batch effect correction. (B) Volcano plot of DEGs. Blue indicates significantly downregulated genes, red indicates significantly upregulated genes, and grey indicates non-significant genes. (C) Scale independence and mean connectivity in the weighted gene co-expression network. At a soft threshold of %d, the network exhibits high scale independence and mean connectivity close to zero. (D) Different co-expression modules within the weighted gene co-expression network. (E) Heatmap showing the correlation of %d modules and the unassigned grey bin with T2D case and control groups. (F) Correlation between MM and GS for all genes in the %s module. (G) Venn diagram illustrating the intersection among DEGs, key-module genes, and hyperglycaemia-related genes.",
             pwr, nrow(mt), best),
@@ -370,6 +367,6 @@ if (stage %in% c("legend", "panels", "all")) {
     }),
     sprintf("| Three-way intersection | %s genes |", isum[item == "triple_intersection", value])
   )
-  writeLines(l, file.path(fig_dir, "Fig1_paper_style_legend.md"))
-  message("wrote ", file.path(fig_dir, "Fig1_paper_style_legend.md"))
+  writeLines(l, file.path(fig_dir, "Fig1_legend.md"))
+  message("wrote ", file.path(fig_dir, "Fig1_legend.md"))
 }

@@ -116,7 +116,7 @@ Model: limma `~condition + dataset`.
 | GO (Fig 2A) | 230 terms (BP 221, CC 5, MF 4) | Response to insulin (IRS2, IGF1, IGFBP1, ENPP1, CTSD, KHK, FBP1, PNPLA3; adj.P 6×10⁻⁷); cellular response to insulin stimulus; regulation of carbohydrate / glycogen metabolism; IGF receptor signalling (IRS2, IGF1, IGFBP1, IGFBP2); insulin receptor signalling; response to nutrient levels |
 | KEGG (Fig 2B–C) | 9 pathways | **AMPK signalling** (IRS2, IGF1, PPARGC1A, CCND1, FBP1; adj.P 2×10⁻⁴); Apelin signalling; **p53 signalling** (IGF1, CCND1, SERPINE1); longevity regulating; HIF-1; FoxO; fructose and mannose metabolism (KHK, FBP1); insulin signalling |
 
-**Fig 2D:** pathview map of **AMPK signalling (hsa04152)**, coloured by T2D vs Control logFC (`figures/Fig2_enrichment/Fig2D_pathview/hsa04152.T2D_vs_Control_logFC.png`). This is the analogue of the reference paper's pathway diagram.
+**Fig 2D:** pathview map of **AMPK signalling (hsa04152)**, coloured by T2D vs Control logFC (`results/pathway_selection/pathview/hsa04152.T2D_vs_Control_logFC.png`). This is the analogue of the reference paper's pathway diagram.
 
 **GSEA on the full T2D vs Control ranking** (moderated t):
 

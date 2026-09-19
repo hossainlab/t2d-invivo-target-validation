@@ -15,9 +15,8 @@
 #   D  Steiger directionality: variance explained in the outcome against variance explained in the
 #      exposure, with the y = x line dashed in red
 #
-# This is deliberately NOT the figure_style.R contract used by scripts 27-32. It is the reference
-# paper's style, kept as a separate deliverable in figures/Fig5_paper_style/ so the Nature/Cell
-# version in figures/Fig5_MR/ is untouched. Pick one for submission; do not ship both.
+# This is the shipped Figure 5. It follows the reference paper's visual language, not the
+# figure_style.R Nature/Cell contract that scripts 27-32 use; that set is no longer built.
 #
 # The single most important deviation, stated at the top of the legend:
 #   The reference's Fig. 4 nominates a causal druggable target (PAK1, IVW P = 0.039). This analysis
@@ -32,8 +31,8 @@
 #
 # Inputs:  results/mr/mr_results_blood_ldclumped.csv, instruments_blood_ldclumped_harmonised.csv,
 #          mr_steiger.csv
-# Outputs: figures/Fig5_paper_style/Fig5<A-D>_*.pdf, Fig5_paper_style.pdf,
-#          Fig5_paper_style_legend.md, results/figure_exports/Fig5_paper_style.tiff
+# Outputs: figures/Fig5/Fig5<A-D>_*.pdf, Fig5.pdf, Fig5_legend.md,
+#          results/figure_exports/Fig5.tiff
 
 suppressPackageStartupMessages({
   library(data.table); library(ggplot2); library(patchwork); library(ggrepel)
@@ -44,8 +43,8 @@ args  <- commandArgs(trailingOnly = TRUE)
 stage <- if (length(args) >= 1) args[1] else "all"
 set.seed(20260918)
 
-fig_dir   <- "figures/Fig5_paper_style"
-panel_dir <- file.path("results/figure_exports", "fig5paper_panels")
+fig_dir   <- "figures/Fig5"
+panel_dir <- file.path("results/figure_exports", "fig5_panels_ref")
 mrd       <- "results/mr"
 for (dd in c(fig_dir, panel_dir)) dir.create(dd, recursive = TRUE, showWarnings = FALSE)
 
@@ -274,9 +273,9 @@ BBBCCCDDD
     plot_layout(design = design) +
     plot_annotation(tag_levels = "A") &
     theme(plot.tag = element_text(size = 13, face = "bold"))
-  out <- file.path(fig_dir, "Fig5_paper_style")
+  out <- file.path(fig_dir, "Fig5")
   ggsave(paste0(out, ".pdf"), comp, width = 260, height = 250, units = "mm", device = cairo_pdf)
-  tif <- file.path("results/figure_exports", "Fig5_paper_style.tiff")
+  tif <- file.path("results/figure_exports", "Fig5.tiff")
   unlink(tif)
   ggsave(tif, comp, width = 260, height = 250, units = "mm", dpi = 400, bg = "white",
          compression = "lzw")
@@ -299,8 +298,6 @@ if (stage %in% c("legend", "panels", "all")) {
     "# Figure 5, reference-paper style - legend",
     "",
     "Drawn to match Xu et al., *Phytomedicine* 154 (2026) 158050, Fig. 4, with this project's data.",
-    "The Nature/Cell-contract version of the same figure is in `figures/Fig5_MR/`.",
-    "**Ship one or the other, not both.**",
     "",
     "## What this figure is restricted to",
     "",
@@ -371,6 +368,6 @@ if (stage %in% c("legend", "panels", "all")) {
     sprintf("| Steiger, correct direction | %d of %d genes |",
             st[correct_direction == TRUE, .N], nrow(st))
   )
-  writeLines(l, file.path(fig_dir, "Fig5_paper_style_legend.md"))
-  message("wrote ", file.path(fig_dir, "Fig5_paper_style_legend.md"))
+  writeLines(l, file.path(fig_dir, "Fig5_legend.md"))
+  message("wrote ", file.path(fig_dir, "Fig5_legend.md"))
 }

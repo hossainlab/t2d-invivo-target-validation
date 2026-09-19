@@ -14,9 +14,8 @@
 #      gene count, grey edges, selected pathway boxed in red
 #   D  the pathview rendering of the selected KEGG map, as supplied by script 05
 #
-# This is deliberately NOT the figure_style.R contract used by scripts 27-32. It is the reference
-# paper's style, kept as a separate deliverable in figures/Fig2_paper_style/ so the Nature/Cell version
-# in figures/Fig2_enrichment/ is untouched. Pick one for submission; do not ship both.
+# This is the shipped Figure 2. It follows the reference paper's visual language, not the
+# figure_style.R Nature/Cell contract that scripts 27-32 use; that set is no longer built.
 #
 # Deviations from the reference forced by this dataset, all of them stated in Fig2_paper_style_legend.md:
 #   - A has no CC column. Over-representation of the 8 candidate genes returns BP and MF terms only;
@@ -27,8 +26,8 @@
 #   - D shows AMPK signalling (hsa04152), the map selected in docs/pathway_selection.md, standing in
 #     for the paper's regulation of actin cytoskeleton.
 #
-# Outputs: figures/Fig2_paper_style/Fig2<A-D>_*.pdf, Fig2_paper_style.pdf, Fig2_paper_style_legend.md
-#          results/figure_exports/Fig2_paper_style.tiff
+# Outputs: figures/Fig2/Fig2<A-D>_*.pdf, Fig2.pdf, Fig2_legend.md
+#          results/figure_exports/Fig2.tiff
 
 suppressPackageStartupMessages({
   library(data.table); library(ggplot2); library(patchwork)
@@ -40,15 +39,15 @@ args  <- commandArgs(trailingOnly = TRUE)
 stage <- if (length(args) >= 1) args[1] else "all"
 set.seed(20260918)
 
-fig_dir   <- "figures/Fig2_paper_style"
-panel_dir <- file.path("results/figure_exports", "fig2paper_panels")
+fig_dir   <- "figures/Fig2"
+panel_dir <- file.path("results/figure_exports", "fig2_panels_ref")
 bulk      <- "results/bulk"
 for (d in c(fig_dir, panel_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 
 TOP_GO   <- 10          # terms per ontology in panel A, as in the reference
 TOP_KEGG <- 30          # bubbles in B and nodes in C, as in the reference
 SEL_ID   <- "hsa04152"  # the selected map, boxed in B and C and drawn in D
-PATHVIEW <- "figures/Fig2_enrichment/Fig2D_pathview/hsa04152.T2D_vs_Control_logFC.png"
+PATHVIEW <- "results/pathway_selection/pathview/hsa04152.T2D_vs_Control_logFC.png"
 
 # the paper's palette: one hue per ontology in A, a red-to-blue p.adjust ramp in B and C
 col_onto <- c(BP = "#9ECAE1", CC = "#FDBE85", MF = "#BCBDDC")
@@ -247,9 +246,9 @@ CCCCCCCDDDDDDD
     plot_layout(design = design) +
     plot_annotation(tag_levels = "A") &
     theme(plot.tag = element_text(size = 13, face = "bold"))
-  out <- file.path(fig_dir, "Fig2_paper_style")
+  out <- file.path(fig_dir, "Fig2")
   ggsave(paste0(out, ".pdf"), comp, width = 260, height = 230, units = "mm", device = cairo_pdf)
-  tif <- file.path("results/figure_exports", "Fig2_paper_style.tiff")
+  tif <- file.path("results/figure_exports", "Fig2.tiff")
   unlink(tif)
   ggsave(tif, comp, width = 260, height = 230, units = "mm", dpi = 400, bg = "white",
          compression = "lzw")
@@ -274,8 +273,6 @@ if (stage %in% c("legend", "panels", "all")) {
     "# Figure 2, reference-paper style - legend",
     "",
     "Drawn to match Xu et al., *Phytomedicine* 154 (2026) 158050, Fig. 2, with this project's data.",
-    "The Nature/Cell-contract version of the same figure is in `figures/Fig2_enrichment/`.",
-    "**Ship one or the other, not both.**",
     "",
     sprintf("**Fig. 2. Functional enrichment analysis of intersecting genes.** (A) Results of GO enrichment analysis. Blue represents biological process (BP) terms, yellow represents cellular component (CC) terms, and purple represents molecular function (MF) terms. (B) Bubble chart displaying the results of KEGG analysis. (C) Pathway interaction network of the top %d enriched KEGG terms. (D) Pathway diagram generated using the pathview package, illustrating signal activation within %s.",
             TOP_KEGG, sel$Description),
@@ -309,6 +306,6 @@ if (stage %in% c("legend", "panels", "all")) {
             sel$GeneRatio, format(signif(sel$p.adjust, 2), scientific = TRUE)),
     sprintf("| Genes driving the KEGG result | %s |", paste(kgenes, collapse = ", "))
   )
-  writeLines(l, file.path(fig_dir, "Fig2_paper_style_legend.md"))
-  message("wrote ", file.path(fig_dir, "Fig2_paper_style_legend.md"))
+  writeLines(l, file.path(fig_dir, "Fig2_legend.md"))
+  message("wrote ", file.path(fig_dir, "Fig2_legend.md"))
 }

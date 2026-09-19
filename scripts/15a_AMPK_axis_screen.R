@@ -5,7 +5,8 @@
 # Here both are reported: cell-level Wilcoxon (paper style) and per-mouse pseudobulk edgeR (script 09; primary,
 # because the paper had n = 1 mouse per group and we have 3 vs 4).
 #
-# Gene universe: all human genes on the KEGG hsa04152 map (pathview XML from script 05) -> 1:1 mouse orthologs.
+# Gene universe: all human genes on the KEGG hsa04152 map (pathview KGML from script 05, in
+#                results/pathway_selection/pathview/) -> 1:1 mouse orthologs.
 # "Human-DE" genes = bulk T2D vs lean P < 0.05 (script 02); direction taken from the human logFC.
 #
 # Outputs: results/pathway_selection/AMPK_screen_<tissue>.csv (gene x cell type)
@@ -24,7 +25,7 @@ out_dir <- "results/pathway_selection"
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 # ---- 1. AMPK pathway genes (KEGG map) -------------------------------------------------
-xml <- read_xml("figures/Fig2_enrichment/Fig2D_pathview/hsa04152.xml")
+xml <- read_xml("results/pathway_selection/pathview/hsa04152.xml")
 ids <- unique(unlist(strsplit(xml_attr(xml_find_all(xml, "//entry[@type='gene']"), "name"), " ")))
 entrez <- sub("^hsa:", "", ids[grepl("^hsa:", ids)])
 hum <- unique(na.omit(AnnotationDbi::mapIds(org.Hs.eg.db, entrez, "SYMBOL", "ENTREZID")))

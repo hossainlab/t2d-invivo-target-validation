@@ -78,10 +78,22 @@ keep <- function(p, name, w, h) {
 }
 p_sci <- function(p) formatC(p, format = "E", digits = 2)
 
-res_all <- fread(file.path(mrd, "mr_results_blood_ldclumped.csv"))
+res_all   <- fread(file.path(mrd, "mr_results_blood_ldclumped.csv"))
 map_genes <- fread(MAP_FILE)$human
 res <- res_all[gene %in% map_genes]                       # exposures on the selected map only
 if (!nrow(res)) stop("no MR exposures on ", MAP_ID)
+setnames(res, "FDR", "FDR_all")                           # the q value over every instrumented gene
+
+# The analysis this figure reports is MR of the selected map, so the multiple-testing correction is
+# recomputed over the genes of that map. It is the same rule scripts 19/20b use - BH over one primary
+# estimate per gene, IVW where there are >= 2 instruments and the Wald ratio where there is 1 - applied
+# to this set rather than to all 24 instrumented genes. The wider q value is kept as FDR_all so the
+# legend can quote both.
+prim <- res[method %in% c("IVW", "Wald ratio"), .(gene, p)]
+stopifnot(!anyDuplicated(prim$gene))                      # one primary estimate per gene
+prim[, FDR := p.adjust(p, "BH")]
+res <- merge(res, prim[, .(gene, FDR)], by = "gene", all.x = TRUE)
+
 # order genes by their best P, so the causal ones head the table as they do in the reference
 gene_ord <- res[, .(best_p = min(p)), by = gene][order(best_p), gene]
 shown <- gene_ord
@@ -319,8 +331,10 @@ if (stage %in% c("legend", "panels", "all")) {
             FEATURE, ft[method == "IVW", OR]),
     sprintf("- **(D) plots the %d genes with a Steiger test** and names the %d on the map. That is one more than the %d with a causal estimate: GAS6 passes Steiger but has no usable instrument after clumping. Exposure R2 exceeds outcome R2 for %d of %d, so the instruments act on expression first.",
             nrow(st), st[gene %in% map_genes, .N], n_est, st[correct_direction == TRUE, .N], nrow(st)),
-    sprintf("- **FDR is the one computed over all %d genes with a causal estimate, not recomputed over the %d shown.** Restricting the figure to the selected map does not undo the multiple testing that was actually done, so the q values here are the conservative ones.",
-            n_est, nrow(ivw)),
+    sprintf("- **FDR is recomputed over the %d genes of the selected map,** by the same rule scripts 19/20b use: Benjamini-Hochberg over one primary estimate per gene. The analysis this figure reports is MR of %s, so that is the family the correction belongs to. Over all %d instrumented genes the same two exposures give q = %s and %s; correcting within the map changes the q values, not which genes clear 0.05.",
+            nrow(ivw), MAP_ID, n_est,
+            p_sci(res_all[gene == sig$gene[1] & method %in% c("IVW", "Wald ratio"), FDR]),
+            p_sci(res_all[gene == sig$gene[2] & method %in% c("IVW", "Wald ratio"), FDR])),
     sprintf("- **Methods disagree for PRKAA1 and CAMKK2.** PRKAA1 is null by IVW (OR %.3f, P = %.2f) but significant by the weighted median and weighted mode (OR %.3f, P = %s), and CAMKK2 only by the weighted mode. With %s instruments each, that pattern is what a single outlying instrument produces; it is reported, not interpreted.",
             res[gene == "PRKAA1" & method == "IVW", OR], res[gene == "PRKAA1" & method == "IVW", p],
             res[gene == "PRKAA1" & method == "Weighted median", OR],
@@ -337,7 +351,12 @@ if (stage %in% c("legend", "panels", "all")) {
     sprintf("| Map genes with usable instruments | %d (%s) |", nrow(ivw),
             paste(sort(ivw$gene), collapse = ", ")),
     sprintf("| Map genes at FDR < %.2f | %d (%s) |", FDR_CUT, nrow(sig),
-            paste(sig$gene, collapse = ", ")),
+            paste(sprintf("%s q = %s", sig$gene, p_sci(sig$FDR)), collapse = ", ")),
+    sprintf("| Same genes, q over all %d instrumented genes | %s |", n_est,
+            paste(sprintf("%s q = %s", sig$gene,
+                          p_sci(res_all[gene %in% sig$gene &
+                                        method %in% c("IVW", "Wald ratio")][match(sig$gene, gene), FDR])),
+                  collapse = ", ")),
     sprintf("| Strongest on-map estimate | %s, OR %.3f (95%% CI %.3f-%.3f), P = %s, %d SNPs |",
             sig$gene[1], sig$OR[1], sig$OR_lo[1], sig$OR_hi[1], p_sci(sig$p[1]), sig$n_snp[1]),
     sprintf("| %s (featured in B, C) | %d SNPs, IVW OR %.3f (95%% CI %.3f-%.3f), P = %s |", FEATURE,

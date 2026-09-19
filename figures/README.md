@@ -84,9 +84,12 @@ What the restriction does to the results:
   (8-gene vs 4-gene panel); every CI still includes 0.5, so it stays a negative result, but the
   pathway-restricted panel transports better than the full candidate set.
 - **Fig 5.** Restricting *helps*. The map contains two causal genes at FDR < 0.05, **SREBF1**
-  (OR 0.903, P 9.0e-9) and **SIRT1** (OR 1.027, P 9.5e-4), so the figure reproduces the reference's
-  structure - a causal gene drawn from the selected pathway - rather than only imitating it. Neither
-  Tier 1 target is causal (PPARGC1A P 0.16, CCND1 P 0.55).
+  (OR 0.903, P 9.0e-9, q 8.1e-8) and **SIRT1** (OR 1.027, P 9.5e-4, q 4.3e-3), so the figure
+  reproduces the reference's structure - a causal gene drawn from the selected pathway - rather than
+  only imitating it. Neither Tier 1 target is causal (PPARGC1A P 0.16, CCND1 P 0.55).
+  FDR is Benjamini-Hochberg over the 9 map genes, one primary estimate each, which is the family the
+  figure's analysis actually defines; the q values over all 24 instrumented genes (2.2e-7 and 1.1e-2)
+  are quoted alongside in the legend. The correction changes the q values, not which genes clear 0.05.
 
 The deviations that change what a reader should conclude, rather than just how it looks:
 

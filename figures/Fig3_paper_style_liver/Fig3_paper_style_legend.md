@@ -10,7 +10,7 @@ The Nature/Cell-contract version of the same figure is in `figures/Fig3_composit
 
 - **Two groups, not three.** The reference contrasts Ctrl, CIA and Treat, so its D and E carry three brackets. This atlas is Control vs STZ, so each panel carries one.
 - **The bracket is the per-mouse t-test (n = 3 vs 4 mice), not the cell-level Wilcoxon.** Cells within a mouse are not independent replicates, so a cell-level P is anticonservative. Both are tabulated below; the reference reported the cell-level test.
-- **(F) and (G) do not agree, and that is the result.** The pair is co-localized enough to draw, but in cholangiocyte the cell-level correlation is -0.10 and the background-matched empirical P is 0.992, so the pair-level criterion of the reference framework is **not** met in this tissue.
+- **(F) and (G) do not agree, and that is the result.** The pair is co-localized in cholangiocyte (18.7% of cells, above the 2% gate), but the cell-level correlation is -0.10 and the background-matched empirical P is 0.992, so the correlation criterion of the reference framework is **not** met in this tissue.
 - **(A) labels every cluster on the plot** as the reference does; the reference's atlas is bone marrow with 11 types, this one is liver with 13.
 - **D, E and G are computed inside Cholangiocyte only,** the cell type the pair was selected in. The atlas-wide test is a different and weaker number (Cdkn1a over all 16861 cells gives per-mouse P = 0.16), and is not what these panels show.
 

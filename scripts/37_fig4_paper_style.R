@@ -37,11 +37,18 @@ options(stringsAsFactors = FALSE)
 
 args  <- commandArgs(trailingOnly = TRUE)
 stage <- if (length(args) >= 1) args[1] else "all"
+# Optional second argument selects a pathway-restricted ML run, e.g. "hsa04152" for the panel
+# restricted to the selected KEGG map. It reads results/ml_<map>/ and writes its own figure folder.
+PANEL_MAP <- if (length(args) >= 2 && nzchar(args[2])) args[2] else ""
+tag       <- if (nzchar(PANEL_MAP)) paste0("_", PANEL_MAP) else ""
 set.seed(20260918)
 
-fig_dir   <- "figures/Fig4_paper_style"
-panel_dir <- file.path("results/figure_exports", "fig4paper_panels")
-mld       <- "results/ml"
+fig_dir   <- paste0("figures/Fig4_paper_style", tag)
+panel_dir <- file.path("results/figure_exports", paste0("fig4paper_panels", tag))
+mld       <- paste0("results/ml", tag)
+if (!dir.exists(mld))
+  stop("missing ", mld, "
+  run: Rscript scripts/21_ML_classifier.R ", PANEL_MAP, call. = FALSE)
 bulk      <- "results/bulk"
 for (dd in c(fig_dir, panel_dir)) dir.create(dd, recursive = TRUE, showWarnings = FALSE)
 
@@ -248,9 +255,9 @@ EEEEEEEEE
     plot_layout(design = design) +
     plot_annotation(tag_levels = "A") &
     theme(plot.tag = element_text(size = 13, face = "bold"))
-  out <- file.path(fig_dir, "Fig4_paper_style")
+  out <- file.path(fig_dir, paste0("Fig4_paper_style", tag))
   ggsave(paste0(out, ".pdf"), comp, width = 230, height = 205, units = "mm", device = cairo_pdf)
-  tif <- file.path("results/figure_exports", "Fig4_paper_style.tiff")
+  tif <- file.path("results/figure_exports", paste0("Fig4_paper_style", tag, ".tiff"))
   unlink(tif)
   ggsave(tif, comp, width = 230, height = 205, units = "mm", dpi = 400, bg = "white",
          compression = "lzw")
@@ -276,19 +283,41 @@ if (stage %in% c("legend", "panels", "all")) {
     "",
     "## This figure has no panel-for-panel source in the reference",
     "",
-    "The reference paper runs no classifier, and its Figures 5 to 11 are chemistry and wet-lab validation that this study does not have. Figures 1, 2, 3 and 5 of this project each reproduce a reference figure panel for panel; this one reproduces only the reference's **visual language**, so that the shipped set reads as one figure set. Nothing about the analysis changes: every number is what script 21 wrote.",
+    "The reference paper runs no classifier, and its Figures 5 to 11 are chemistry and wet-lab validation that this study does not have. Figures 1, 2, 3 and 5 of this project each reproduce a reference figure panel for panel; this one reproduces only the reference's **visual language**, so that the shipped set reads as one figure set.",
     "",
-    sprintf("**Fig. 4. Classification of T2D from the candidate panel.** (A) Cross-validated AUC for LASSO, random forest and SVM under two schemes: panel-fixed CV, in which the gene panel selected on the full data is held constant across folds, and nested CV, in which selection is repeated inside each fold. Grey, AUC from %d label permutations; dashed line, chance. (B) ROC curves in the independent cohort GSE23343 (%d samples); the key gives AUC. Score is a parameter-free signature score. (C) LASSO selection frequency across folds and random-forest permutation importance for each candidate gene. (D) Predicted probability, or signature score, in GSE23343 by true group; points are samples. (E) Candidate-gene expression, z-scored within cohort and clipped at +/-2, in the discovery data and in GSE23343.",
+    if (nzchar(PANEL_MAP))
+      sprintf("**The panel is restricted to the selected KEGG map (%s).** Of the 8 Fig 1 candidate genes, %d are nodes of that map: %s. The other four (VSNL1, SREBF2, IGFBP1, IGFBP2) appear in no KEGG pathway at all and are excluded, so the classifier is tested on the same genes the pathway, single-cell and MR figures are about. The restriction is applied inside the nested-CV selection rule as well, not only to the fixed panel.",
+              PANEL_MAP, nrow(fr), paste(sort(fr$gene), collapse = ", "))
+    else
+      "The panel is the 8-gene Fig 1 candidate set. Nothing about the analysis changes: every number is what script 21 wrote.",
+    "",
+    sprintf("**Fig. 4. Classification of T2D from the %s.** (A) Cross-validated AUC for LASSO, random forest and SVM under two schemes: panel-fixed CV, in which the gene panel selected on the full data is held constant across folds, and nested CV, in which selection is repeated inside each fold. Grey, AUC from %d label permutations; dashed line, chance. (B) ROC curves in the independent cohort GSE23343 (%d samples); the key gives AUC. Score is a parameter-free signature score. (C) LASSO selection frequency across folds and random-forest permutation importance for each candidate gene. (D) Predicted probability, or signature score, in GSE23343 by true group; points are samples. (E) Candidate-gene expression, z-scored within cohort and clipped at +/-2, in the discovery data and in GSE23343.",
+            if (nzchar(PANEL_MAP)) sprintf("%d-gene %s panel", nrow(fr), PANEL_MAP)
+            else "candidate panel",
             nrow(nl), nrow(fread(file.path(mld, "external_predictions.csv")))),
     "",
     "## Read this with the figure",
     "",
     sprintf("- **The two CV estimates in (A) disagree, and only the lower one is honest.** Panel-fixed CV gives LASSO a mean AUC of %.2f; nested CV, which repeats gene selection inside every fold, gives %.2f. The gap is selection bias, not model quality.",
             pf$mean_AUC, ns$mean_AUC),
-    sprintf("- **Nothing separates the groups in the independent cohort.** The best external AUC is %.2f (%s), 95%% CI %.2f-%.2f, and every confidence interval includes 0.5. LASSO is below chance at %.2f. This is a negative result and should be reported as one.",
-            best$AUC, best$model, best$AUC_lo, best$AUC_hi, em[model == "LASSO", AUC]),
-    sprintf("- **(C) ranks genes that the models then fail to use.** %s and %s are selected in %.0f%% and %.0f%% of LASSO folds, which says they are the most stable features of a panel that does not generalise, not that they are validated markers.",
-            fr$gene[1], fr$gene[2], 100 * fr$lasso_freq[1], 100 * fr$lasso_freq[2]),
+    local({
+      any_sep <- em[AUC_lo > 0.5, .N] > 0
+      below   <- em[AUC < 0.5]
+      sprintf("- **%s** The best external AUC is %.2f (%s), 95%% CI %.2f-%.2f%s.%s This is %s and should be reported as one.",
+              if (any_sep) "One model separates the groups in the independent cohort."
+              else "No model separates the groups in the independent cohort at conventional confidence.",
+              best$AUC, best$model, best$AUC_lo, best$AUC_hi,
+              if (any_sep) "" else ", and every confidence interval includes 0.5",
+              if (nrow(below))
+                sprintf(" %s is below chance at %s.",
+                        paste(below$model, collapse = " and "),
+                        paste(sprintf("%.2f", below$AUC), collapse = " and "))
+              else "",
+              if (any_sep) "a weak positive result" else "a negative result")
+    }),
+    sprintf("- **(C) ranks the genes the models lean on.** %s and %s are selected in %.0f%% and %.0f%% of LASSO folds. With %d features and %d discovery samples, that stability says the panel is small and internally consistent, not that these are validated markers.",
+            fr$gene[1], fr$gene[2], 100 * fr$lasso_freq[1], 100 * fr$lasso_freq[2],
+            nrow(fr), 27L),
     "- With 16 vs 11 samples in discovery and 10 vs 7 in validation, every interval on this figure is wide. Read it as a negative result, not as a ranking of models.",
     "- **(E) is z-scored within cohort**, so it shows relative pattern; absolute expression is not comparable across the two cohorts.",
     "",
@@ -309,9 +338,15 @@ if (stage %in% c("legend", "panels", "all")) {
     sprintf("| Best external model | %s, AUC %.2f (95%% CI %.2f-%.2f) |", best$model, best$AUC,
             best$AUC_lo, best$AUC_hi),
     sprintf("| Most stable features | %s |",
-            paste(sprintf("%s (LASSO %.0f%%)", fr$gene[1:3], 100 * fr$lasso_freq[1:3]),
-                  collapse = ", "))
+            paste(sprintf("%s (LASSO %.0f%%)", fr$gene[1:min(3, nrow(fr))],
+                          100 * fr$lasso_freq[1:min(3, nrow(fr))]), collapse = ", ")),
+    if (nzchar(PANEL_MAP) && file.exists("results/ml/external_metrics.csv")) {
+      base <- fread("results/ml/external_metrics.csv")
+      sprintf("| Same models on the unrestricted 8-gene panel | %s |",
+              paste(base[, sprintf("%s %.2f", model, AUC)], collapse = ", "))
+    } else NULL
   )
+  l <- l[!vapply(l, is.null, TRUE)]
   writeLines(l, file.path(fig_dir, "Fig4_paper_style_legend.md"))
   message("wrote ", file.path(fig_dir, "Fig4_paper_style_legend.md"))
 }

@@ -49,9 +49,14 @@ panel_dir <- file.path("results/figure_exports", "fig5paper_panels")
 mrd       <- "results/mr"
 for (dd in c(fig_dir, panel_dir)) dir.create(dd, recursive = TRUE, showWarnings = FALSE)
 
-TIER1   <- c("PPARGC1A", "CCND1")   # docs/target_selection.md
-FEATURE <- "PPARGC1A"               # the exposure drawn per-SNP in B and C: best-instrumented Tier 1
-FDR_CUT <- 0.05
+# The reference runs MR on a gene taken from its selected KEGG map (PAK1 on regulation of actin
+# cytoskeleton). The selected map here is AMPK signalling (hsa04152), so the exposures shown are the
+# genes of that map that have usable instruments - not the Fig 1 candidate set, and not the p53 genes.
+MAP_ID   <- "hsa04152"
+MAP_FILE <- "results/pathway_selection/AMPK_pathway_genes.csv"
+TIER1    <- c("PPARGC1A", "CCND1")  # docs/target_selection.md; both on the map, kept for the legend
+FEATURE  <- "SIRT1"                 # per-SNP exposure for B and C: the on-map hit with >2 instruments
+FDR_CUT  <- 0.05
 METHODS <- c("MR-Egger", "Weighted median", "IVW", "Weighted mode", "Wald ratio")
 col_meth <- c(`MR-Egger` = "#3B7DD8", `Weighted median` = "#2E9E5B", IVW = "#E8362B",
               `Weighted mode` = "#8E5CC8", `Wald ratio` = "#E6A700")
@@ -73,15 +78,20 @@ keep <- function(p, name, w, h) {
 }
 p_sci <- function(p) formatC(p, format = "E", digits = 2)
 
-res <- fread(file.path(mrd, "mr_results_blood_ldclumped.csv"))
-top <- res[method == "IVW"][order(FDR)][1, gene]          # strongest MR hit, whatever it is
-shown <- unique(c(TIER1, top))
+res_all <- fread(file.path(mrd, "mr_results_blood_ldclumped.csv"))
+map_genes <- fread(MAP_FILE)$human
+res <- res_all[gene %in% map_genes]                       # exposures on the selected map only
+if (!nrow(res)) stop("no MR exposures on ", MAP_ID)
+# order genes by their best P, so the causal ones head the table as they do in the reference
+gene_ord <- res[, .(best_p = min(p)), by = gene][order(best_p), gene]
+shown <- gene_ord
+top   <- res[order(p)][1, gene]                           # strongest on-map hit, whatever it is
 
 # ===================================================================================================
 # A - the table-forest, as in the paper
 # ===================================================================================================
 if (stage %in% c("A", "panels", "all")) {
-  d <- res[gene %in% shown]
+  d <- copy(res)
   d[, gene := factor(gene, levels = shown)]
   d[, method := factor(method, levels = METHODS)]
   setorder(d, gene, method)
@@ -97,7 +107,9 @@ if (stage %in% c("A", "panels", "all")) {
                   linewidth = 0.5) +
     geom_point(shape = 15, size = 1.5) +
     scale_colour_manual(values = col_meth, guide = "none") +
-    scale_x_continuous(trans = "log", breaks = c(0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2),
+    # one MR-Egger interval (PRKAA1) spans 0.15-2.5, so fixed decade-ish breaks are used instead of
+    # a fine grid that would collide once the axis is stretched to hold it
+    scale_x_continuous(trans = "log", breaks = c(0.25, 0.5, 0.75, 1, 1.5, 2.5),
                        limits = exp(log(xr) + c(-pad, pad))) +
     # the same y range as the table half, so the two align row for row under patchwork
     scale_y_continuous(limits = c(0.4, nrow(d) + 1.9), expand = c(0, 0)) +
@@ -134,7 +146,7 @@ if (stage %in% c("A", "panels", "all")) {
     theme_void()
 
   pA <- wrap_elements(full = pTab + pForest + plot_layout(widths = c(1.85, 1)))
-  keep(pA, "Fig5A_table_forest", 190, 78)
+  keep(pA, "Fig5A_table_forest", 190, 150)
 }
 
 # ===================================================================================================
@@ -204,16 +216,17 @@ if (stage %in% c("C", "panels", "all")) {
 # ===================================================================================================
 if (stage %in% c("D", "panels", "all")) {
   st <- fread(file.path(mrd, "mr_steiger.csv"))
-  st[, flag := ifelse(gene %in% shown, gene, NA_character_)]
+  st[, on_map := gene %in% map_genes]
+  st[, flag := ifelse(on_map, gene, NA_character_)]   # name the selected map's genes, grey the rest
 
   pD <- ggplot(st, aes(r2_exposure, r2_outcome)) +
     geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "red", linewidth = 0.4) +
-    geom_point(aes(colour = correct_direction), size = 1.1) +
+    geom_point(aes(colour = on_map), size = 1.1) +
     geom_text_repel(aes(label = flag), size = 1.9, seed = 1, na.rm = TRUE,
                     min.segment.length = 0.2, segment.size = 0.15, segment.colour = "grey55",
                     box.padding = 0.35, max.overlaps = Inf) +
-    scale_colour_manual(values = c(`TRUE` = "#3B7DD8", `FALSE` = "#E8362B"),
-                        name = "Correct direction") +
+    scale_colour_manual(values = c(`TRUE` = "#E8362B", `FALSE` = "grey65"),
+                        labels = c(`TRUE` = "on hsa04152", `FALSE` = "other"), name = NULL) +
     # explicit decade breaks: label_log() on the default breaks prints things like 10^-2.523
     scale_x_continuous(trans = "log10", breaks = 10^(-4:0), labels = scales::label_log()) +
     scale_y_continuous(trans = "log10", breaks = 10^(-7:-3), labels = scales::label_log()) +
@@ -241,6 +254,7 @@ if (stage %in% c("assemble", "all")) {
   design <- "
 AAAAAAAAA
 AAAAAAAAA
+AAAAAAAAA
 BBBCCCDDD
 BBBCCCDDD
 "
@@ -249,10 +263,10 @@ BBBCCCDDD
     plot_annotation(tag_levels = "A") &
     theme(plot.tag = element_text(size = 13, face = "bold"))
   out <- file.path(fig_dir, "Fig5_paper_style")
-  ggsave(paste0(out, ".pdf"), comp, width = 260, height = 165, units = "mm", device = cairo_pdf)
+  ggsave(paste0(out, ".pdf"), comp, width = 260, height = 250, units = "mm", device = cairo_pdf)
   tif <- file.path("results/figure_exports", "Fig5_paper_style.tiff")
   unlink(tif)
-  ggsave(tif, comp, width = 260, height = 165, units = "mm", dpi = 400, bg = "white",
+  ggsave(tif, comp, width = 260, height = 250, units = "mm", dpi = 400, bg = "white",
          compression = "lzw")
   message("wrote ", out, ".pdf and ", tif)
 }
@@ -260,11 +274,14 @@ BBBCCCDDD
 # ===================================================================================================
 if (stage %in% c("legend", "panels", "all")) {
   st  <- fread(file.path(mrd, "mr_steiger.csv"))
-  ivw <- res[method == "IVW"]
+  ivw <- res[method %in% c("IVW", "Wald ratio")]
   sig <- ivw[FDR < FDR_CUT][order(FDR)]
   ft  <- res[gene == FEATURE]
   h   <- fread(file.path(mrd, "instruments_blood_ldclumped_harmonised.csv"))[gene == FEATURE]
-  ccnd <- res[gene == "CCND1"]
+  n_map <- length(map_genes)
+  n_est <- nrow(res_all[method %in% c("IVW", "Wald ratio")])
+  n_off <- n_est - nrow(ivw)
+  t1    <- ivw[gene %in% TIER1]
 
   l <- c(
     "# Figure 5, reference-paper style - legend",
@@ -273,47 +290,65 @@ if (stage %in% c("legend", "panels", "all")) {
     "The Nature/Cell-contract version of the same figure is in `figures/Fig5_MR/`.",
     "**Ship one or the other, not both.**",
     "",
-    "## Read this before the caption",
+    "## What this figure is restricted to",
     "",
-    sprintf("**The reference's Fig. 4 nominates a causal druggable target. This figure does not.** PAK1 reached IVW P = 0.039 there and was carried forward. Here neither Tier 1 target is causal for T2D: %s. The %d gene(s) that do reach FDR < %.2f (%s) are listed in `docs/target_selection.md` as *not* targets, because each is supported on this axis alone. Panel A therefore carries three exposures rather than one, so the null is on the figure rather than behind it.",
-            paste(sprintf("%s OR %.3f, P = %.2f", ivw[gene %in% TIER1, gene],
-                          ivw[gene %in% TIER1, OR], ivw[gene %in% TIER1, p]), collapse = "; "),
-            nrow(sig), FDR_CUT, paste(sig$gene, collapse = ", ")),
+    sprintf("The reference runs MR on a gene taken from its own selected KEGG map: PAK1, a node of regulation of actin cytoskeleton. The map selected here is **AMPK signalling (%s)**, so the exposures on this figure are the **%d genes of that map with usable instruments**, out of %d genes on the map. The %d instrumented genes that are not on the map (p53-arrest genes and Fig 1 candidates without KEGG annotation) are excluded from A, B and C, and appear in D only as grey points.",
+            MAP_ID, nrow(ivw), n_map, n_off),
     "",
-    sprintf("**Fig. 5. Results of MR analysis.** (A) Forest plot illustrating the causal inference between the two Tier 1 targets (%s), the strongest MR hit (%s) and type 2 diabetes. (B) SNP-level effect on the outcome against effect on the exposure for %s, with one fitted line per MR method. (C) Forest plot for each SNP of the %s analysis. (D) Results of Steiger filtering for directionality testing.",
-            paste(TIER1, collapse = ", "), top, FEATURE, FEATURE),
+    sprintf("**Unlike the wider gene set, the selected map does contain causal genes.** %s FDR < %.2f: %s. %s nodes of %s, so the reference's structure - a causal gene drawn from the selected pathway - is reproduced rather than only imitated.",
+            if (nrow(sig) == 1) "One gene reaches" else sprintf("%d genes reach", nrow(sig)),
+            FDR_CUT,
+            paste(sprintf("**%s** (OR %.3f, 95%% CI %.3f-%.3f, P = %s)", sig$gene, sig$OR, sig$OR_lo,
+                          sig$OR_hi, p_sci(sig$p)), collapse = "; "),
+            if (nrow(sig) == 1) "It is a node of" else "Both are",
+            MAP_ID),
+    "",
+    sprintf("**Fig. 5. Results of MR analysis.** (A) Forest plot illustrating the causal inference between the %d instrumented genes of the selected KEGG map (%s) and type 2 diabetes, by every applicable MR estimator. (B) SNP-level effect on the outcome against effect on the exposure for %s, with one fitted line per MR method. (C) Forest plot for each SNP of the %s analysis. (D) Results of Steiger filtering for directionality testing; genes of the selected map are named.",
+            nrow(ivw), MAP_ID, FEATURE, FEATURE),
     "",
     "## Where this data forces a deviation from the reference",
     "",
-    sprintf("- **(A) has three exposures, not one,** for the reason given above. Rows are bold where P < 0.05."),
-    sprintf("- **(B) and (C) feature %s,** the better-instrumented of the two Tier 1 targets (%d SNPs against %d for CCND1). Both panels are diagnostics of pleiotropy and heterogeneity, and they are worth showing on a null estimate: the reference's versions carry the same information about a positive one.",
-            FEATURE, nrow(h), ccnd[method == "IVW", n_snp]),
-    sprintf("- **CCND1 is the one exposure whose methods disagree.** IVW gives OR %.3f (P = %.2f) while MR-Egger gives OR %.3f (P = %.3f) with an intercept at P = %.3f, i.e. directional pleiotropy on 5 instruments. It is reported, not interpreted.",
-            ccnd[method == "IVW", OR], ccnd[method == "IVW", p],
-            ccnd[method == "MR-Egger", OR], ccnd[method == "MR-Egger", p],
-            ccnd[method == "MR-Egger", egger_int_p]),
-    sprintf("- **(D) labels the three exposures of panel A only;** all %d instrumented genes are plotted. Exposure R2 exceeds outcome R2 for %d of %d, so the instruments act on expression first.",
-            nrow(st), st[correct_direction == TRUE, .N], nrow(st)),
+    sprintf("- **(A) carries %d exposures, not one.** The reference had a single prior druggable candidate (PAK1, from Finan et al. 2017) and tested it. There is no equivalent prior nomination here, so every instrumented gene of the map is tested and the whole screen is shown. Rows are bold where P < 0.05.",
+            nrow(ivw)),
+    sprintf("- **(B) and (C) feature %s, not the strongest hit.** %s has the smaller P (%s) but only %d instruments, which is too few for MR-Egger, the weighted median or the weighted mode, so its pleiotropy and heterogeneity diagnostics would be empty. %s carries %d instruments and %d estimators, and is significant in %d of them.",
+            FEATURE, sig$gene[1], p_sci(sig$p[1]), sig$n_snp[1], FEATURE, nrow(h),
+            nrow(ft), ft[p < 0.05, .N]),
+    sprintf("- **Neither Tier 1 target is causal.** %s. `docs/target_selection.md` nominates these two on expression and cell-type evidence; MR does not support either, and that disagreement is reported rather than smoothed over.",
+            paste(sprintf("%s OR %.3f, P = %.2f", t1$gene, t1$OR, t1$p), collapse = "; ")),
+    sprintf("- **%s is causal in the direction opposite to the usual reading.** Higher genetically predicted expression associates with *higher* T2D risk (OR %.3f per SD). It is reported as the estimate came out; this figure does not interpret the direction.",
+            FEATURE, ft[method == "IVW", OR]),
+    sprintf("- **(D) plots the %d genes with a Steiger test** and names the %d on the map. That is one more than the %d with a causal estimate: GAS6 passes Steiger but has no usable instrument after clumping. Exposure R2 exceeds outcome R2 for %d of %d, so the instruments act on expression first.",
+            nrow(st), st[gene %in% map_genes, .N], n_est, st[correct_direction == TRUE, .N], nrow(st)),
+    sprintf("- **FDR is the one computed over all %d genes with a causal estimate, not recomputed over the %d shown.** Restricting the figure to the selected map does not undo the multiple testing that was actually done, so the q values here are the conservative ones.",
+            n_est, nrow(ivw)),
+    sprintf("- **Methods disagree for PRKAA1 and CAMKK2.** PRKAA1 is null by IVW (OR %.3f, P = %.2f) but significant by the weighted median and weighted mode (OR %.3f, P = %s), and CAMKK2 only by the weighted mode. With %s instruments each, that pattern is what a single outlying instrument produces; it is reported, not interpreted.",
+            res[gene == "PRKAA1" & method == "IVW", OR], res[gene == "PRKAA1" & method == "IVW", p],
+            res[gene == "PRKAA1" & method == "Weighted median", OR],
+            p_sci(res[gene == "PRKAA1" & method == "Weighted median", p]),
+            res[gene == "PRKAA1" & method == "IVW", n_snp]),
     "- Exposures are whole-blood eQTLs (eQTLGen), the outcome is GCST006867. The primary analysis is the LD-clumped one; the earlier distance-pruned pass over-called SERPINE1, PPARGC1A and PRKAA1 and is withdrawn (decision R21).",
     "",
     "## Statistics to quote",
     "",
     "| Quantity | Value |",
     "|---|---|",
-    sprintf("| Genes with usable instruments | %d |", nrow(ivw)),
-    sprintf("| Genes at FDR < %.2f | %d (%s) |", FDR_CUT, nrow(sig), paste(sig$gene, collapse = ", ")),
-    sprintf("| Strongest estimate | %s, OR %.3f (95%% CI %.3f-%.3f), P = %s |", sig$gene[1],
-            sig$OR[1], sig$OR_lo[1], sig$OR_hi[1], p_sci(sig$p[1])),
-    sprintf("| %s (Tier 1) | %d SNPs, IVW OR %.3f (95%% CI %.3f-%.3f), P = %.2f |", TIER1[1],
-            ivw[gene == TIER1[1], n_snp], ivw[gene == TIER1[1], OR], ivw[gene == TIER1[1], OR_lo],
-            ivw[gene == TIER1[1], OR_hi], ivw[gene == TIER1[1], p]),
-    sprintf("| %s (Tier 1) | %d SNPs, IVW OR %.3f (95%% CI %.3f-%.3f), P = %.2f |", TIER1[2],
-            ivw[gene == TIER1[2], n_snp], ivw[gene == TIER1[2], OR], ivw[gene == TIER1[2], OR_lo],
-            ivw[gene == TIER1[2], OR_hi], ivw[gene == TIER1[2], p]),
+    sprintf("| Selected KEGG map | %s, %d genes, %d measured in the bulk data |", MAP_ID, n_map,
+            fread(MAP_FILE)[!is.na(human_P), .N]),
+    sprintf("| Map genes with usable instruments | %d (%s) |", nrow(ivw),
+            paste(sort(ivw$gene), collapse = ", ")),
+    sprintf("| Map genes at FDR < %.2f | %d (%s) |", FDR_CUT, nrow(sig),
+            paste(sig$gene, collapse = ", ")),
+    sprintf("| Strongest on-map estimate | %s, OR %.3f (95%% CI %.3f-%.3f), P = %s, %d SNPs |",
+            sig$gene[1], sig$OR[1], sig$OR_lo[1], sig$OR_hi[1], p_sci(sig$p[1]), sig$n_snp[1]),
+    sprintf("| %s (featured in B, C) | %d SNPs, IVW OR %.3f (95%% CI %.3f-%.3f), P = %s |", FEATURE,
+            ft[method == "IVW", n_snp], ft[method == "IVW", OR], ft[method == "IVW", OR_lo],
+            ft[method == "IVW", OR_hi], p_sci(ft[method == "IVW", p])),
     sprintf("| %s heterogeneity | Cochran Q = %.2f, P = %.2f |", FEATURE,
             ft[method == "IVW", Q], ft[method == "IVW", Q_p]),
     sprintf("| %s pleiotropy | MR-Egger intercept P = %.2f |", FEATURE,
             ft[method == "MR-Egger", egger_int_p]),
+    paste0("| Tier 1 targets | ",
+           paste(sprintf("%s OR %.3f, P = %.2f", t1$gene, t1$OR, t1$p), collapse = "; "), " |"),
     sprintf("| Steiger, correct direction | %d of %d genes |",
             st[correct_direction == TRUE, .N], nrow(st))
   )

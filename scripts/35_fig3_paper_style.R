@@ -49,13 +49,19 @@ if (length(args) < 1 || !tolower(args[1]) %in% TISSUES)
          paste0("unrecognised tissue: ", args[1]), call. = FALSE)
 tissue <- tolower(args[1])
 stage  <- if (length(args) >= 2) args[2] else "all"
+# optional third argument selects the pair, matching script 27's cache naming. The default is the p53
+# arrest readout; "Ppargc1a,Ccnd1" is the axis pair drawn from the selected KEGG map, hsa04152.
+PAIR_DEFAULT <- c("Cdkn1a", "Ccnd1")
+pair_arg <- if (length(args) >= 3) trimws(strsplit(args[3], ",")[[1]]) else PAIR_DEFAULT
+pair_tag <- if (identical(pair_arg, PAIR_DEFAULT)) "" else paste0("_", paste(tolower(pair_arg), collapse = "_"))
 set.seed(20260918)
 
 SIG_UNIT <- "mouse"     # "mouse" (per-mouse t-test) or "cell" (cell-level Wilcoxon)
 
-fig_dir   <- file.path("figures", paste0("Fig3_paper_style_", tissue))
-panel_dir <- file.path("results/figure_exports", paste0("fig3paper_panels_", tissue))
-cache_f   <- file.path("results/figure_exports", paste0("fig3_composite_", tissue, "_cache.rds"))
+fig_dir   <- file.path("figures", paste0("Fig3_paper_style_", tissue, pair_tag))
+panel_dir <- file.path("results/figure_exports", paste0("fig3paper_panels_", tissue, pair_tag))
+cache_f   <- file.path("results/figure_exports",
+                       paste0("fig3_composite_", tissue, pair_tag, "_cache.rds"))
 for (d in c(fig_dir, panel_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 
 if (!file.exists(cache_f))
@@ -293,9 +299,10 @@ DDDEEEFFFFGGGG
     plot_layout(design = design) +
     plot_annotation(tag_levels = "A") &
     theme(plot.tag = element_text(size = 13, face = "bold"))
-  out <- file.path(fig_dir, paste0("Fig3_paper_style_", tissue))
+  out <- file.path(fig_dir, paste0("Fig3_paper_style_", tissue, pair_tag))
   ggsave(paste0(out, ".pdf"), comp, width = 260, height = 190, units = "mm", device = cairo_pdf)
-  tif <- file.path("results/figure_exports", paste0("Fig3_paper_style_", tissue, ".tiff"))
+  tif <- file.path("results/figure_exports",
+                   paste0("Fig3_paper_style_", tissue, pair_tag, ".tiff"))
   unlink(tif)
   ggsave(tif, comp, width = 260, height = 190, units = "mm", dpi = 400, bg = "white",
          compression = "lzw")
@@ -315,8 +322,8 @@ if (stage %in% c("legend", "panels", "all")) {
     sprintf("# Figure 3, reference-paper style (%s) - legend", tissue),
     "",
     "Drawn to match Xu et al., *Phytomedicine* 154 (2026) 158050, Fig. 3, with this project's data.",
-    sprintf("The Nature/Cell-contract version of the same figure is in `figures/Fig3_composite_%s/`.",
-            tissue),
+    sprintf("The Nature/Cell-contract version of the same figure is in `figures/Fig3_composite_%s%s/`.",
+            tissue, pair_tag),
     "**Ship one or the other, not both.**",
     "",
     sprintf("**Fig. 3. Results of scRNA-seq analysis.** (A) UMAP projection illustrating the single-cell atlas of mouse %s tissue. (B) Bubble plot showing marker genes for each cell type. (C) Bar plot displaying the proportion and number of cells from each sample source. (D-E) Analysis of %s and %s expression levels in %s across experimental groups. %s; ns: P > 0.05, *: P < 0.05, **: P < 0.01, ***: P < 0.001, ****: P < 0.0001. (F) UMAP-based heatmap showing co-localization of %s and %s across the atlas. (G) Correlation between %s and %s expression levels in %s.",
@@ -329,8 +336,17 @@ if (stage %in% c("legend", "panels", "all")) {
     sprintf("- **Two groups, not three.** The reference contrasts Ctrl, CIA and Treat, so its D and E carry three brackets. This atlas is Control vs STZ, so each panel carries one."),
     sprintf("- **The bracket is the %s, not the cell-level Wilcoxon.** Cells within a mouse are not independent replicates, so a cell-level P is anticonservative. Both are tabulated below; the reference reported the cell-level test.",
             sig_word),
-    sprintf("- **(F) and (G) do not agree, and that is the result.** The pair is co-localized enough to draw, but in %s the cell-level correlation is %.2f and the background-matched empirical P is %.3f, so the pair-level criterion of the reference framework is **not** met in this tissue.",
-            tolower(nice_ct(cc$key)), cr$cell_R, cr$empirical_p),
+    # the reference framework's co-localization gate is >= 2 % of the cell type's cells; say which
+    # gate actually failed rather than asserting co-localization that the number does not support
+    local({
+      coloc_ok <- cr$pct_coexpr >= 2
+      if (coloc_ok)
+        sprintf("- **(F) and (G) do not agree, and that is the result.** The pair is co-localized in %s (%.1f%% of cells, above the 2%% gate), but the cell-level correlation is %.2f and the background-matched empirical P is %.3f, so the correlation criterion of the reference framework is **not** met in this tissue.",
+                tolower(nice_ct(cc$key)), cr$pct_coexpr, cr$cell_R, cr$empirical_p)
+      else
+        sprintf("- **(F) fails before (G) is reached.** Only %.2f%% of %s cells co-express the pair, below the 2%% co-localization gate of the reference framework, so the correlation that follows (R %.2f, empirical P %.3f) is not interpretable here. %s is barely expressed in this cell type.",
+                cr$pct_coexpr, tolower(nice_ct(cc$key)), cr$cell_R, cr$empirical_p, cc$pair[1])
+    }),
     sprintf("- **(A) labels every cluster on the plot** as the reference does; the reference's atlas is bone marrow with 11 types, this one is %s with %d.",
             tissue, nrow(prop)),
     sprintf("- **D, E and G are computed inside %s only,** the cell type the pair was selected in. The atlas-wide test is a different and weaker number (%s over all %d cells gives per-mouse P = %s), and is not what these panels show.",

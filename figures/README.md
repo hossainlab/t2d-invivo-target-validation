@@ -61,6 +61,33 @@ the places this data forces a deviation from it.
 | Fig 4 | `scripts/37_fig4_paper_style.R` | **none** - the reference runs no classifier; visual language only |
 | Fig 5 | `scripts/36_fig5_paper_style.R` | Xu et al. Fig. 4, panel for panel (A-D) |
 
+### Pathway-restricted variants (the selected map, hsa04152)
+
+The reference takes its downstream genes from its own selected KEGG map: RAC1/PAK1 are nodes of
+regulation of actin cytoskeleton, and PAK1 is the MR exposure. The selected map here is **AMPK
+signalling (hsa04152)**, so a second variant of Figures 3, 4 and 5 restricts each downstream step to
+that map. These are the reference-faithful versions; the unrestricted ones are kept beside them.
+
+| Figure | Restricted folder | What changes | Command |
+|---|---|---|---|
+| Fig 3 | `Fig3_paper_style_<tissue>_ppargc1a_ccnd1/` | pair is **Ppargc1a-Ccnd1**, both nodes of hsa04152, instead of the p53 readout Cdkn1a-Ccnd1 (Cdkn1a is *not* on the map) | `Rscript scripts/27_fig3_composite.R <tissue> cache "Ppargc1a,Ccnd1"` then `scripts/35_fig3_paper_style.R <tissue> all "Ppargc1a,Ccnd1"` |
+| Fig 4 | `Fig4_paper_style_hsa04152/` | panel is the **4 candidates on the map** (CCND1, IGF1, IRS2, PPARGC1A); the other 4 candidates are in no KEGG map at all. The restriction applies inside the nested-CV selection rule too | `Rscript scripts/21_ML_classifier.R hsa04152` then `scripts/37_fig4_paper_style.R all hsa04152` |
+| Fig 5 | `Fig5_paper_style/` (now restricted by default) | exposures are the **9 map genes with instruments**; off-map genes appear only as grey points in D | `Rscript scripts/36_fig5_paper_style.R all` |
+
+What the restriction does to the results:
+
+- **Fig 3.** The on-map pair is honest but negative. Liver cholangiocytes: co-localized (13.8 %) but
+  not correlated (R 0.03, empirical P 0.60). Kidney endothelium: fails the 2 % co-localization gate
+  outright at 0.17 %, because Ppargc1a is barely expressed there. Only the off-map p53 pair
+  Cdkn1a-Ccnd1 clears all three gates (kidney endothelium, empirical P 0.009).
+- **Fig 4.** Restricting *helps*. External AUC in GSE23343 rises from 0.43 to **0.71** for LASSO
+  (8-gene vs 4-gene panel); every CI still includes 0.5, so it stays a negative result, but the
+  pathway-restricted panel transports better than the full candidate set.
+- **Fig 5.** Restricting *helps*. The map contains two causal genes at FDR < 0.05, **SREBF1**
+  (OR 0.903, P 9.0e-9) and **SIRT1** (OR 1.027, P 9.5e-4), so the figure reproduces the reference's
+  structure - a causal gene drawn from the selected pathway - rather than only imitating it. Neither
+  Tier 1 target is causal (PPARGC1A P 0.16, CCND1 P 0.55).
+
 The deviations that change what a reader should conclude, rather than just how it looks:
 
 - **Fig 1B** uses nominal P. 84 genes reach FDR < 0.05, but only 31 also clear |log2FC| > 0.5 and the

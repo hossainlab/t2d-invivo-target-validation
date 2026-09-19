@@ -46,11 +46,17 @@ stage  <- if (length(args) >= 2) args[2] else "all"
 stopifnot(tissue %in% c("liver", "kidney"))
 set.seed(20260918)
 
-pair      <- c("Cdkn1a", "Ccnd1")
-fig_dir   <- file.path("figures", paste0("Fig3_composite_", tissue))
+# The pair is the p53 arrest readout CDKN1A-CCND1 by default. An optional third argument selects a
+# different pair, e.g. "Ppargc1a,Ccnd1" for the AMPK-map axis; that run gets its own cache and its own
+# output folder, so the default deliverable is never overwritten.
+PAIR_DEFAULT <- c("Cdkn1a", "Ccnd1")
+pair <- if (length(args) >= 3) trimws(strsplit(args[3], ",")[[1]]) else PAIR_DEFAULT
+stopifnot(length(pair) == 2)
+pair_tag  <- if (identical(pair, PAIR_DEFAULT)) "" else paste0("_", paste(tolower(pair), collapse = "_"))
+fig_dir   <- file.path("figures", paste0("Fig3_composite_", tissue, pair_tag))
 cache_dir <- "results/figure_exports"
-cache_f   <- file.path(cache_dir, paste0("fig3_composite_", tissue, "_cache.rds"))
-panel_dir <- file.path(cache_dir, paste0("fig3_panels_", tissue))   # intermediates, not deliverables
+cache_f   <- file.path(cache_dir, paste0("fig3_composite_", tissue, pair_tag, "_cache.rds"))
+panel_dir <- file.path(cache_dir, paste0("fig3_panels_", tissue, pair_tag))   # intermediates, not deliverables
 tiff_dir  <- cache_dir                                              # TIFF exports live with the others
 for (d in c(fig_dir, cache_dir, panel_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 
@@ -278,8 +284,15 @@ if (stage %in% c("cache", "all")) {
   }
 
   # ---- panel g input: key cell type + background statistics already computed by script 18 ----
-  corr_f <- file.path("results/pathway_selection", paste0("18_axis_correlation_", tissue, ".csv"))
+  # script 18 wrote the background-matched statistics for the p53 pair, script 23 for the anchored
+  # AMPK-map pair; pick whichever table actually contains the pair being drawn
+  corr_f <- file.path("results/pathway_selection",
+                      paste0(if (identical(pair, PAIR_DEFAULT)) "18_axis_correlation_"
+                             else "23_anchored_correlation_", tissue, ".csv"))
   corr   <- if (file.exists(corr_f)) fread(corr_f) else NULL
+  if (!is.null(corr) && "pair" %in% names(corr))
+    corr <- corr[pair == paste(pr, collapse = "-")]
+  if (!is.null(corr) && !nrow(corr)) corr <- NULL
   key    <- if (!is.null(corr)) corr$cell_type[1] else as.character(ct_levels[1])
 
   saveRDS(list(tissue = tissue, pair = pr, md = md, ct_levels = ct_levels, dot = dot,

@@ -26,7 +26,28 @@ suppressPackageStartupMessages({
   library(limma); library(ggplot2); library(patchwork); library(WGCNA)
 })
 set.seed(20260916)
-out_dir <- "results/ml"; fig_dir <- "results/supplementary_figures/ml"
+
+# Optional first argument restricts the panel to a KEGG map, e.g.
+#   Rscript scripts/21_ML_classifier.R hsa04152
+# With no argument the panel is the Fig 1 candidate set, as before. A restricted run writes to its own
+# results/ml_<map>/ directory, so the default deliverable is never overwritten. The restriction applies
+# to the nested-CV selection rule as well, otherwise the honest estimate would still be free to reach
+# for genes the restricted panel does not contain.
+args      <- commandArgs(trailingOnly = TRUE)
+PANEL_MAP <- if (length(args) >= 1 && nzchar(args[1])) args[1] else ""
+MAP_FILES <- c(hsa04152 = "results/pathway_selection/AMPK_pathway_genes.csv")
+map_genes <- NULL
+if (nzchar(PANEL_MAP)) {
+  if (!PANEL_MAP %in% names(MAP_FILES))
+    stop("unknown map: ", PANEL_MAP, "
+  known: ", paste(names(MAP_FILES), collapse = ", "),
+         call. = FALSE)
+  map_genes <- data.table::fread(MAP_FILES[[PANEL_MAP]])$human
+  message("panel restricted to ", PANEL_MAP, ": ", length(map_genes), " genes on the map")
+}
+tag     <- if (nzchar(PANEL_MAP)) paste0("_", PANEL_MAP) else ""
+out_dir <- paste0("results/ml", tag)
+fig_dir <- paste0("results/supplementary_figures/ml", tag)
   # draft panels; figures/ is owned by the 27-31 publication figure scripts. Writing here from an
   # analysis script silently overwrites them, because Windows filenames are case-insensitive.
 
@@ -42,6 +63,11 @@ stopifnot(identical(meta$GSM, colnames(expr)))
 y <- factor(meta$condition, levels = c("Control", "T2D"))
 panel <- fread("results/bulk/intersect_genes.csv")$gene
 hyper <- fread("results/bulk/geneset_hyperglycemia.csv")$gene
+if (!is.null(map_genes)) {
+  panel <- intersect(panel, map_genes)
+  message("panel after map restriction: ", length(panel), " genes (", paste(panel, collapse = ", "), ")")
+  if (length(panel) < 2) stop("fewer than 2 panel genes survive the map restriction", call. = FALSE)
+}
 message("Discovery: ", ncol(expr), " samples (", sum(y == "T2D"), " T2D / ", sum(y == "Control"),
         " lean); panel genes measured: ", length(intersect(panel, rownames(expr))))
 
@@ -137,7 +163,12 @@ select_in_fold <- function(idx_tr) {
   tt <- as.data.table(topTable(fit, coef = "conditionT2D", number = Inf), keep.rownames = "gene")
   g <- tt[P.Value < 0.05 & abs(logFC) > 0.5, gene]
   g <- intersect(g, hyper)
-  if (length(g) < 3) g <- head(intersect(tt[order(P.Value), gene], hyper), 10)
+  if (!is.null(map_genes)) g <- intersect(g, map_genes)
+  if (length(g) < 3) {
+    pool <- intersect(tt[order(P.Value), gene], hyper)
+    if (!is.null(map_genes)) pool <- intersect(pool, map_genes)
+    g <- head(pool, 10)
+  }
   intersect(g, rownames(gx))                 # keep only genes that would also be portable
 }
 res_nested <- list()

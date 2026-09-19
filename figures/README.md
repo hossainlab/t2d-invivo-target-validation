@@ -1,74 +1,109 @@
-# Figures: Reference-Framework Panels Only
+# Figures
 
-This folder holds only the panels that mirror the analytical framework of the reference paper (Xu et al., *Phytomedicine* 2026, Figs 1–3). Everything else lives in `results/`:
+One figure set, drawn to match the reference paper: **Xu et al., *Phytomedicine* 154 (2026) 158050**.
+Six folders, one per figure. Nothing else belongs here.
+
+| Folder | Figure | Reference analogue | Script |
+|---|---|---|---|
+| `Fig1/` | Bulk DEG + WGCNA | Xu et al. Fig. 1, panel for panel (A–G) | `scripts/33_fig1_paper_style.R` |
+| `Fig2/` | Functional enrichment | Xu et al. Fig. 2, panel for panel (A–D) | `scripts/34_fig2_paper_style.R` |
+| `Fig3_liver/`, `Fig3_kidney/` | scRNA-seq atlas | Xu et al. Fig. 3, panel for panel (A–G) | `scripts/35_fig3_paper_style.R <tissue>` |
+| `Fig4/` | Machine-learning classifier | **none** — the reference runs no classifier; visual language only | `scripts/37_fig4_paper_style.R` |
+| `Fig5/` | Mendelian randomisation | Xu et al. Fig. 4, panel for panel (A–D) | `scripts/36_fig5_paper_style.R` |
+
+Each folder holds the assembled figure (`Fig<n>.pdf`), one PDF per panel, and `Fig<n>_legend.md` —
+the caption in the reference's own wording, plus an explicit list of where this data forces a
+deviation from it. Read the legend before quoting any number from a panel.
+
+Rebuild with `Rscript scripts/<script> <stage>`, where `stage` is a panel letter, `panels`,
+`assemble`, `legend` or `all`. The scripts **re-draw only** — they read the result tables the analysis
+scripts already wrote, so rebuilding changes no number.
+
+```
+Rscript scripts/33_fig1_paper_style.R all
+Rscript scripts/34_fig2_paper_style.R all
+Rscript scripts/35_fig3_paper_style.R liver all
+Rscript scripts/35_fig3_paper_style.R kidney all
+Rscript scripts/37_fig4_paper_style.R all
+Rscript scripts/36_fig5_paper_style.R all
+```
+
+TIFF submission rasters and serialized panel intermediates go to `results/figure_exports/`, never
+here. Analysis scripts never write into `figures/`.
+
+## The chain, and where it holds
+
+The reference's logic is: DEGs ∩ module ∩ phenotype set → enrichment → **one selected KEGG map** →
+single-cell and MR on genes **taken from that map**. This set follows the same chain.
+
+| Stage | Reference | This project |
+|---|---|---|
+| Candidate genes | 159 | **8** (DEG ∩ key modules ∩ hyperglycaemia set) |
+| Selected map | regulation of actin cytoskeleton | **AMPK signalling (hsa04152)** |
+| Genes of the set on that map | RAC1, PAK1 | **IRS2, PPARGC1A, CCND1, IGF1** |
+| Single-cell pair | Rac1 + Pak1 | **Ppargc1a + Ccnd1** |
+| ML panel | — | the 4 map genes above |
+| MR exposures | PAK1 | the **9 map genes with usable instruments** |
+
+Every downstream step draws from hsa04152. The four candidates that are not on it (VSNL1, SREBF2,
+IGFBP1, IGFBP2) appear in **no** KEGG pathway at all and are carried in Fig. 1 only.
+
+## What the results actually say
+
+Read these before writing any text around the figures.
+
+- **Fig. 1B uses nominal P.** 84 genes reach FDR < 0.05, but only 31 also clear |log2FC| > 0.5, and
+  the strict downstream rules then leave a single intersecting gene (SREBF2, decision R17).
+- **Fig. 2A has no CC column.** Over-representation of 8 genes returns BP and MF terms only.
+- **Fig. 2B/2C rest on 4 genes.** The 21 pathways at adjusted P < 0.05 are recombinations of IRS2,
+  PPARGC1A, CCND1 and IGF1 — one signal seen through 21 annotation sets, not 21 findings.
+- **Fig. 3 is negative, on purpose.** The on-map pair is co-localized in liver cholangiocytes (13.8 %
+  of cells) but not correlated (R 0.03, empirical P 0.60). In kidney endothelium it fails the 2 %
+  co-localization gate outright at 0.17 %, because *Ppargc1a* is barely expressed there. The only
+  pair in either atlas clearing all three of the reference's gates is the off-map p53 readout
+  *Cdkn1a*–*Ccnd1* (kidney endothelium, empirical P 0.009); it is not part of this set because
+  *Cdkn1a* is not a node of hsa04152.
+- **Fig. 4 is negative, but restriction helps.** External AUC in GSE23343 is 0.71 for LASSO on the
+  4-gene map panel, against 0.43 on the unrestricted 8-gene candidate panel. Every confidence
+  interval still includes 0.5.
+- **Fig. 5 is the one clear positive.** The selected map contains two causal genes at FDR < 0.05:
+  **SREBF1** (OR 0.903, P 9.0e-9, q 8.1e-8) and **SIRT1** (OR 1.027, P 9.5e-4, q 4.3e-3). FDR is
+  Benjamini–Hochberg over the 9 map genes, one primary estimate each. Neither Tier 1 target is
+  causal (PPARGC1A P 0.16, CCND1 P 0.55), and SREBF1 rests on only 2 instruments, so its pleiotropy
+  cannot be tested — which is why panels B and C feature SIRT1.
+
+## Variants
+
+The scripts can still draw the alternatives; they write to suffixed folders so the shipped set is
+never overwritten.
+
+```
+# Fig 3 with the off-map p53 pair (the one that passes all three gates, in kidney)
+Rscript scripts/27_fig3_composite.R kidney cache "Cdkn1a,Ccnd1"
+Rscript scripts/35_fig3_paper_style.R kidney all "Cdkn1a,Ccnd1"
+
+# Fig 4 on the unrestricted 8-gene candidate panel
+Rscript scripts/21_ML_classifier.R          # writes results/ml/
+Rscript scripts/37_fig4_paper_style.R all ""
+```
+
+The Nature/Cell-contract set (scripts 27–32, lowercase tags, viridis, no in-panel titles) is no
+longer built. Those scripts still exist and still run; their output folders were removed in favour of
+this one set. Recover them from git history if they are ever needed again.
+
+## Elsewhere
 
 | Location | Contents |
 |---|---|
-| `results/supplementary_figures/` | QC, diagnostic and sensitivity plots (bulk QC, scRNA demultiplexing/QC, pseudobulk DE counts, validation, prioritization) |
-| `results/figure_exports/` | TIFF exports of main panels |
-| `archive/superseded_figures/` | Outputs from superseded designs (3-group bulk contrast, 12-gene DEG run) |
+| `results/supplementary_figures/` | QC, diagnostic and sensitivity plots |
+| `results/figure_exports/` | TIFF submission rasters, panel intermediates, figure caches |
+| `results/pathway_selection/pathview/` | the KEGG pathview raster and KGML for hsa04152 (rendered by KEGG, not drawn by a figure script) |
+| `archive/superseded_figures/` | outputs from superseded designs |
 
-## Fig 1: Bulk DEG + WGCNA (`Fig1_bulk_DEG_WGCNA/`)
+**Note on filenames:** Windows is case-insensitive, so a new lowercase name silently overwrites an old
+uppercase one when the rest matches. Check before deleting anything that differs only in case.
 
-| Panel | Reference paper | This project | Script |
-|---|---|---|---|
-| Fig1A | PCA before/after batch correction | PCA before/after ComBat (GSE15653 + GSE64998), T2D vs Control | 01 |
-| Fig1B | Volcano of DEGs | T2D (16) vs lean Control (11), P < 0.05 and \|log2FC\| > 0.5 (M9) | 02 |
-| Fig1C | Soft-threshold scale independence / mean connectivity | Same | 03 |
-| Fig1D | Module dendrogram | Same | 03 |
-| Fig1E | Module–trait heatmap | Same (traits T2D, Dataset, HbA1c) | 03 |
-| Fig1F | MM vs GS in key module | MM vs GS for the T2D-associated key modules (T2D p < 0.1; M11) that contain 19-gene candidates. Other modules are in `results/supplementary_figures/bulk/` | 03/04 |
-| Fig1G | Venn: DEG ∩ module ∩ phenotype gene set | Paper 3-way overlap (M13): DEGs (P < 0.05, \|log2FC\| > 0.5) ∩ all genes of the T2D-associated key modules (T2D p < 0.1) ∩ hyperglycemia gene set. Counts only; the caption lists the up/down genes and the DEG ∩ hub count. 27 samples, T2D vs lean (D1b) | 04 |
-
-## Fig 2: Functional enrichment (`Fig2_enrichment/`)
-
-| Panel | Reference paper | This project | Script |
-|---|---|---|---|
-| Fig2A | GO enrichment | GO over-representation of the 19 candidate genes (230 terms; top: response to insulin) | 05 |
-| Fig2B | KEGG bubble plot | KEGG over-representation (9 pathways; top: AMPK signalling) | 05 |
-| Fig2C | Pathway interaction network | `Fig2C_emap_KEGG.pdf` (KEGG) and `Fig2C_emap_GOBP.pdf` (GO BP) | 05 |
-| Fig2D | pathview pathway diagram | `Fig2D_pathview/hsa04152.T2D_vs_Control_logFC.png`: AMPK signalling coloured by T2D vs Control logFC | 05 |
-| Fig2_GSEA_hallmark | — (additional) | GSEA Hallmark on the full T2D vs Control ranking (22 sets; p53 pathway, UPR) | 05 |
-
-## Fig 3: scRNA-seq, STZ vs Control (`Fig3_scRNA/`)
-
-Selected map: **AMPK signalling** (stage 1, script 16). Reported axis is **candidate-anchored** (decision R23): **AMPKα2 (PRKAA2) → PGC-1α (PPARGC1A)** with **CCND1** as output node — both anchors are Fig 1 candidates. Fig 3D–G show that axis (script 23); the pair is not co-localized or correlated, consistent with post-translational control. Fig 3H–J show the downstream partner **Cdkn1a (p21) – Ccnd1**, the only pair that satisfies all three of the paper's single-cell criteria (script 18). Supplementary: AMPK eyeballed-axis panels and the p53 per-cell-type score (`results/supplementary_figures/pathway_selection/`), shortlist-wide confirmation matrix (`17_edge_confirmation.pdf`), selection criteria (`16_selection_criteria.pdf`), chain audit (`results/supplementary_figures/consistency/22_chain_consistency.pdf`). The earlier 19-gene candidate panels are in `results/supplementary_figures/candidates_19gene/`.
-
-| Panel | Reference paper | This project | Script |
-|---|---|---|---|
-| Fig3A | UMAP cell atlas | `Fig3A_umap_celltype_<liver/kidney>` | 08 |
-| Fig3B | Marker bubble plot | `Fig3B_marker_bubble_<tissue>` | 08 |
-| Fig3C | Cell proportions per sample | `Fig3C_cell_proportion_<tissue>` | 08 |
-| Fig3D | Rac1/Pak1 expression by group in neutrophils (cell-level Wilcoxon) | `Fig3D_anchored_axis_expression_<tissue>`: AMPK-map axis genes (Prkaa1/2, Stk11, Camkk2, Sirt1, Ppargc1a, Irs2, Igf1, Fbp1, Ccnd1) in the key cell type; Fig 1 candidates marked * | 23 |
-| Fig3E | Pathway elevation in the key cell type | `Fig3E_anchored_score_<tissue>`: UCell score of the Fig 1 candidates that lie on the AMPK map, split by human direction, per cell type | 23 |
-| Fig3F | Rac1+Pak1 co-localization UMAP | `Fig3F_anchored_colocalization_<tissue>`: Ppargc1a+Ccnd1 joint density and % co-expressing cells | 23 |
-| Fig3G | Rac1–Pak1 correlation in neutrophils | `Fig3G_anchored_correlation_<tissue>`: cell-level Pearson, per-mouse Pearson, and a detection-matched background null — the pair does **not** correlate | 23 |
-| Fig3H | — (downstream readout) | `Fig3H_p53_partner_expression_<tissue>`: Cdkn1a, Ccnd1, Phlda3, Zmat3, Bax, Serpine1, Mdm2, Trp53 in the key cell type | 18 |
-| Fig3I | — | `Fig3I_p53_partner_colocalization_<tissue>`: Cdkn1a+Ccnd1 joint density and % co-expressing cells | 18 |
-| Fig3J | — | `Fig3J_p53_partner_correlation_<tissue>`: the pair that does satisfy all three criteria in kidney endothelium, with its background null | 18 |
-
-## Fig 4: Machine learning (`Fig4_ML/`)
-
-Not a reference-paper panel — an addition (script 21, `docs/results_ML.md`, decision R22). Classification of T2D vs lean from the 19-gene candidate panel, built so the small-n failure mode is visible: optimistic CV, honest nested CV, a permutation null, and an independent cohort. Assembled panel: `Fig4_ML.pdf`.
-
-| Panel | Contents | Script |
-|---|---|---|
-| Fig4A | AUC of panel-fixed CV vs nested CV (selection re-run inside folds) vs label-permutation null, for LASSO / random forest / SVM | 21 |
-| Fig4B | ROC in the independent cohort GSE23343 (10 T2D / 7 NGT), three models plus a parameter-free signature score | 21 |
-| Fig4C | LASSO selection frequency over 100 folds (gene-selection stability) | 21 |
-| Fig4D | Random-forest permutation importance | 21 |
-| Fig4E | External predicted probabilities by true group | 21 |
-| Fig4F | Top consensus genes, z-scored, in both cohorts | 21 |
-
-## Fig 5: Mendelian randomization (`Fig5_MR/`)
-
-Exposure: eQTLGen whole-blood cis-eQTLs. Outcome: type 2 diabetes (GCST006867, Xue et al. 2018). Primary analysis is LD-clumped (1000G EUR, Ensembl); no candidate is causally supported. Details and caveats in `docs/results_MR.md` (decisions R20, R21).
-
-| Panel | Reference paper | This project | Script |
-|---|---|---|---|
-| Fig5A | Forest plot of the causal estimate for PAK1 on RA | `Fig5A_forest.pdf`: all 25 instrumentable candidate genes, OR per SD of genetically predicted expression — **superseded first pass (distance-pruned)**; SERPINE1, PRKAA1 and PPARGC1A do not survive LD clumping (see Fig5F) | 19 |
-| Fig5B | Radial / SNP plot | `Fig5B_scatter_<gene>.pdf`: SNP effect on expression vs on T2D with the IVW slope | 19 |
-| Fig5C | Per-SNP forest | `Fig5C_leaveoneout_<gene>.pdf`: leave-one-out IVW | 19 |
-| Fig5D | Steiger directionality | `Fig5D_funnel_<gene>.pdf` (funnel); Steiger results are tabular, `results/mr/mr_steiger.csv` | 19 |
-| Fig5E | — (added) | `Fig5E_tissue_forest.pdf`: MR with GTEx liver instruments (kidney cortex has none) | 20b |
-| Fig5F | — (added) | `Fig5F_blood_clumping_comparison.pdf`: LD-clumped vs distance-pruned ORs; shows why the first pass over-called (decision R21) | 20b |
+**Do not open `results/bulk/enrich_KEGG.csv` in Excel.** It reads `GeneRatio` values such as `4/4` as
+dates and writes back `4-Apr`, which makes every ratio unparseable. This has happened twice.
+`scripts/34_fig2_paper_style.R` now refuses to run on a damaged file rather than silently dropping
+every point; the repair is `GeneRatio = Count/4` for all 81 rows.

@@ -4,7 +4,8 @@
 #
 # Outputs: results/bulk/enrich_GO.csv, enrich_KEGG.csv, enrich_DEG_up_down_GO.csv,
 #          GSEA_<contrast>_<collection>.csv
-# Figures: figures/bulk/Fig2A_GO.pdf, Fig2B_KEGG.pdf, Fig2C_emap.pdf, Fig2D_pathview_<id>.png,
+# Figures: figures/bulk/Fig2A_GO.pdf, Fig2B_KEGG.pdf, Fig2C_emap.pdf; the pathview raster and its
+#          KGML go to results/pathway_selection/pathview/,
 #          05_GSEA_hallmark.pdf
 
 suppressPackageStartupMessages({
@@ -20,7 +21,8 @@ suppressPackageStartupMessages({
 })
 set.seed(20260914)
 out_dir <- "results/bulk"; fig_dir <- "results/supplementary_figures/bulk"
-fig_main <- "figures/Fig2_enrichment"  # reference-framework panels (Fig 2 analogue)
+fig_main <- "results/supplementary_figures/enrichment"  # draft panels; figures/Fig2 is owned by
+# scripts/29_pub_fig2.R. The pathview diagram is the exception and still goes to figures/ (see below).
 for (d in c(fig_dir, fig_main)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 
 # Remove outputs of previous runs first: files are only written when enrichment is found,
@@ -30,7 +32,11 @@ unlink(c(file.path(out_dir, c("enrich_GO.csv", "enrich_KEGG.csv", "enrich_DEG_up
          file.path(fig_main, c("Fig2A_GO.pdf", "Fig2B_KEGG.pdf", "Fig2C_emap_KEGG.pdf", "Fig2C_emap_GOBP.pdf",
                                "Fig2_GSEA_hallmark.pdf")),
          file.path(fig_dir, "05_GO_DEG_up_down.pdf")))
-unlink(file.path(fig_main, "Fig2D_pathview"), recursive = TRUE)
+# the pathview diagram is a rendered asset, not a drawn panel: KEGG produces the raster and no figure
+# script redraws it. It therefore lives with the other analysis outputs, and the figure script that
+# needs it reads it from there. figures/ holds only what a figure script writes.
+pv_main <- "results/pathway_selection"
+unlink(file.path(pv_main, "pathview"), recursive = TRUE)
 
 deg <- fread(file.path(out_dir, "DEG_T2D_vs_Control_all.csv"))
 ints <- fread(file.path(out_dir, "intersect_genes.csv"))
@@ -95,7 +101,7 @@ if (!is.null(ekg)) {
       fc[, entrez := suppressMessages(mapIds(org.Hs.eg.db, gene, "ENTREZID", "SYMBOL"))]
       fc <- fc[!is.na(entrez)]
       fc_vec <- setNames(fc$logFC, fc$entrez)
-      pv_dir <- normalizePath(file.path(fig_main, "Fig2D_pathview"), mustWork = FALSE)
+      pv_dir <- normalizePath(file.path(pv_main, "pathview"), mustWork = FALSE)
       dir.create(pv_dir, recursive = TRUE, showWarnings = FALSE)
       old <- getwd()
       # pathview writes into the working directory; always restore it, even if pathview fails

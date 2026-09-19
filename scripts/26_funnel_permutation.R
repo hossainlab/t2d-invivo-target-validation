@@ -40,7 +40,16 @@ hyper <- fread("results/bulk/geneset_hyperglycemia.csv")$gene
 paths <- fread("results/pathway_selection/25_map_paths.csv")
 tiers <- fread("results/targets/target_tiers.csv")
 
-key_modules <- mt[p_T2D < 0.1, module]
+# Key modules are decided once, by script 03 (decision M11b: T2D p < 0.1 AND replicated in both
+# cohorts). Reading that decision here instead of re-deriving it keeps every downstream step on the
+# same module set; the rule used to be copied into four scripts, which is how the vacuous
+# abs(r_T2D) > abs(r_Dataset) clause survived unnoticed.
+read_key_modules <- function(dir = "results/bulk") {
+  f <- file.path(dir, "WGCNA_key_module_selection.csv")
+  if (!file.exists(f)) stop("missing ", f, "; run scripts/03_bulk_WGCNA.R first")
+  fread(f)[key == TRUE][order(p_T2D), module]
+}
+key_modules <- read_key_modules()
 strongest   <- mt[order(-r_T2D)][1, module]
 module_genes <- list(`7 key modules` = mm[module %in% key_modules, gene],
                      `strongest module only` = mm[module == strongest, gene])

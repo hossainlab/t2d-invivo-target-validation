@@ -41,7 +41,16 @@ scg   <- fread("results/pathway_selection/17_gene_confirmation.csv")
 sc18  <- rbindlist(lapply(c("kidney", "liver"), function(t)
   fread(paste0("results/pathway_selection/18_axis_gene_stats_", t, ".csv"))[, tissue := t]), fill = TRUE)
 
-key_modules <- mt[p_T2D < 0.1, module]
+# Key modules are decided once, by script 03 (decision M11b: T2D p < 0.1 AND replicated in both
+# cohorts). Reading that decision here instead of re-deriving it keeps every downstream step on the
+# same module set; the rule used to be copied into four scripts, which is how the vacuous
+# abs(r_T2D) > abs(r_Dataset) clause survived unnoticed.
+read_key_modules <- function(dir = "results/bulk") {
+  f <- file.path(dir, "WGCNA_key_module_selection.csv")
+  if (!file.exists(f)) stop("missing ", f, "; run scripts/03_bulk_WGCNA.R first")
+  fread(f)[key == TRUE][order(p_T2D), module]
+}
+key_modules <- read_key_modules()
 ampk_axis_unanchored <- strsplit(comps[pathway == "hsa04152"][order(-n_nodes, median_worst_p)][1, nodes], ";")[[1]]
 anch <- fread("results/pathway_selection/selection_axis_anchored.csv")[pathway == "hsa04152"]
 ampk_axis <- unique(c(anch$gene1, anch$gene2, "CCND1"))   # reported, candidate-anchored axis (R23)

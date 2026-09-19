@@ -3,7 +3,9 @@
 # Traits: T2D (T2D vs lean Control, 27 samples, D1b), dataset (confound check), HbA1c (GSE15653 only).
 # Obesity/group traits are not used: with lean controls only they are identical to T2D.
 # With < 30 samples the top 5000 MAD genes are used (plan Phase 3).
-# Key modules (user decision M11): all modules correlated with T2D at p < 0.1 and not more dataset- than T2D-correlated.
+# Key modules (decision M11b): modules correlated with T2D at p < 0.1 that also hold in BOTH cohorts
+# separately (same sign, p < 0.1 each). The superseded M11 rule also required abs(r_T2D) > abs(r_Dataset),
+# which is vacuous because datExpr is ComBat-corrected; see the module-trait section.
 # Hub genes: key-module genes with |kME| > 0.7 and |GS| > 0.2.
 # Robustness: modulePreservation GSE15653 (ref) -> GSE64998 (test).
 #
@@ -20,8 +22,12 @@ suppressPackageStartupMessages({
 options(stringsAsFactors = FALSE)
 enableWGCNAThreads(nThreads = 8)
 set.seed(20260914)
+
+REQUIRE_REPLICATION <- TRUE   # decision M11b; FALSE reproduces the superseded M11 module set
+P_COHORT            <- 0.1    # per-cohort significance a module must reach in BOTH cohorts
 out_dir <- "results/bulk"; fig_dir <- "results/supplementary_figures/bulk"
-fig_main <- "figures/Fig1_bulk_DEG_WGCNA"; exp_dir <- "results/figure_exports"  # framework panels / TIFF exports
+fig_main <- "results/supplementary_figures/bulk"; exp_dir <- "results/figure_exports"  # draft panels;
+# figures/Fig1 is owned by scripts/28_pub_fig1.R
 for (d in c(fig_dir, fig_main, exp_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 
 expr <- readRDS(file.path(out_dir, "expr_merged_combat.rds"))
@@ -100,10 +106,25 @@ hb_p   <- corPvalueStudent(hb_cor, length(s15))
 mt_cor <- cbind(mt_cor, HbA1c_GSE15653 = hb_cor[, 1])
 mt_p   <- cbind(mt_p,   HbA1c_GSE15653 = hb_p[, 1])
 
+# ---- per-cohort T2D correlation (decision M11b) ---------------------------------------
+# datExpr is ComBat-corrected, so the Dataset column above is bounded near zero by construction
+# (max |r| = 0.08 here, against |r| up to 1.00 on the uncorrected matrix). It therefore cannot act as
+# a confound filter: the old rule abs(r_T2D) > abs(r_Dataset) excluded 0 of 14 modules. It is kept as
+# a reported column, but the filter is now whether a module's T2D association holds in BOTH cohorts
+# separately, which is what a residual batch or cohort effect would break.
+i1 <- meta$dataset == "GSE15653"; i2 <- meta$dataset == "GSE64998"
+r1 <- cor(MEs[i1, ], meta$T2D[i1], use = "p"); p1 <- corPvalueStudent(r1, sum(i1))
+r2 <- cor(MEs[i2, ], meta$T2D[i2], use = "p"); p2 <- corPvalueStudent(r2, sum(i2))
+mt_cor <- cbind(mt_cor, T2D_GSE15653 = r1[, 1], T2D_GSE64998 = r2[, 1])
+mt_p   <- cbind(mt_p,   T2D_GSE15653 = p1[, 1], T2D_GSE64998 = p2[, 1])
+message("per-cohort n: GSE15653 = ", sum(i1), ", GSE64998 = ", sum(i2))
+
 mt_tab <- data.table(module = sub("^ME", "", rownames(mt_cor)),
                      size = as.integer(table(moduleColors)[sub("^ME", "", rownames(mt_cor))]),
                      setnames(data.table(mt_cor), paste0("r_", colnames(mt_cor))),
                      setnames(data.table(mt_p), paste0("p_", colnames(mt_p))))
+mt_tab[, concordant := sign(r_T2D_GSE15653) == sign(r_T2D_GSE64998)]
+mt_tab[, replicates := concordant & p_T2D_GSE15653 < P_COHORT & p_T2D_GSE64998 < P_COHORT]
 fwrite(mt_tab, file.path(out_dir, "WGCNA_module_trait.csv"))
 
 pdf(file.path(fig_main, "Fig1E_module_trait.pdf"), width = 9, height = max(5, 0.35 * nrow(mt_cor) + 2))
@@ -116,9 +137,26 @@ labeledHeatmap(Matrix = mt_cor, xLabels = colnames(mt_cor), yLabels = rownames(m
 dev.off()
 
 # ---------------- Key modules ----------------------------------------------------------
-cand <- mt_tab[module != "grey" & p_T2D < 0.1 & abs(r_T2D) > abs(r_Dataset)]  # user decision M11
+# M11  (superseded): p_T2D < 0.1 and abs(r_T2D) > abs(r_Dataset). The second clause is vacuous on
+#                    ComBat-corrected input, so this reduced to p_T2D < 0.1 alone.
+# M11b (current):    p_T2D < 0.1 AND the same direction in both cohorts AND p < P_COHORT in each.
+#                    Set REQUIRE_REPLICATION <- FALSE to reproduce the M11 module set.
+cand_all <- mt_tab[module != "grey" & p_T2D < 0.1]
+cand <- if (REQUIRE_REPLICATION) cand_all[replicates == TRUE] else cand_all
 key_modules <- cand[order(p_T2D), module]
-message("Key modules (T2D p<0.1): ", paste(key_modules, collapse = ", "))
+dropped <- setdiff(cand_all[order(p_T2D), module], key_modules)
+message("Key modules (M11b, T2D p<0.1 + replicated): ", paste(key_modules, collapse = ", "))
+if (length(dropped))
+  message("Dropped for failing replication: ",
+          paste(sprintf("%s (r %.2f / %.2f, p %.3g / %.3g)", dropped,
+                        mt_tab[match(dropped, module), r_T2D_GSE15653],
+                        mt_tab[match(dropped, module), r_T2D_GSE64998],
+                        mt_tab[match(dropped, module), p_T2D_GSE15653],
+                        mt_tab[match(dropped, module), p_T2D_GSE64998]), collapse = "; "))
+fwrite(mt_tab[, .(module, size, r_T2D, p_T2D, r_T2D_GSE15653, p_T2D_GSE15653,
+                  r_T2D_GSE64998, p_T2D_GSE64998, concordant, replicates,
+                  key = module %in% key_modules)][order(p_T2D)],
+       file.path(out_dir, "WGCNA_key_module_selection.csv"))
 
 # ---------------- GS / MM -------------------------------------------------------------
 GS   <- as.numeric(cor(datExpr, traits$T2D, use = "p"))

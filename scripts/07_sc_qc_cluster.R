@@ -31,8 +31,15 @@ suppressPackageStartupMessages({
 set.seed(20260914)
 options(future.globals.maxSize = 8 * 1024^3)
 
-tissue <- tolower(commandArgs(trailingOnly = TRUE)[1])
-stopifnot(tissue %in% c("liver", "kidney", "heart", "spleen"))
+TISSUES <- c("liver", "kidney", "heart", "spleen")
+tissue  <- tolower(commandArgs(trailingOnly = TRUE)[1])
+# a bare stopifnot() here reports "tissue %in% c(...) is not TRUE", which reads as though the tissue
+# names were wrong when the real cause is almost always a missing argument
+if (is.na(tissue) || !tissue %in% TISSUES)
+  stop("usage: Rscript scripts/07_sc_qc_cluster.R <", paste(TISSUES, collapse = "|"), ">\n",
+       if (is.na(tissue)) "  no tissue argument was given."
+       else paste0("  got '", tissue, "', which is not one of the four tissues."),
+       call. = FALSE)
 out_dir <- "results/sc"; fig_dir <- "results/supplementary_figures/sc_qc"
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
 mt_cap <- c(liver = 20, kidney = 30, heart = 30, spleen = 10)[[tissue]]

@@ -25,7 +25,9 @@ set.seed(20260914)
 proj    <- normalizePath(".")
 out_dir <- file.path(proj, "results", "bulk")
 fig_dir  <- file.path(proj, "results", "supplementary_figures", "bulk")  # QC plots
-fig_main <- file.path(proj, "figures", "Fig1_bulk_DEG_WGCNA")            # reference-framework panels
+fig_main <- file.path(proj, "results", "supplementary_figures", "bulk")  # draft panels; figures/ is
+# owned by scripts/28_pub_fig1.R, which redraws Fig 1 to the publication contract from the tables below.
+# Writing here from an analysis script would clobber those panels (Windows filenames are case-insensitive).
 exp_dir  <- file.path(proj, "results", "figure_exports")                  # TIFF exports
 for (d in c(fig_main, exp_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)

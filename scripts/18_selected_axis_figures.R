@@ -25,14 +25,24 @@ suppressPackageStartupMessages({
   library(ggplot2); library(patchwork); library(Matrix)
 })
 set.seed(20260916)
-fig_main <- "figures/Fig3_scRNA"; out_dir <- "results/pathway_selection"
+fig_main <- "results/supplementary_figures/pathway_selection"; out_dir <- "results/pathway_selection"
+  # draft panels; figures/ is owned by the 27-32 publication figure scripts (Fig 3 is now
+  # Fig3_composite_<tissue> from 27 and Fig3_axis_<tissue> from 32). Writing here from an analysis
+  # script silently overwrites them, because Windows filenames are case-insensitive.
+
 dir.create(fig_main, recursive = TRUE, showWarnings = FALSE)
 cols <- c(Control = "#3B7DD8", STZ = "#C8322F")
 
 pair       <- c("Cdkn1a", "Ccnd1")                                     # CDKN1A - CCND1
+# Curated p53 arrest / target set. Provenance matters here and is easy to lose: of these eight genes
+# only CCND1 is a Fig 1g candidate. CDKN1A is a bulk DEG but sits in the turquoise module, which fails
+# the M11b replication rule, and it is not in the hyperglycaemia gene set - so it never reaches the
+# candidate intersection. This axis is secondary and data-driven (decisions R17, R23), NOT a Fig 1
+# result, and the fig1_candidate column written below is what keeps that visible downstream.
 axis_genes <- c("Cdkn1a", "Ccnd1", "Phlda3", "Zmat3", "Bax", "Serpine1", "Mdm2", "Trp53")
 human_of   <- c(Cdkn1a = "CDKN1A", Ccnd1 = "CCND1", Phlda3 = "PHLDA3", Zmat3 = "ZMAT3",
                 Bax = "BAX", Serpine1 = "SERPINE1", Mdm2 = "MDM2", Trp53 = "TP53")
+fig1_candidates <- fread("results/bulk/intersect_genes.csv")$gene      # never typed in; see script 23
 n_bg <- 2000L                                                          # background gene pairs per cell type
 fmt_p <- function(p) ifelse(is.na(p), "NA", formatC(p, format = "g", digits = 2))
 
@@ -64,6 +74,7 @@ for (tt in c("liver", "kidney")) {
   fm[, cell_BH := p.adjust(cell_p, "BH")]
   st <- merge(fm, pb_ax[cell_type == key, .(gene, pb_logFC = logFC, pb_P = PValue, pb_FDR = FDR,
                                             human, human_logFC, human_P, human_FDR, concordant)], by = "gene")
+  st[, fig1_candidate := human %in% fig1_candidates]
   fwrite(st[order(pb_P)], file.path(out_dir, paste0("18_axis_gene_stats_", tt, ".csv")))
 
   ex <- as.data.table(FetchData(sub, vars = c(genes, "condition", "mouse_id"), layer = "data"))

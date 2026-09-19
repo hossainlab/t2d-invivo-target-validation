@@ -150,7 +150,7 @@ Each phase lists its inputs, the method with parameters fixed in advance, its ou
   - Model: `~condition + dataset`.
   - The single-cell counterpart is STZ vs Control.
   - Caveat: T2D status is collinear with obesity in this design.
-- **DEG definition (M9, decided by the user 2026-09-14):** nominal P < 0.05 and |log2FC| > 0.5, labelled exploratory. No gene reaches FDR < 0.05 for T2D vs Control; the FDR column is still reported.
+- **DEG definition (M9, decided by the user 2026-09-14):** nominal P < 0.05 and |log2FC| > 0.5, labelled exploratory. 84 genes reach FDR < 0.05 for T2D vs Control but only 31 of those also clear |log2FC| > 0.5, and carrying that set through the strict module and gene-set rules leaves a single intersecting gene (SREBF2, R17), which is why the nominal rule is used. The FDR column is reported throughout.
 - **Input (M8):** raw CEL + RMA, no expression filter (all genes common to both platforms).
 - **Candidate rule (M13, replaces M10):** the reference paper's 3-way overlap. DEGs ∩ all genes of the key modules (T2D p < 0.1, not dataset-driven; M11) ∩ hyperglycemia gene set. WGCNA hub status (|kME| > 0.7, |GS| > 0.2) is kept as an annotation.
 - DEG threshold (same as the reference): |log2FC| > 0.5 and BH adj.P < 0.05. If C1 yields fewer than 100 DEGs, fall back to nominal P < 0.01 with |log2FC| > 0.5 and report this openly.

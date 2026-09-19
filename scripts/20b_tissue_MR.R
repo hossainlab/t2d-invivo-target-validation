@@ -13,11 +13,24 @@ suppressPackageStartupMessages({ library(data.table); library(ggplot2) })
 source("scripts/mr_functions.R")
 set.seed(20260916)
 scratch <- Sys.getenv("MR_SCRATCH", unset = file.path(tempdir(), "mr"))
-out_dir <- "results/mr"; fig_dir <- "figures/Fig5_MR"
+out_dir <- "results/mr"; fig_dir <- "results/supplementary_figures/mr"
+  # draft panels; figures/ is owned by the 27-31 publication figure scripts. Writing here from an
+  # analysis script silently overwrites them, because Windows filenames are case-insensitive.
+
 for (d in c(out_dir, fig_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 N_CASE <- 62892; N_CTRL <- 596424; N_BLOOD <- 31684
 
-gwas <- fread(file.path(scratch, "t2d_instruments_stage2.tsv"))
+# The stage-2 outcome lookup lives in the MR scratch directory, which defaults to tempdir() and so does
+# not survive the session that built it. For the whole-blood LD-clumped arm the cached stage-1 lookup in
+# data/mr/ is sufficient: it carries every clumped SNP that has an outcome record, and re-harmonising
+# from it reproduces mr_results_blood_ldclumped.csv exactly (21/21 genes, |db| < 1e-6). The tissue arm
+# needs the stage-2 file proper and is skipped when it is absent.
+stage2_f  <- file.path(scratch, "t2d_instruments_stage2.tsv")
+stage1_f  <- "data/mr/t2d_instruments.tsv.gz"
+has_stage2 <- file.exists(stage2_f)
+gwas <- fread(if (has_stage2) stage2_f else stage1_f)
+if (!has_stage2) message("stage-2 outcome lookup absent; using cached ", stage1_f,
+                         " (whole-blood arm only, tissue arm skipped)")
 g <- gwas[, .(rsid = hm_rsid, out_ea = hm_effect_allele, out_oa = hm_other_allele, out_beta = hm_beta,
               out_se = standard_error, out_p = p_value, eaf = hm_effect_allele_frequency)]
 g <- unique(g[!is.na(out_beta) & !is.na(out_se) & out_se > 0], by = "rsid")
@@ -37,6 +50,7 @@ harmonise <- function(x) {
 }
 
 # ---- 1. Tissue instruments ---------------------------------------------------------------
+if (has_stage2) {
 tis <- fread(file.path(out_dir, "instruments_tissue.csv"))
 th <- harmonise(tis)
 message("Tissue instruments harmonised: ", nrow(th), " of ", nrow(tis))
@@ -59,6 +73,9 @@ st_t <- th[, {
   .(n_snp = .N, r2_exposure = r2_exp, r2_outcome = r2_out, correct_direction = r2_exp > r2_out)
 }, by = .(dataset, gene)]
 fwrite(st_t, file.path(out_dir, "mr_steiger_tissue.csv"))
+} else {
+  message("skipping tissue arm; results/mr/mr_results_tissue.csv left as previously computed")
+}
 
 # ---- 2. Whole blood, LD-clumped ------------------------------------------------------------
 bl <- fread(file.path(out_dir, "instruments_blood_ldclumped.csv"))
@@ -74,6 +91,25 @@ prim_b[, FDR := p.adjust(p, "BH")]
 mr_bl <- merge(mr_bl, prim_b[, .(gene, FDR)], by = "gene", all.x = TRUE)
 setorder(mr_bl, FDR, gene, method)
 fwrite(mr_bl, file.path(out_dir, "mr_results_blood_ldclumped.csv"))
+
+# The harmonised per-SNP table for the PRIMARY (clumped) analysis. Without this, the only per-SNP data
+# on disk belongs to the superseded distance-pruned pass, and the SNP-level panels of Fig 5 cannot be
+# drawn for the analysis the paper actually reports.
+fwrite(bh[, .(rsid, chr, pos, gene, exp_ea, exp_oa, exp_z, exp_p, exp_n, eaf,
+              exp_beta, exp_se, F_stat, out_ea, out_oa, out_beta, out_se, out_p, palindromic)],
+       file.path(out_dir, "instruments_blood_ldclumped_harmonised.csv"))
+
+# leave-one-out on the clumped instruments, for genes with enough SNPs to drop one
+loo_bl <- rbindlist(lapply(split(bh, by = "gene"), function(x) {
+  if (nrow(x) < 3) return(NULL)
+  rbindlist(lapply(seq_len(nrow(x)), function(i) {
+    r <- run_mr(x[-i])[method == "IVW"]
+    if (!nrow(r)) return(NULL)
+    data.table(gene = x$gene[1], dropped = x$rsid[i], b = r$b, se = r$se, p = r$p)
+  }))
+}))
+fwrite(loo_bl, file.path(out_dir, "mr_leaveoneout_blood_ldclumped.csv"))
+message("clumped harmonised SNPs: ", nrow(bh), "; leave-one-out rows: ", nrow(loo_bl))
 print(prim_b[order(p), .(gene, method, n_snp, OR = round(OR, 3), lo = round(OR_lo, 3), hi = round(OR_hi, 3),
                          p = signif(p, 3), FDR = signif(FDR, 3), Q_p = signif(Q_p, 2))][seq_len(min(12, .N))])
 
@@ -86,7 +122,7 @@ print(cmp[order(p_ld), .(gene, n_snp_ld, n_snp_dist, OR_ld = round(exp(b_ld), 3)
                          p_ld = signif(p_ld, 3), p_dist = signif(p_dist, 3), FDR_ld = signif(FDR_ld, 3))][seq_len(min(12, .N))])
 
 # ---- 4. Figures ------------------------------------------------------------------------------
-if (nrow(prim_t)) {
+if (has_stage2 && exists("prim_t") && nrow(prim_t)) {
   pt <- prim_t[order(dataset, b)]
   pt[, lab := factor(paste0(gene, " (", n_snp, ")"), levels = rev(unique(paste0(gene, " (", n_snp, ")"))))]
   p4e <- ggplot(pt, aes(OR, lab)) +

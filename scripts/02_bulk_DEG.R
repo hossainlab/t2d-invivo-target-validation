@@ -7,7 +7,9 @@
 # Checks: paper-style ComBat -> limma; + sex covariate; per-dataset.
 # Thresholds as in the reference paper: |log2FC| > 0.5 and BH adj.P < 0.05.
 # DEG definition for downstream steps (user decision M9): nominal P < 0.05 and |log2FC| > 0.5,
-# because no gene reaches FDR < 0.05 for T2D vs Control. Reported as exploratory.
+# because the FDR-significant set is too small to carry the strict downstream rules: 84 genes reach
+# FDR < 0.05 for T2D vs Control, only 31 of them at |log2FC| > 0.5, and those leave one intersecting
+# gene at the end of the chain (SREBF2, decision R17). Reported as exploratory.
 #
 # Outputs: results/bulk/DEG_T2D_vs_Control_all.csv, DEG_summary.csv, DEG_concordance.csv,
 #          HbA1c_assoc_GSE15653.csv
@@ -24,7 +26,8 @@ suppressPackageStartupMessages({
 
 set.seed(20260914)
 out_dir <- "results/bulk"; fig_dir <- "results/supplementary_figures/bulk"
-fig_main <- "figures/Fig1_bulk_DEG_WGCNA"; exp_dir <- "results/figure_exports"  # framework panels / TIFF exports
+fig_main <- "results/supplementary_figures/bulk"; exp_dir <- "results/figure_exports"  # draft panels;
+# figures/Fig1 is owned by scripts/28_pub_fig1.R
 for (d in c(fig_dir, fig_main, exp_dir)) dir.create(d, recursive = TRUE, showWarnings = FALSE)
 LFC <- 0.5; FDR <- 0.05
 

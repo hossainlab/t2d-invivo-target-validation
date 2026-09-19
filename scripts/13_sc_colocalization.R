@@ -26,7 +26,11 @@ suppressPackageStartupMessages({
   library(Matrix)
 })
 set.seed(20260914)
-tissue <- tolower(commandArgs(trailingOnly = TRUE)[1]); stopifnot(tissue %in% c("liver", "kidney"))
+tissue <- tolower(commandArgs(trailingOnly = TRUE)[1])
+if (is.na(tissue) || !tissue %in% c("liver", "kidney"))
+  stop("usage: Rscript scripts/13_sc_colocalization.R <liver|kidney>\n",
+       if (is.na(tissue)) "  no tissue argument was given."
+       else paste0("  got '", tissue, "'."), call. = FALSE)
 out_dir <- "results/integration"; fig_main <- "results/supplementary_figures/candidates_19gene"  # main Fig 3F-G now from 15b (AMPK axis)
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE); dir.create(fig_main, recursive = TRUE, showWarnings = FALSE)
 

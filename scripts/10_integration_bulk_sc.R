@@ -22,6 +22,10 @@ suppressPackageStartupMessages({
 })
 set.seed(20260914)
 tissue <- tolower(commandArgs(trailingOnly = TRUE)[1])
+if (is.na(tissue) || !tissue %in% c("liver", "kidney"))
+  stop("usage: Rscript scripts/10_integration_bulk_sc.R <liver|kidney>\n",
+       if (is.na(tissue)) "  no tissue argument was given."
+       else paste0("  got '", tissue, "'."), call. = FALSE)
 bulk_dir <- "results/bulk"; sc_dir <- "results/sc"
 out_dir <- "results/integration"; fig_dir <- "results/supplementary_figures/integration"
 fig_main <- "results/supplementary_figures/candidates_19gene"  # 19-gene candidate panels (Fig 3D-G main panels now from 15b, AMPK axis)
